@@ -1,0 +1,43 @@
+{
+  "name": "cesium_demos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/cesium": "^1.59.0",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "cesium": "^1.60.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@types/copy-webpack-plugin": "^5.0.0",
+    "@types/html-webpack-plugin": "^3.2.1",
+    "@types/node": "^12.7.2",
+    "awesome-typescript-loader": "^5.2.1",
+    "axios": "^0.19.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "cross-env": "^5.2.0",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "increase-memory-limit": "^1.0.7",
+    "requirejs": "^2.3.6",
+    "source-map-loader": "^0.2.4",
+    "string-replace-loader": "^2.2.0",
+    "style-loader": "^1.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "debug": "webpack --display-error-details",
+    "fix-memory-limit": "cross-env LIMIT=6184 increase-memory-limit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
