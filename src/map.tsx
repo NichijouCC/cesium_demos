@@ -3,6 +3,7 @@ import { CesiumMain } from "./manager";
 import { AutoRot } from "./demos/autoRotation";
 import { Load3dtiles } from "./demos/load3dTiles";
 import { Adjust3dtilesHeight } from "./demos/adjust3dtilesHeight";
+import { CustomeRiver } from "./demos/customeRiver";
 // import Cesium from "cesium";
 // import Cesium from "cesium/Cesium";
 
@@ -27,8 +28,15 @@ declare global {
 // import cs from 'cesiumSource/Cesium'
 require('@cesiumSource/Widgets/widgets.css');
 
-export class Map extends React.Component {
 
+export class Map extends React.Component<{}, { viewer: Cesium.Viewer }> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            viewer: null
+        }
+    }
     componentDidMount() {
 
         // CesiumIon.defaultAccessToken = Config.ION;
@@ -39,10 +47,8 @@ export class Map extends React.Component {
         viewer.scene.globe.enableLighting = MapConfig.global.enableLighting;
         viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;
 
-        let main = new CesiumMain(viewer);
-        // main.addDemo(new AutoRot(0.001));
-        // main.chooseDemo(new Load3dtiles());
-        main.chooseDemo(new Adjust3dtilesHeight());
+        this.setState({ viewer: viewer });
+
     }
     render() {
         const containerStyle: React.CSSProperties = {
@@ -55,7 +61,11 @@ export class Map extends React.Component {
             position: "fixed",
         };
         return (
-            <div id="cesiumContainer" style={containerStyle}></div>
+            <div id="cesiumContainer" style={containerStyle}>
+                {
+                    this.state.viewer ? <CesiumMain viewer={this.state.viewer} /> : null
+                }
+            </div>
         );
     }
 }

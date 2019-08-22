@@ -30,7 +30,6 @@ module.exports = {
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 
-
     devServer: {
         contentBase: path.join(__dirname, "dist")
     },
@@ -40,7 +39,8 @@ module.exports = {
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
             {
                 test: /\.css$/, use: ['style-loader', 'css-loader']
-            }, {
+            },
+            {
                 test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
                 use: ['url-loader']
             },
@@ -53,6 +53,10 @@ module.exports = {
                 }
             }
 
+        ],
+        loaders: [
+            { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules' },
+            { test: /\.scss$/, loader: 'typings-for-css-modules-loader?modules&sass' }
         ],
         // is needed to avoid warnings from Cesium pulling in some third-party AMD-formatted modules like Knockout.
         unknownContextCritical: false
@@ -71,6 +75,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
+        new CopywebpackPlugin([{ from: 'static', to: 'static' }]),
+
         // Copy Cesium Assets, Widgets, and Workers to a static directory
         new CopywebpackPlugin([{ from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' }]),
         new CopywebpackPlugin([{ from: path.join(cesiumSource, 'Assets'), to: 'Assets' }]),

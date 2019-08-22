@@ -1,0 +1,29 @@
+.content div{
+    background:#ffffff;
+    width: 4px;
+    height: 4px;
+    border: 6px #009FD9 solid;
+    border-radius:50%;
+    position: relative;
+}
+
+.content p, .content span{
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius:50%;
+    animation: myfirst 1.5s  infinite;
+    box-shadow: 0px 0px 1px #009FD9; 
+    margin: 0px;
+}
+
+.content  span{
+    animation-delay: 0.8s;
+}
+
+.content .one{position: absolute;left:600px; top:100px;}
+
+@keyframes myfirst{
+    10% {transform: scale(1);}
+    100% {transform: scale(8);}
+}

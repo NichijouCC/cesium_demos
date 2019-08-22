@@ -1,4 +1,4 @@
-import { Iexample, IupdateProps, IinitProps } from "../manager";
+import { Iexample, IinitProps, IupdateProps } from "./iexample";
 
 export class Load3dtiles implements Iexample {
 
