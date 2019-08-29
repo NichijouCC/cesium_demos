@@ -52,12 +52,8 @@ module.exports = {
                     replace: '',
                 }
             }
+        ],
 
-        ],
-        loaders: [
-            { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules' },
-            { test: /\.scss$/, loader: 'typings-for-css-modules-loader?modules&sass' }
-        ],
         // is needed to avoid warnings from Cesium pulling in some third-party AMD-formatted modules like Knockout.
         unknownContextCritical: false
     },

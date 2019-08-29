@@ -7,6 +7,9 @@
 - 地球自旋转
 - 加载3dtiles
 - 画河流
+- 各种常用pick
+- 自定义几何体
+- 更新单个geometryinstance属性
 
 ## 组件
 - domTag （3d物体的dom标签）

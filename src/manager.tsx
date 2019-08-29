@@ -3,6 +3,8 @@ import { CustomeRiver } from "./demos/customeRiver";
 import DomTagInfo from "./lib/domTag";
 import { Iexample } from "./demos/iexample";
 import { DomAnimationPoint } from "./lib/domAnimationPoint";
+import { UpdateInstancesAttribute } from "./demos/updateInstancesAttribute";
+import { CustomeGeometry } from "./demos/customeGeometry";
 
 
 export class CesiumMain extends React.Component<{ viewer: Cesium.Viewer }, { append: any[] }> {
@@ -20,19 +22,20 @@ export class CesiumMain extends React.Component<{ viewer: Cesium.Viewer }, { app
         // main.chooseDemo(new Load3dtiles());
         // main.chooseDemo(new Adjust3dtilesHeight());
         // this.chooseDemo(new CustomeRiver());
-
-        {
-            this.state.append.push(<DomTagInfo key={Date.now()} text={"TAG!!!!!!!"} viewer={this.props.viewer} worldPos={Cesium.Cartesian3.fromDegrees(121, 31)}></DomTagInfo>);
-            this.props.viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(121, 31), new Cesium.Cartesian3(10, 10, 10));
-            this.props.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY, null);
-            this.setState({ append: this.state.append });
-        }
-        {
-            this.state.append.push(<DomAnimationPoint key={Date.now()} text={""} viewer={this.props.viewer} worldPos={Cesium.Cartesian3.fromDegrees(121, 31)} ></DomAnimationPoint >);
-            this.props.viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(121, 31), new Cesium.Cartesian3(10, 10, 10));
-            this.props.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY, null);
-            this.setState({ append: this.state.append });
-        }
+        // this.chooseDemo(new UpdateInstancesAttribute());
+        this.chooseDemo(new CustomeGeometry());
+        // {
+        //     this.state.append.push(<DomTagInfo key={Date.now()} text={"TAG!!!!!!!"} viewer={this.props.viewer} worldPos={Cesium.Cartesian3.fromDegrees(121, 31)}></DomTagInfo>);
+        //     this.props.viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(121, 31), new Cesium.Cartesian3(10, 10, 10));
+        //     this.props.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY, null);
+        //     this.setState({ append: this.state.append });
+        // }
+        // {
+        //     this.state.append.push(<DomAnimationPoint key={Date.now()} text={""} viewer={this.props.viewer} worldPos={Cesium.Cartesian3.fromDegrees(121, 31)} ></DomAnimationPoint >);
+        //     this.props.viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(121, 31), new Cesium.Cartesian3(10, 10, 10));
+        //     this.props.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY, null);
+        //     this.setState({ append: this.state.append });
+        // }
 
     }
     private examples: Iexample[] = [];
