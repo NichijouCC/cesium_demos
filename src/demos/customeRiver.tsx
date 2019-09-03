@@ -1,14 +1,14 @@
 import Axios from "axios";
-import { Iexample, IinitProps, IupdateProps } from "./iexample";
+import React from "react";
+import { CesiumMap } from "../lib/map";
 
 interface IriverJson {
     data: { longitude: string, latitude: string }[]
 }
-export class CustomeRiver implements Iexample {
-    title: string = "画河流"
-    beInit?: boolean | undefined;
-    init(props: IinitProps) {
+export class CustomeRiver extends React.Component {
+    static title: string = "画河流"
 
+    handleViewerLoaded(viewer: Cesium.Viewer) {
         Axios.get("./static/json/islandRiver.json").then((res) => {
             let data = (res.data as IriverJson).data;
             let riverPoint: number[] = [];
@@ -51,9 +51,9 @@ export class CustomeRiver implements Iexample {
                 }
             });
             River.appearance.material = River_Material;
-            props.viewer.scene.primitives.add(River);
+            viewer.scene.primitives.add(River);
 
-            props.viewer.camera.setView({
+            viewer.camera.setView({
                 destination: new Cesium.Cartesian3(-2862254.210290102, 4651511.794501719, 3283563.2216813704),
                 orientation: {
                     heading: 6.159615851035844, // east, default value is 0.0 (north)
@@ -63,7 +63,10 @@ export class CustomeRiver implements Iexample {
             })
         });
     }
-    update(props: IupdateProps): void {
-
+    render() {
+        return (
+            <CesiumMap id={CustomeRiver.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+        )
     }
+
 }

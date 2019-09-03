@@ -1,11 +1,11 @@
-import { Iexample } from "./iexample";
-import Axios from "axios";
+import Axios from "axios"
+import React from "react";
+import { CesiumMap } from "../lib/map";
 
-export class AutoAdjust3dtilesHeight implements Iexample {
-    readonly title: string = "自动调整3dtiles高度";
-    beInit?: boolean;
+export class Adjust3dtilesHeight extends React.Component {
+    static title: string = "调整3dtiles高度";
 
-    init?(props: import("./iexample").IinitProps): void {
+    handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
         Axios.get(modelPath).then((data) => {
             let res = data.data as any;
@@ -14,13 +14,11 @@ export class AutoAdjust3dtilesHeight implements Iexample {
             return boundingSphere;
 
         }).then((boundingSphere) => {
-            let tileset = props.viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+            let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
                 url: modelPath,
                 maximumScreenSpaceError: 0.8,
                 maximumNumberOfLoadedTiles: 100
             }));
-
-
             //----------------调整高度
             let heightOffset = -30;
 
@@ -28,12 +26,15 @@ export class AutoAdjust3dtilesHeight implements Iexample {
             let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, heightOffset, new Cesium.Cartesian3());
             tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
 
-            props.viewer.zoomTo(tileset);
+            viewer.zoomTo(tileset);
         });
     }
-    update(props: import("./iexample").IupdateProps): void {
-        // throw new Error("Method not implemented.");
+
+    render() {
+        return (
+            <CesiumMap id={Adjust3dtilesHeight.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+        )
     }
-
-
 }
+
+

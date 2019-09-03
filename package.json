@@ -7,9 +7,12 @@
     "@types/cesium": "^1.59.0",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^4.3.5",
+    "antd": "^3.23.1",
     "cesium": "^1.60.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "@types/copy-webpack-plugin": "^5.0.0",

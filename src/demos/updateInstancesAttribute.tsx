@@ -1,9 +1,10 @@
-import { Iexample } from "./iexample";
+import React from "react";
+import { CesiumMap } from "../lib/map";
 
-export class UpdateInstancesAttribute implements Iexample {
-    title: string = "动态更改instances 的属性"
-    beInit?: boolean;
-    init?(props: import("./iexample").IinitProps): void {
+export class UpdateInstancesAttribute extends React.Component {
+    static title: string = "动态更改instances 的属性";
+
+    handleViewerLoaded(viewer: Cesium.Viewer) {
         var instances = [];
         for (var lon = -180.0; lon < 180.0; lon += 5.0) {
             for (var lat = -90.0; lat < 90.0; lat += 5.0) {
@@ -27,19 +28,22 @@ export class UpdateInstancesAttribute implements Iexample {
             asynchronous: false,
         });
 
-        props.viewer.scene.primitives.add(primitive);
+        viewer.scene.primitives.add(primitive);
 
         let handler = new Cesium.ScreenSpaceEventHandler();
         handler.setInputAction((event) => {
-            let picked = props.viewer.scene.pick(event.position);
+            let picked = viewer.scene.pick(event.position);
             if (picked != null && picked.id != null) {
                 let attributes = primitive.getGeometryInstanceAttributes(picked.id);//获取某个实例的属性集
                 attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.fromRandom());
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     }
-    update(props: import("./iexample").IupdateProps): void {
+    render() {
+        return (
+            <CesiumMap id={UpdateInstancesAttribute.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
+            } />
+        )
     }
-
 
 }

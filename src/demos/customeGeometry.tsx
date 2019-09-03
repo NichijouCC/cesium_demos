@@ -1,10 +1,10 @@
-import { Iexample } from "./iexample";
+import React from "react";
+import { CesiumMap } from "../lib/map";
 
-export class CustomeGeometry implements Iexample {
-    title: string = "使用自定义几何体(非以地心为原点建模)"
-    beInit?: boolean;
-    init?(props: import("./iexample").IinitProps): void {
+export class CustomeGeometry extends React.Component {
+    static title: string = "使用自定义几何体(非以地心为原点建模)";
 
+    handleViewerLoaded(viewer: Cesium.Viewer) {
         let hwidth = 2.0;
         let hheigt = 2.0;
         let positions = new Float64Array([hwidth, hheigt, 0.0, -hwidth, hheigt, 0.0, -hwidth, -hheigt, 0.0, hwidth, -hheigt, 0.0]);
@@ -42,18 +42,18 @@ export class CustomeGeometry implements Iexample {
             modelMatrix: modelToWorldMatrix,
         });
 
-        props.viewer.scene.primitives.add(new Cesium.Primitive({
+        viewer.scene.primitives.add(new Cesium.Primitive({
             geometryInstances: instance,
             modelMatrix: Cesium.Matrix4.IDENTITY,
             appearance: new Cesium.PerInstanceColorAppearance(),
             asynchronous: false,
         }));
 
-        props.viewer.camera.lookAt(pos, new Cesium.HeadingPitchRange(-30, -90, 100));
-
+        viewer.camera.lookAt(pos, new Cesium.HeadingPitchRange(-30, -90, 100));
     }
-    update(props: import("./iexample").IupdateProps): void {
+    render() {
+        return (
+            <CesiumMap id={CustomeGeometry.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+        )
     }
-
-
 }

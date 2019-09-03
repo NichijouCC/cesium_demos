@@ -1,10 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from "react";
 
-import { Map } from './map';
-
-
+import { Main } from './main';
 
 ReactDOM.render(
-    <Map />
+    <Main />
     , document.getElementById('root'));
