@@ -5,6 +5,8 @@ export class UpdateInstancesAttribute extends React.Component {
     static title: string = "动态更改instances 的属性";
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
+        viewer.scene.globe.depthTestAgainstTerrain = false;
+
         var instances = [];
         for (var lon = -180.0; lon < 180.0; lon += 5.0) {
             for (var lat = -90.0; lat < 90.0; lat += 5.0) {

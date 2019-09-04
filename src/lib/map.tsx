@@ -4,22 +4,33 @@ import React from "react";
 require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
 declare global {
-    export module Cesium {
-        export interface Cesium3DTileset {
-            constructor(Cesium3DTilesetItem: {
-                url: string;
-                maximumScreenSpaceError: number;
-                maximumNumberOfLoadedTiles: number;
-                shadows?: any;
-            })
-        }
-    }
+    export module Cesium { }
 }
+
+// declare module "Cesium" {
+//     type TypedArray = Float64Array | Float32Array | Int32Array | Int16Array;
+//     export interface Cesium3DTileset {
+//         constructor(Cesium3DTilesetItem: {
+//             url: string;
+//             maximumScreenSpaceError: number;
+//             maximumNumberOfLoadedTiles: number;
+//             shadows?: any;
+//         })
+//     }
+//     // export interface Geometry {
+//     //     constructor(options: { attributes: GeometryAttributes; primitiveType?: PrimitiveType; indices?: Uint16Array | Uint32Array; boundingSphere?: BoundingSphere });
+//     // }
+//     export interface GeometryAttribute {
+//         constructor(options?: { componentDatatype?: ComponentDatatype; componentsPerAttribute?: number; normalize?: boolean; values?: number[] | TypedArray });
+
+//         xxxx(): void;
+//     }
+// }
+
 
 export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (viewer: Cesium.Viewer) => void }, { viewer: Cesium.Viewer }> {
 
     componentDidMount() {
-
         // CesiumIon.defaultAccessToken = Config.ION;
         let viewer: Cesium.Viewer = new Cesium.Viewer(this.props.id || "cesiumContainer", MapConfig.MAPOPTIONS);
 
@@ -27,7 +38,7 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
         viewer.scene.globe.enableLighting = MapConfig.global.enableLighting;
         viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;
-        viewer.scene.highDynamicRange = false;
+        viewer.scene.highDynamicRange = true;
 
         //------------
 
@@ -55,7 +66,7 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
             left: 0,
             bottom: 0,
             right: 0,
-            // position: "fixed",
+            position: "absolute",
         };
         return (
             <div id={this.props.id || "cesiumContainer"} style={containerStyle}>
@@ -103,6 +114,6 @@ const MapConfig = {
         selectionIndicator: false,
         timeline: false,              //时间轴
         navigationHelpButton: false,  //帮助按钮
-        terrainShadows: Cesium.ShadowMode.ENABLED,
+        terrainShadows: Cesium.ShadowMode.DISABLED,
     },
 };

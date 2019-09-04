@@ -4,7 +4,7 @@ export interface ItagInfoProps {
     viewer: Cesium.Viewer;
     worldPos?: Cesium.Cartesian3;
     trackEntity?: Cesium.Entity;
-    text: string;
+    text?: string;
 }
 export default class DomTagInfo extends React.Component<ItagInfoProps> {
     private trackPos: Cesium.Cartesian3 | undefined;
