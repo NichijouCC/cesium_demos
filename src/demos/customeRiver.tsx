@@ -61,6 +61,8 @@ export class CustomeRiver extends React.Component {
                     roll: 6.282714572962707                             // default value
                 }
             })
+        }).catch(err => {
+            console.error(err);
         });
     }
     render() {

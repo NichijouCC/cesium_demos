@@ -27,6 +27,8 @@ export class Adjust3dtilesHeight extends React.Component {
             tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
 
             viewer.zoomTo(tileset);
+        }).catch(err => {
+            console.error(err);
         });
     }
 

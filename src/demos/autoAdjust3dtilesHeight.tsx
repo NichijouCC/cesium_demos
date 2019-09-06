@@ -1,7 +1,7 @@
 import Axios from "axios"
 import React from "react";
 import { CesiumMap } from "../lib/map";
-import { pickLowestPostion } from "../lib/helper";
+import { Helper } from "../lib/helper";
 
 export class AutoAdjust3dtilesHeight extends React.Component {
     static title: string = "自动调整3dtiles高度贴合地面";
@@ -20,22 +20,19 @@ export class AutoAdjust3dtilesHeight extends React.Component {
                 maximumScreenSpaceError: 0.8,
                 maximumNumberOfLoadedTiles: 100
             })) as Cesium.Cesium3DTileset;
-            viewer.zoomTo(tileset);
-
+            return { tileset: tileset, boundingSphere: boundingSphere };
+        }).then((res) => {
             //----------------调整高度
-            let checked = false;
-            tileset.allTilesLoaded.addEventListener(() => {
-                if (!checked) {
-                    checked = true;
-                    let lowestheight = pickLowestPostion(viewer, boundingSphere);
-                    let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(boundingSphere.center);
-                    let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, -lowestheight, new Cesium.Cartesian3());
-                    tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
-                    viewer.zoomTo(tileset);
-                }
+            Helper.clamp3dtilesToGround(viewer, res.tileset, res.boundingSphere, (tilest) => {
+                viewer.zoomTo(tilest);
             });
+
+        }).catch(err => {
+            console.error(err);
         });
     }
+
+
     render() {
         return (
             <CesiumMap id={AutoAdjust3dtilesHeight.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
