@@ -10,6 +10,7 @@
 - 画河流
 - 自定义几何体
 - 更新单个geometryinstance属性
+- ai巡游
 - 点扩散
 - 物体标签
 - 各种常用pick
