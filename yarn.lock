@@ -42,11 +42,6 @@
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
   integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
 
-"@types/cesium@^1.59.0":
-  version "1.59.0"
-  resolved "https://registry.yarnpkg.com/@types/cesium/-/cesium-1.59.0.tgz#a2ba3080f8df845a5a1903a33268f7a1d405200e"
-  integrity sha512-CGXl5UBUVbBTvqoOetGvvZ4YxGD1XDh4yCJIboNE2cyFz4hvK0HeHlerEWbNGvEchk+0nFiJBrYSnxazG2ye5Q==
-
 "@types/clean-css@*":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@types/clean-css/-/clean-css-4.2.1.tgz#cb0134241ec5e6ede1b5344bc829668fd9871a8d"

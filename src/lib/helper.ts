@@ -1,17 +1,40 @@
+import { Debug } from "./debug";
 
-export function PickLowestPostion(viewer: Cesium.Viewer, center: Cesium.Cartesian3, radius: number, sampleCount: number) {
-
-    let plane = new Cesium.EllipsoidTangentPlane(Cesium.Ellipsoid.WGS84, center);
-    for (let i = 0; i < sampleCount; i++) {
-        for (let j = 0; j < sampleCount; j++) {
-            // let offset = Cesium.Cartesian3.multiplyByScalar(plane.xAxis, j, new Cesium.Cartesian3());
-            // let samplePos = Cesium.Cartesian3.add(offset, plane.origin, new Cesium.Cartesian3());
-
-            // Cesium.Ellipsoid.WGS84.
-            // let res = viewer.scene.pickFromRay(new Cesium.Ray(samplePos, scen), []);
+export function pickLowestPostion(viewer: Cesium.Viewer, boundingSpere: Cesium.BoundingSphere) {
+    let plane = new Cesium.EllipsoidTangentPlane(boundingSpere.center, Cesium.Ellipsoid.WGS84);
+    let lowestheight = Number.POSITIVE_INFINITY;
+    let func = (halfCount, dir, origin) => {
+        for (let i = -1 * halfCount; i < halfCount; i += 2) {
+            let offset = Cesium.Cartesian3.multiplyByScalar(dir, i, new Cesium.Cartesian3());
+            let samplePos = Cesium.Cartesian3.add(offset, origin, new Cesium.Cartesian3());
+            let res = pickPosByNormalDir(samplePos, viewer);
+            if (res != null && res.object != null) {
+                let height = Cesium.Cartographic.fromCartesian(res.position).height;
+                if (height < lowestheight) {
+                    lowestheight = height;
+                }
+                // Debug.addSpriteMark(res.position, viewer);
+            }
         }
     }
+    //------------------xaxis yaxis 采样一遍
+    func(Math.round(boundingSpere.radius), plane.xAxis, plane.origin);
+    func(Math.round(boundingSpere.radius), plane.yAxis, plane.origin);
 
+    if (lowestheight < Number.POSITIVE_INFINITY) {
+        return lowestheight + (lowestheight > 0 ? - 0.2 : 0.2);
+    } else {
+        return null;
+    }
+}
+
+export function pickPosByNormalDir(samplePos: Cesium.Cartesian3, viewer: Cesium.Viewer) {
+    let normal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(samplePos, new Cesium.Cartesian3());
+    normal = Cesium.Cartesian3.negate(normal, normal);
+    let car = Cesium.Cartographic.fromCartesian(samplePos);
+    let origin = Cesium.Cartesian3.fromRadians(car.longitude, car.latitude, car.height + 1000);
+    let res = viewer.scene.pickFromRay(new Cesium.Ray(origin, normal), []);
+    return res;
 }
 
 

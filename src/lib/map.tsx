@@ -7,30 +7,10 @@ declare global {
     export module Cesium { }
 }
 
-// declare module "Cesium" {
-//     type TypedArray = Float64Array | Float32Array | Int32Array | Int16Array;
-//     export interface Cesium3DTileset {
-//         constructor(Cesium3DTilesetItem: {
-//             url: string;
-//             maximumScreenSpaceError: number;
-//             maximumNumberOfLoadedTiles: number;
-//             shadows?: any;
-//         })
-//     }
-//     // export interface Geometry {
-//     //     constructor(options: { attributes: GeometryAttributes; primitiveType?: PrimitiveType; indices?: Uint16Array | Uint32Array; boundingSphere?: BoundingSphere });
-//     // }
-//     export interface GeometryAttribute {
-//         constructor(options?: { componentDatatype?: ComponentDatatype; componentsPerAttribute?: number; normalize?: boolean; values?: number[] | TypedArray });
-
-//         xxxx(): void;
-//     }
-// }
-
-
 export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (viewer: Cesium.Viewer) => void }, { viewer: Cesium.Viewer }> {
 
     componentDidMount() {
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMzJmNDgwZi1iNmQ2LTQ0NWEtOWRkNi0wODkxYzYxYTg0ZDIiLCJpZCI6ODUzMiwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjIwMjY4OH0.u4d7x0IxZY06ThT4JFmxrfgBxVjQcfI6xXDLu-fsWsY';
         // CesiumIon.defaultAccessToken = Config.ION;
         let viewer: Cesium.Viewer = new Cesium.Viewer(this.props.id || "cesiumContainer", MapConfig.MAPOPTIONS);
 
@@ -77,7 +57,7 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
 
 
 const MapConfig = {
-    //ION: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGRlYTM0ZS0zYjQzLTQ0N2EtYTk4ZS0zNmIwMmU3MDRkNTIiLCJpZCI6MTkzMSwiaWF0IjoxNTMwNzU5NTg3fQ.nt8CVoWjIXTeDM9T6qPs-dM7tb7IWnNc56mzAqhcBBY',
+    ION: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGRlYTM0ZS0zYjQzLTQ0N2EtYTk4ZS0zNmIwMmU3MDRkNTIiLCJpZCI6MTkzMSwiaWF0IjoxNTMwNzU5NTg3fQ.nt8CVoWjIXTeDM9T6qPs-dM7tb7IWnNc56mzAqhcBBY',
     global: {
         enableLighting: false,
         depthTestAgainstTerrain: true,

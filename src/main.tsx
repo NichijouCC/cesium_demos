@@ -14,6 +14,7 @@ import { Dom_tagInfo } from "./demos/dom_tag";
 import 'antd/dist/antd.css';
 import { Tabs, Radio, Menu } from 'antd';
 import './main.css'
+import { AutoAdjust3dtilesHeight } from "./demos/autoAdjust3dtilesHeight";
 const { TabPane } = Tabs;
 
 export class Main extends React.Component {
@@ -25,6 +26,7 @@ export class Main extends React.Component {
         let _demos = [
             { title: Load3dtiles.title, element: < Load3dtiles /> },
             { title: Adjust3dtilesHeight.title, element: < Adjust3dtilesHeight /> },
+            { title: AutoAdjust3dtilesHeight.title, element: < AutoAdjust3dtilesHeight /> },
             { title: CameraRot.title, element: < CameraRot /> },
             { title: CustomeRiver.title, element: < CustomeRiver /> },
             { title: CustomeGeometry.title, element: < CustomeGeometry /> },
@@ -32,6 +34,7 @@ export class Main extends React.Component {
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
             { title: MutilplyPick.title, element: < MutilplyPick /> },
+
         ]
         this.setState({ demos: _demos });
     }
@@ -43,53 +46,6 @@ export class Main extends React.Component {
         let cssStyle: React.CSSProperties = { width: "100%", height: "100%", position: "fixed" };
         return (
             <div >
-                {/* <Tabs defaultActiveKey="1" tabPosition="left" style={{ height: "100%", width: "100%", position: "absolute" }}>
-                    <TabPane tab={CameraRot.title} key={CameraRot.title}>
-                        <div style={cssStyle}>
-                            <CameraRot />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={Adjust3dtilesHeight.title} key={Adjust3dtilesHeight.title}>
-                        <div style={cssStyle}>
-                            <Adjust3dtilesHeight />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={CustomeGeometry.title} key={CustomeGeometry.title}>
-                        <div style={cssStyle}>
-                            <CustomeGeometry />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={CustomeRiver.title} key={CustomeRiver.title}>
-                        <div style={cssStyle}>
-                            <CustomeRiver />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={Load3dtiles.title} key={Load3dtiles.title}>
-                        <div style={cssStyle}>
-                            <Load3dtiles />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={MutilplyPick.title} key={MutilplyPick.title}>
-                        <div style={cssStyle}>
-                            <MutilplyPick />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={UpdateInstancesAttribute.title} key={UpdateInstancesAttribute.title}>
-                        <div style={cssStyle}>
-                            <UpdateInstancesAttribute />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={Dom_animationPoint.title} key={Dom_animationPoint.title}>
-                        <div style={cssStyle}>
-                            <Dom_animationPoint />
-                        </div>
-                    </TabPane>
-                    <TabPane tab={Dom_tagInfo.title} key={Dom_tagInfo.title}>
-                        <div style={cssStyle}>
-                            <Dom_tagInfo />
-                        </div>
-                    </TabPane>
-                </Tabs> */}
                 {
                     this.state.demos ? this.state.demos[this.state.demoIndex].element : null
                 }
