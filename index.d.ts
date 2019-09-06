@@ -2093,8 +2093,8 @@ declare namespace Cesium {
         availability?: TimeIntervalCollection;
         show?: boolean;
         description?: Property;
-        position?: PositionProperty;
-        orientation?: Property;
+        position?: PositionProperty | Cartesian3;
+        orientation?: Property | Quaternion;
         viewFrom?: Property;
         parent?: Entity;
         billboard?: BillboardGraphics | BillboardGraphicsOption;
@@ -2104,7 +2104,7 @@ declare namespace Cesium {
         ellipse?: EllipseGraphics;
         ellipsoid?: EllipsoidGraphics;
         label?: LabelGraphics;
-        model?: ModelGraphics;
+        model?: ModelGraphics | IModelGraphicsOption;
         path?: PathGraphics;
         plane?: any;
         point?: PointGraphics;
@@ -2299,6 +2299,26 @@ declare namespace Cesium {
         getType(time: JulianDate): string;
     }
 
+    interface IModelGraphicsOption {
+        uri?: Property | string;
+        show?: Property | boolean;
+        scale?: Property | number;
+        minimumPixelSize?: Property | number;
+        maximumScale?: Property | number;
+        incrementallyLoadTextures?: Property | boolean;
+        runAnimations?: Property | boolean;
+        clampAnimations?: Property | boolean;
+        nodeTransformations?: Property;
+        shadows?: Property;
+        heightReference?: Property;
+        distanceDisplayCondition?: Property;
+        silhouetteColor?: Property;
+        silhouetteSize?: Property | number;
+        color?: Property;
+        colorBlendMode?: Property;
+        colorBlendAmount?: Property | number;
+        clippingPlanes?: Property;
+    }
     class ModelGraphics {
         clampAnimations: Property | boolean;
         clippingPlanes: Property;
@@ -2320,26 +2340,7 @@ declare namespace Cesium {
         silhouetteColor: Property;
         silhouetteSize: Property | number;
         uri: Property | string;
-        constructor(options?: {
-            uri?: Property | string;
-            show?: Property | boolean;
-            scale?: Property | number;
-            minimumPixelSize?: Property | number;
-            maximumScale?: Property | number;
-            incrementallyLoadTextures?: Property | boolean;
-            runAnimations?: Property | boolean;
-            clampAnimations?: Property | boolean;
-            nodeTransformations?: Property;
-            shadows?: Property;
-            heightReference?: Property;
-            distanceDisplayCondition?: Property;
-            silhouetteColor?: Property;
-            silhouetteSize?: Property | number;
-            color?: Property;
-            colorBlendMode?: Property;
-            colorBlendAmount?: Property | number;
-            clippingPlanes?: Property;
-        });
+        constructor(options?: IModelGraphicsOption);
         clone(result?: ModelGraphics): ModelGraphics;
         merge(source: ModelGraphics): ModelGraphics;
     }
@@ -4558,7 +4559,7 @@ declare namespace Cesium {
         zoomTo(target: Cesium3DTileset | Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>, offset?: HeadingPitchRange): Promise<boolean>;
         flyTo(target: Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>,
             options?: { duration?: number; maximumHeight?: number; offset?: HeadingPitchRange }): Promise<boolean>;
-        frameUpdate?: (deltaTime: number) => void;
+        frameUpdate: Event;
     }
 
     namespace Viewer {

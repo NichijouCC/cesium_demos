@@ -7,9 +7,9 @@ export class CameraRot extends React.Component {
     speed: number = 0.001;
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        viewer.frameUpdate = (deltaTime) => {
+        viewer.frameUpdate.addEventListener((deltaTime) => {
             viewer.camera.rotate(Cesium.Cartesian3.UNIT_Z, deltaTime * this.speed);
-        }
+        });
     }
     render() {
         return (

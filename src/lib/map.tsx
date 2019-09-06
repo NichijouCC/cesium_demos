@@ -21,16 +21,13 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
         viewer.scene.highDynamicRange = true;
 
         //------------
-
+        viewer.frameUpdate = new Cesium.Event();
         let lasTime;
         viewer.scene.preUpdate.addEventListener((time) => {
             let dateNow = Date.now();
             let deltaTime = lasTime != null ? dateNow - lasTime : 0;
             lasTime = dateNow;
-
-            if (viewer.frameUpdate != null) {
-                viewer.frameUpdate(deltaTime);
-            }
+            viewer.frameUpdate.raiseEvent(deltaTime);
         });
 
         if (this.props.onViewerLoaded != null) {

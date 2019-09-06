@@ -15,6 +15,7 @@ import 'antd/dist/antd.css';
 import { Tabs, Radio, Menu } from 'antd';
 import './main.css'
 import { AutoAdjust3dtilesHeight } from "./demos/autoAdjust3dtilesHeight";
+import { AIPatrol } from "./demos/aiPatrol";
 const { TabPane } = Tabs;
 
 export class Main extends React.Component {
@@ -31,6 +32,7 @@ export class Main extends React.Component {
             { title: CustomeRiver.title, element: < CustomeRiver /> },
             { title: CustomeGeometry.title, element: < CustomeGeometry /> },
             { title: UpdateInstancesAttribute.title, element: < UpdateInstancesAttribute /> },
+            { title: AIPatrol.title, element: < AIPatrol /> },
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
             { title: MutilplyPick.title, element: < MutilplyPick /> },
@@ -39,9 +41,6 @@ export class Main extends React.Component {
         this.setState({ demos: _demos });
     }
 
-    private handleClick() {
-
-    }
     render() {
         let cssStyle: React.CSSProperties = { width: "100%", height: "100%", position: "fixed" };
         return (

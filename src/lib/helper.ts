@@ -84,4 +84,47 @@ export class Helper {
         }
     }
 
+    static unitxyzToRotation(xAxis: Cesium.Cartesian3, yAxis: Cesium.Cartesian3, zAxis: Cesium.Cartesian3, out: Cesium.Quaternion) {
+        var m11 = xAxis.x, m12 = yAxis.x, m13 = zAxis.x;
+        var m21 = xAxis.y, m22 = yAxis.y, m23 = zAxis.y;
+        var m31 = xAxis.z, m32 = yAxis.z, m33 = zAxis.z;
+        var trace = m11 + m22 + m33;
+        var s;
+        if (trace > 0) {
+
+            s = 0.5 / Math.sqrt(trace + 1.0);
+
+            out.w = 0.25 / s;
+            out.x = (m32 - m23) * s;
+            out.y = (m13 - m31) * s;
+            out.z = (m21 - m12) * s;
+        } else if (m11 > m22 && m11 > m33) {
+
+            s = 2.0 * Math.sqrt(1.0 + m11 - m22 - m33);
+
+            out.w = (m32 - m23) / s;
+            out.x = 0.25 * s;
+            out.y = (m12 + m21) / s;
+            out.z = (m13 + m31) / s;
+        } else if (m22 > m33) {
+
+            s = 2.0 * Math.sqrt(1.0 + m22 - m11 - m33);
+
+            out.w = (m13 - m31) / s;
+            out.x = (m12 + m21) / s;
+            out.y = 0.25 * s;
+            out.z = (m23 + m32) / s;
+        } else {
+
+            s = 2.0 * Math.sqrt(1.0 + m33 - m11 - m22);
+
+            out.w = (m21 - m12) / s;
+            out.x = (m13 + m31) / s;
+            out.y = (m23 + m32) / s;
+            out.z = 0.25 * s;
+        }
+        return out;
+    }
+
+
 }
