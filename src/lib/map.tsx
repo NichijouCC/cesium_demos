@@ -15,9 +15,9 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
         let viewer: Cesium.Viewer = new Cesium.Viewer(this.props.id || "cesiumContainer", MapConfig.MAPOPTIONS);
 
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息
-        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
-        viewer.scene.globe.enableLighting = MapConfig.global.enableLighting;
-        viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//移除双击选中
+        viewer.scene.globe.enableLighting = MapConfig.global.enableLighting;//光照开关
+        viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;//depth
         viewer.scene.highDynamicRange = true;
 
         //------------

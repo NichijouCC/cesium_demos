@@ -12,6 +12,7 @@
 export = Cesium;
 export as namespace Cesium;
 type TypedArray = Float64Array | Float32Array | Int32Array | Int16Array;
+
 declare namespace Cesium {
     type RenderState = any;
 
@@ -2107,12 +2108,13 @@ declare namespace Cesium {
         model?: ModelGraphics | IModelGraphicsOption;
         path?: PathGraphics;
         plane?: any;
-        point?: PointGraphics;
-        polygon?: PolygonGraphics;
-        polyline?: PolylineGraphics;
+        point?: PointGraphics | IPointGraphics;
+        polygon?: PolygonGraphics | IPolygonGraphics;
+        polyline?: PolylineGraphics | IPolylineGraphics;
         polylineVolume?: PolylineVolumeGraphics;
         rectangle?: RectangleGraphics;
-        wall?: WallGraphics
+        wall?: WallGraphics | IWallGraphics;
+
     }
 
     class EntityCluster {
@@ -2234,7 +2236,7 @@ declare namespace Cesium {
     class ImageMaterialProperty extends MaterialProperty {
         image: Property;
         repeat: Property;
-        constructor(options?: { image?: Property; repeat?: Property });
+        constructor(options?: { image?: string; repeat?: Cartesian2, color?: Color });
     }
 
     class KmlDataSource extends DataSource {
@@ -2375,6 +2377,21 @@ declare namespace Cesium {
         constructor(scene: Scene, entityCollection: EntityCollection);
     }
 
+    interface IPointGraphics {
+        color?: Color;
+        pixelSize?: number;
+        outlineColor?: Color;
+        outlineWidth?: number;
+        show?: boolean;
+        scaleByDistance?: Property;
+        translucencyByDistance?: Property;
+        heightReference?: HeightReference;
+        distanceDisplayCondition?: Property;
+        disableDepthTestDistance?: Property;
+        zIndex?: number
+
+    }
+
     class PointGraphics {
         color: Property;
         readonly definitionChanged: Event;
@@ -2387,18 +2404,7 @@ declare namespace Cesium {
         scaleByDistance: Property;
         show: Property;
         translucencyByDistance: Property;
-        constructor(options?: {
-            color?: Color;
-            pixelSize?: number;
-            outlineColor?: Color;
-            outlineWidth?: number;
-            show?: boolean;
-            scaleByDistance?: Property;
-            translucencyByDistance?: Property;
-            heightReference?: HeightReference;
-            distanceDisplayCondition?: Property;
-            disableDepthTestDistance?: Property
-        });
+        constructor(options?: IPointGraphics);
         clone(result?: PointGraphics): PointGraphics;
         merge(source: PointGraphics): PointGraphics;
     }
@@ -2411,6 +2417,20 @@ declare namespace Cesium {
         constructor(entity: Entity, scene: Scene);
     }
 
+    interface IPolygonGraphics {
+        hierarchy?: Cartesian3[];
+        height?: number;
+        extrudedHeight?: Property;
+        show?: Property;
+        fill?: boolean;
+        material?: MaterialProperty | Color;
+        outline?: boolean;
+        outlineColor?: Color;
+        outlineWidth?: number;
+        stRotation?: Property;
+        granularity?: Property;
+        perPositionHeight?: boolean;
+    }
     class PolygonGraphics {
         definitionChanged: Event;
         show: Property;
@@ -2426,20 +2446,7 @@ declare namespace Cesium {
         outlineColor: Color;
         outlineWidth: Property;
         perPositionHeight: Property;
-        constructor(options?: {
-            hierarchy?: Property;
-            height?: number;
-            extrudedHeight?: Property;
-            show?: Property;
-            fill?: boolean;
-            material?: MaterialProperty | Color;
-            outline?: boolean;
-            outlineColor?: Color;
-            outlineWidth?: number;
-            stRotation?: Property;
-            granularity?: Property;
-            perPositionHeight?: Property
-        });
+        constructor(options?: IPolygonGraphics);
         clone(result?: PolygonGraphics): PolygonGraphics;
         merge(source: PolygonGraphics): PolygonGraphics;
     }
@@ -2468,7 +2475,15 @@ declare namespace Cesium {
         readonly distanceDisplayConditionProperty: Property;
         constructor(entity: Entity, scene: Scene);
     }
-
+    interface IPolylineGraphics {
+        positions?: Cartesian3[];
+        followSurface?: Property;
+        width?: number;
+        show?: Property;
+        material?: Color | string;
+        granularity?: Property;
+        zIndex?: number
+    }
     class PolylineGraphics {
         definitionChanged: Event;
         show: Property;
@@ -2477,14 +2492,7 @@ declare namespace Cesium {
         width: number;
         followSurface: Property;
         granularity: Property;
-        constructor(options?: {
-            positions?: Cartesian3[];
-            followSurface?: Property;
-            width?: number;
-            show?: Property;
-            material?: MaterialProperty;
-            granularity?: Property
-        });
+        constructor(options?: IPolylineGraphics);
         clone(result?: PolylineGraphics): PolylineGraphics;
         merge(source: PolylineGraphics): PolylineGraphics;
     }
@@ -2663,6 +2671,18 @@ declare namespace Cesium {
         constructor(entity: Entity, scene: Scene);
     }
 
+    interface IWallGraphics {
+        positions?: Property | Cartesian3[];
+        maximumHeights?: Property;
+        minimumHeights?: Property;
+        show?: Property;
+        fill?: Property;
+        material?: MaterialProperty | Material | Color | string;
+        outline?: Property;
+        outlineColor?: Property;
+        outlineWidth?: Property;
+        granularity?: Property
+    }
     class WallGraphics {
         readonly definitionChanged: Event;
         show: Property;
@@ -2675,18 +2695,7 @@ declare namespace Cesium {
         outline: Property;
         outlineColor: Property;
         outlineWidth: Property;
-        constructor(options?: {
-            positions?: Property;
-            maximumHeights?: Property;
-            minimumHeights?: Property;
-            show?: Property;
-            fill?: Property;
-            material?: MaterialProperty;
-            outline?: Property;
-            outlineColor?: Property;
-            outlineWidth?: Property;
-            granularity?: Property
-        });
+        constructor(options?: IWallGraphics);
         clone(result?: WallGraphics): WallGraphics;
         merge(source: WallGraphics): WallGraphics;
     }
@@ -3364,7 +3373,7 @@ declare namespace Cesium {
         static PolylineArrowType: string;
         static PolylineGlowType: string;
         static PolylineOutlineType: string;
-        constructor(options?: { strict?: boolean; translucent?: boolean; fabric: any });
+        constructor(options?: { strict?: boolean; translucent?: boolean; fabric: { type: string, uniforms?: any, source?: any } });
         isTranslucent(): boolean;
         isDestroyed(): boolean;
         destroy(): void;

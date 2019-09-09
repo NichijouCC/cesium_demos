@@ -16,6 +16,8 @@ import { Tabs, Radio, Menu } from 'antd';
 import './main.css'
 import { AutoAdjust3dtilesHeight } from "./demos/autoAdjust3dtilesHeight";
 import { AIPatrol } from "./demos/aiPatrol";
+import { CustomeMaterial } from "./demos/customeMaterial";
+import { PointLineFace } from "./demos/pointLineFace";
 const { TabPane } = Tabs;
 
 export class Main extends React.Component {
@@ -25,6 +27,7 @@ export class Main extends React.Component {
     }
     componentDidMount() {
         let _demos = [
+            { title: PointLineFace.title, element: < PointLineFace /> },
             { title: Load3dtiles.title, element: < Load3dtiles /> },
             { title: Adjust3dtilesHeight.title, element: < Adjust3dtilesHeight /> },
             { title: AutoAdjust3dtilesHeight.title, element: < AutoAdjust3dtilesHeight /> },
@@ -35,7 +38,9 @@ export class Main extends React.Component {
             { title: AIPatrol.title, element: < AIPatrol /> },
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
+            { title: CustomeMaterial.title, element: < CustomeMaterial /> },
             { title: MutilplyPick.title, element: < MutilplyPick /> },
+
 
         ]
         this.setState({ demos: _demos });
