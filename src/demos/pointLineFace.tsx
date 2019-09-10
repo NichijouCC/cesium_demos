@@ -1,12 +1,11 @@
 import React from "react";
 import { CesiumMap } from "../lib/map";
-import { UpdateInstancesAttribute } from "./updateInstancesAttribute";
 
 export class PointLineFace extends React.Component {
     static title = "点线面";
     render() {
         return (
-            <CesiumMap id={UpdateInstancesAttribute.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
+            <CesiumMap id={PointLineFace.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
             } />
         )
     }
