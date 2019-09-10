@@ -6,7 +6,7 @@ export class Adjust3dtilesHeight extends React.Component {
     static title: string = "调整3dtiles高度";
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
+        let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json";
         Axios.get(modelPath).then((data) => {
             let res = data.data as any;
             var modelSphere = res.root.boundingVolume.sphere;

@@ -11,13 +11,11 @@ export class CustomeMaterial_2 extends React.Component {
     handleViewerLoaded(viewer: Cesium.Viewer) {
 
         let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
-            121.444409, 31.247417, 500.0,
-            121.533521, 31.235685, 500.0,
-            121.563273, 31.190347, 500.0,
-            121.546744, 31.194054, 500.0,
-            121.516705, 31.191459, 500.0,
-            121.502188, 31.203074, 500.0,
-            121.444409, 31.247417, 500.0,
+            121.00, 31.00, 100.0,
+            121.01, 31.003, 100.0,
+            121.013, 31.01, 100.0,
+            121.0, 31.013, 100.0,
+            121.00, 31.00, 100.0,
 
         ])
         //-----内建的wall模型,按照position来分配uv的规则观察可知:点与点之间均分uv,和点的位置没有关系
@@ -44,7 +42,7 @@ export class CustomeMaterial_2 extends React.Component {
                     color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
                     image: "./static/images/arrow.png",
                     time: 0,
-                    repeat: 50
+                    repeat: 30
                 },
                 source: source
             }
