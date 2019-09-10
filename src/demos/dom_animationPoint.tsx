@@ -7,12 +7,24 @@ export class Dom_animationPoint extends React.Component {
     state = {
         viewer: null
     }
+    private pointArr: Cesium.Cartesian3[];
     render() {
         return (
             <React.Fragment>
-                <CesiumMap id={Dom_animationPoint.title} onViewerLoaded={(viewer) => { this.setState({ viewer: viewer }) }} />
+                <CesiumMap id={Dom_animationPoint.title} onViewerLoaded={(viewer) => {
+
+                    this.setState({ viewer: viewer });
+                    let pointArr = Cesium.Cartesian3.fromDegreesArray([121, 31, 121.2, 31.1, 121.5, 31.2]);
+                    viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
+                    this.pointArr = pointArr;
+                }} />
                 {
-                    this.state.viewer ? <DomAnimationPoint viewer={this.state.viewer} worldPos={Cesium.Cartesian3.fromDegrees(121, 31, 0)} /> : null
+                    this.state.viewer ?
+                        this.pointArr.map((item, index) => {
+                            return (
+                                <DomAnimationPoint viewer={this.state.viewer} worldPos={item} />
+                            )
+                        }) : null
                 }
             </React.Fragment>
 

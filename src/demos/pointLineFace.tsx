@@ -2,7 +2,7 @@ import React from "react";
 import { CesiumMap } from "../lib/map";
 
 export class PointLineFace extends React.Component {
-    static title = "点线面";
+    static title = "点线面与鼠标交互";
     render() {
         return (
             <CesiumMap id={PointLineFace.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
@@ -10,8 +10,6 @@ export class PointLineFace extends React.Component {
         )
     }
     handleViewerLoaded(viewer: Cesium.Viewer) {
-
-
         let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
             121.444409, 31.247417, 200.0,
             121.533521, 31.235685, 200.0,
@@ -40,7 +38,6 @@ export class PointLineFace extends React.Component {
                 perPositionHeight: true
             }
         });
-
         pointArr.push(pointArr[0]);
         //-----------------draw line
         viewer.entities.add({
@@ -51,8 +48,6 @@ export class PointLineFace extends React.Component {
             }
         });
         viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
-
-
         this.addMouseInteraction(viewer);
     }
 

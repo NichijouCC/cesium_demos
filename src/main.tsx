@@ -16,8 +16,9 @@ import { Tabs, Radio, Menu } from 'antd';
 import './main.css'
 import { AutoAdjust3dtilesHeight } from "./demos/autoAdjust3dtilesHeight";
 import { AIPatrol } from "./demos/aiPatrol";
-import { CustomeMaterial } from "./demos/customeMaterial";
+import { CustomeMaterial_1 } from "./demos/customeMaterial_1";
 import { PointLineFace } from "./demos/pointLineFace";
+import { CustomeMaterial_2 } from "./demos/customeMaterial_2";
 const { TabPane } = Tabs;
 
 export class Main extends React.Component {
@@ -32,16 +33,15 @@ export class Main extends React.Component {
             { title: Adjust3dtilesHeight.title, element: < Adjust3dtilesHeight /> },
             { title: AutoAdjust3dtilesHeight.title, element: < AutoAdjust3dtilesHeight /> },
             { title: CameraRot.title, element: < CameraRot /> },
-            { title: CustomeRiver.title, element: < CustomeRiver /> },
-            { title: CustomeGeometry.title, element: < CustomeGeometry /> },
-            { title: UpdateInstancesAttribute.title, element: < UpdateInstancesAttribute /> },
             { title: AIPatrol.title, element: < AIPatrol /> },
+            { title: CustomeRiver.title, element: < CustomeRiver /> },
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
-            { title: CustomeMaterial.title, element: < CustomeMaterial /> },
+            { title: UpdateInstancesAttribute.title, element: < UpdateInstancesAttribute /> },
+            { title: CustomeGeometry.title, element: < CustomeGeometry /> },
+            { title: CustomeMaterial_1.title, element: < CustomeMaterial_1 /> },
+            { title: CustomeMaterial_2.title, element: < CustomeMaterial_2 /> },
             { title: MutilplyPick.title, element: < MutilplyPick /> },
-
-
         ]
         this.setState({ demos: _demos });
     }

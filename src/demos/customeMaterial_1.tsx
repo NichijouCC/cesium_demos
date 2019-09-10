@@ -1,11 +1,11 @@
 import React from "react";
 import { CesiumMap } from "../lib/map";
 
-export class CustomeMaterial extends React.Component {
-    static title = "自定义材质_流动围栏"
+export class CustomeMaterial_1 extends React.Component {
+    static title = "自定义材质_围栏一号"
     render() {
         return (
-            <CesiumMap id={CustomeMaterial.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={CustomeMaterial_1.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
         )
     }
     handleViewerLoaded(viewer: Cesium.Viewer) {
@@ -35,13 +35,13 @@ export class CustomeMaterial extends React.Component {
 
 
         let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
-            121.444409, 31.247417, 200.0,
-            121.533521, 31.235685, 200.0,
-            121.563273, 31.190347, 200.0,
-            121.546744, 31.194054, 200.0,
-            121.516705, 31.191459, 200.0,
-            121.502188, 31.203074, 200.0,
-            121.444409, 31.247417, 200.0,
+            121.444409, 31.247417, 800.0,
+            121.533521, 31.235685, 800.0,
+            121.563273, 31.190347, 800.0,
+            121.546744, 31.194054, 800.0,
+            121.516705, 31.191459, 800.0,
+            121.502188, 31.203074, 800.0,
+            121.444409, 31.247417, 800.0,
 
         ])
         //-----内建的wall模型,按照position来分配uv的规则观察可知:点与点之间均分uv,和点的位置没有关系
