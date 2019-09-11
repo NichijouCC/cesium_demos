@@ -19,6 +19,7 @@ import { AIPatrol } from "./demos/aiPatrol";
 import { CustomeMaterial_1 } from "./demos/customeMaterial_1";
 import { PointLineFace } from "./demos/pointLineFace";
 import { CustomeMaterial_2 } from "./demos/customeMaterial_2";
+import { Classification } from "./demos/classification";
 const { TabPane } = Tabs;
 
 export class Main extends React.Component {
@@ -35,6 +36,7 @@ export class Main extends React.Component {
             { title: CameraRot.title, element: < CameraRot /> },
             { title: AIPatrol.title, element: < AIPatrol /> },
             { title: CustomeRiver.title, element: < CustomeRiver /> },
+            { title: Classification.title, element: < Classification /> },
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
             { title: UpdateInstancesAttribute.title, element: < UpdateInstancesAttribute /> },

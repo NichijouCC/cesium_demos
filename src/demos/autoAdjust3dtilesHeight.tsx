@@ -8,30 +8,19 @@ export class AutoAdjust3dtilesHeight extends React.Component {
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
-        Axios.get(modelPath).then((data) => {
-            let res = data.data as any;
-            var modelSphere = res.root.boundingVolume.sphere;
-            const boundingSphere = new Cesium.BoundingSphere(new Cesium.Cartesian3(modelSphere[0], modelSphere[1], modelSphere[2]), modelSphere[3]);//用zyx及R来调用
-            return boundingSphere;
+        let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+            url: modelPath,
+            maximumScreenSpaceError: 0.8,
+            maximumNumberOfLoadedTiles: 100,
 
-        }).then((boundingSphere) => {
-            let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-                url: modelPath,
-                maximumScreenSpaceError: 0.8,
-                maximumNumberOfLoadedTiles: 100
-            })) as Cesium.Cesium3DTileset;
-            return { tileset: tileset, boundingSphere: boundingSphere };
-        }).then((res) => {
+        })) as Cesium.Cesium3DTileset;
+        tileset.readyPromise.then((tileset) => {
             //----------------调整高度
-            Helper.clamp3dtilesToGround(viewer, res.tileset, res.boundingSphere, (tilest) => {
-                viewer.zoomTo(tilest);
+            Helper.clamp3dtilesToGround(viewer, tileset, (tilest) => {
+                viewer.scene.camera.flyToBoundingSphere(tilest.boundingSphere);
             });
-
-        }).catch(err => {
-            console.error(err);
         });
     }
-
 
     render() {
         return (

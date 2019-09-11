@@ -1,14 +1,14 @@
 import { Debug } from "./debug";
 
 export class Helper {
-    static clamp3dtilesToGround(viewer: Cesium.Viewer, tileset: Cesium.Cesium3DTileset, boundingSphere: Cesium.BoundingSphere, callBack?: (tilest: Cesium.Cesium3DTileset) => void) {
-        viewer.scene.camera.lookAt(boundingSphere.center, new Cesium.Cartesian3(0, 0, boundingSphere.radius));
+    static clamp3dtilesToGround(viewer: Cesium.Viewer, tileset: Cesium.Cesium3DTileset, callBack?: (tilest: Cesium.Cesium3DTileset) => void) {
+        viewer.scene.camera.viewBoundingSphere(tileset.boundingSphere);
         let checked = false;
         tileset.allTilesLoaded.addEventListener(() => {
             if (!checked) {
                 checked = true;
-                let lowestheight = this.pickLowestPostion(viewer, boundingSphere);
-                let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(boundingSphere.center);
+                let lowestheight = this.pickLowestPostion(viewer, tileset.boundingSphere);
+                let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
                 let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, -lowestheight, new Cesium.Cartesian3());
                 tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
                 if (callBack != null) {
