@@ -20,6 +20,19 @@ declare namespace Cesium {
         getURL(resource: string): string;
     }
 
+    class IonResource {
+        static fromAssetId(id: number): string
+    }
+    class ClassificationPrimitive {
+        constructor(options: { classificationType?: ClassificationType, geometryInstances: GeometryInstance[] | GeometryInstance, appearance?: Appearance, show?: boolean });
+        classificationType: ClassificationType;
+        getGeometryInstanceAttributes(id: string);
+    }
+    enum ClassificationType {
+        BOTH,
+        CESIUM_3D_TILE,
+        TERRAIN
+    }
     class ArcGisImageServerTerrainProvider extends TerrainProvider {
         constructor(options: { url: string; token?: string; proxy?: any; tilingScheme?: TilingScheme; ellipsoid?: Ellipsoid; credit?: Credit | string });
     }
@@ -97,7 +110,7 @@ declare namespace Cesium {
 
     class BoxGeometry extends Packable {
         constructor(options: { minimumCorner: Cartesian3; maximumCorner: Cartesian3; vertexFormat?: VertexFormat });
-        static fromDimensions(): void;
+        static fromDimensions(options: { dimensions: Cartesian3, vertexFormat?: VertexFormat }): BoxGeometry;
         static unpack(array: number[], startingIndex?: number, result?: BoxGeometry): BoxGeometry;
         static createGeometry(boxGeometry: BoxGeometry): Geometry;
     }
@@ -2418,9 +2431,9 @@ declare namespace Cesium {
     }
 
     interface IPolygonGraphics {
-        hierarchy?: Cartesian3[];
+        hierarchy?: Cartesian3[] | PolygonHierarchy;
         height?: number;
-        extrudedHeight?: Property;
+        extrudedHeight?: Property | number;
         show?: Property;
         fill?: boolean;
         material?: MaterialProperty | Color;
@@ -2430,11 +2443,12 @@ declare namespace Cesium {
         stRotation?: Property;
         granularity?: Property;
         perPositionHeight?: boolean;
+        classificationType?: ClassificationType;
     }
     class PolygonGraphics {
         definitionChanged: Event;
         show: Property;
-        material: MaterialProperty | Color;
+        material: Material | MaterialProperty | Color;
         positions: Property;
         hierarchy: Property;
         height: Property;
@@ -2933,7 +2947,7 @@ declare namespace Cesium {
         rotateUp(angle?: number): void;
         setView(options: {
             destination?: Cartesian3 | Rectangle;
-            orientation?: { direction: Cartesian3, up: Cartesian3 } | { heading: number, pitch: number, roll: number };
+            orientation?: { direction: Cartesian3, up: Cartesian3 } | { heading: number, pitch?: number, roll?: number };
             endTransform?: Matrix4,
             convert?: boolean,
         }): void;
@@ -3207,12 +3221,18 @@ declare namespace Cesium {
     class Cesium3DTileset {
         constructor(Cesium3DTilesetItem: {
             url: string;
-            maximumScreenSpaceError: number;
-            maximumNumberOfLoadedTiles: number;
+            maximumScreenSpaceError?: number;
+            maximumNumberOfLoadedTiles?: number;
+            cullWithChildrenBounds?: boolean;
+            cullRequestsWhileMoving?: boolean;
+            preloadWhenHidden?: boolean;
+            preloadFlightDestinations?: boolean;
+            dynamicScreenSpaceError?: boolean
         })
         modelMatrix: Matrix4;
         readyPromise: Promise<Cesium3DTileset>;
         allTilesLoaded: Event;
+        boundingSphere: BoundingSphere;
     }
 
     class ImageryLayer {
@@ -3878,7 +3898,7 @@ declare namespace Cesium {
         pick(windowPosition: Cartesian2, width?: number, height?: number): any;
         pickPosition(windowPosition: Cartesian2, result?: Cartesian3): Cartesian3;
         requestRender(): void;
-        pickFromRay(ray: Ray, obk: []): { object: any, position: Cartesian3 };
+        pickFromRay(ray: Ray, obk: any[]): { object: any, position: Cartesian3 };
     }
 
     class ScreenSpaceCameraController {

@@ -74,12 +74,13 @@ module.exports = {
         new CopywebpackPlugin([{ from: 'static', to: 'static' }]),
 
         // Copy Cesium Assets, Widgets, and Workers to a static directory
-        new CopywebpackPlugin([{ from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' }]),
-        new CopywebpackPlugin([{ from: path.join(cesiumSource, 'Assets'), to: 'Assets' }]),
-        new CopywebpackPlugin([{ from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }]),
+        new CopywebpackPlugin([{ from: path.join(cesiumBuild, 'Workers'), to: 'Workers' }]),
+        new CopywebpackPlugin([{ from: path.join(cesiumBuild, 'Assets'), to: 'Assets' }]),
+        new CopywebpackPlugin([{ from: path.join(cesiumBuild, 'Widgets'), to: 'Widgets' }]),
+        new CopywebpackPlugin([{ from: path.join(cesiumBuild, 'ThirdParty'), to: 'ThirdParty' }]),
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
-            CESIUM_BASE_URL: JSON.stringify('')
+            'CESIUM_BASE_URL': JSON.stringify('')
         })
     ],
     // When importing a module whose path matches one of the following, just
