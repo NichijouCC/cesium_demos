@@ -1,24 +1,30 @@
 .content div{
-    background:#ffffff;
+    background:red;
     width: 4px;
     height: 4px;
-    border: 6px #009FD9 solid;
+    /* border: 4px #009FD9 solid; */
     border-radius:50%;
     position: relative;
 }
 
 .content p, .content span{
+    display: inline-block;
     position: absolute;
     width: 4px;
     height: 4px;
     border-radius:50%;
     animation: myfirst 1.5s  infinite;
-    box-shadow: 0px 0px 1px #009FD9; 
+    box-shadow: 0px 0px 2px red; 
     margin: 0px;
 }
 
 .content  span{
-    animation-delay: 0.8s;
+    width: 2px;
+    height: 2px;
+    left: 50%;
+    top: 50%;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 .content .one{position: absolute;left:600px; top:100px;}
