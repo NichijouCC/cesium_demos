@@ -4,7 +4,7 @@ import { CesiumMap } from "../lib/map";
 import { Helper } from "../lib/helper";
 
 export class AIPatrol extends React.Component {
-    static title = "ai巡游";
+    static title = "自定义路线巡游";
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelUrl = "./static/models/ship/scene.gltf";
