@@ -1,7 +1,10 @@
 # ceisum 使用demo、方法或components总结
 
 使用cesium+react+ts编写
-
+## 启动
+```
+    npm run dev
+```
 ## 样例类容
 - 点线面与鼠标交互
 - 加载3dtiles
@@ -9,7 +12,7 @@
 - 自动调整3dtiles贴合地面
 - 地球自旋转
 - 画河流
-- ai巡游
+- 自定义路线巡游
 - 点扩散
 - 物体标签
 - 更新单个geometryinstance属性
