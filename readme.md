@@ -2,12 +2,11 @@
 
 使用cesium+react+ts编写
 
-
 ## 启动
+``` 
+npm start
 ```
-    npm run dev
-    
-```
+
 ## 样例类容
 - 点线面与鼠标交互
 - 加载3dtiles
