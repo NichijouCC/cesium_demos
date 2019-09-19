@@ -37,6 +37,11 @@ declare namespace Cesium {
         constructor(options: { url: string; token?: string; proxy?: any; tilingScheme?: TilingScheme; ellipsoid?: Ellipsoid; credit?: Credit | string });
     }
 
+    class ModelInstanceCollection {
+        constructor(options: { url: string, instances: { modelMatrix: Matrix4 }[], shadows?: ShadowMode })
+        readyPromise: Promise<ModelInstanceCollection>;
+        _boundingSphere: BoundingSphere;
+    }
     class AssociativeArray {
         length: number;
         values: any[];
@@ -1739,7 +1744,15 @@ declare namespace Cesium {
     class BoxGeometryUpdater extends GeometryUpdater {
         constructor(entity: Entity, scene: Scene);
     }
-
+    interface IBoxGraphics {
+        dimensions?: Cartesian3;
+        show?: boolean;
+        fill?: Property;
+        material?: MaterialProperty;
+        outline?: boolean;
+        outlineColor?: Color;
+        outlineWidth?: number
+    }
     class BoxGraphics {
         definitionChanged: Event;
         show: Property;
@@ -1747,17 +1760,9 @@ declare namespace Cesium {
         material: MaterialProperty;
         fill: Property;
         outline: Property;
-        outlineColor: Property;
+        outlineColor: Property | Color;
         outlineWidth: Property;
-        constructor(options?: {
-            dimensions?: Property;
-            show?: Property;
-            fill?: Property;
-            material?: MaterialProperty;
-            outline?: Property;
-            outlineColor?: Property;
-            outlineWidth?: Property
-        });
+        constructor(options?: IBoxGraphics);
         clone(result?: BoxGraphics): BoxGraphics;
         merge(source: BoxGraphics): BoxGraphics;
     }
@@ -2099,6 +2104,8 @@ declare namespace Cesium {
         isAvailable(time: JulianDate): boolean;
         merge(source: Entity): Entity;
         removeProperty(propertyName: string): void;
+        onHover?: Event;
+        onEndHover?: Event;
     }
 
     interface IEntityOption {
@@ -2112,7 +2119,7 @@ declare namespace Cesium {
         viewFrom?: Property;
         parent?: Entity;
         billboard?: BillboardGraphics | BillboardGraphicsOption;
-        box?: BoxGraphics;
+        box?: BoxGraphics | IBoxGraphics;
         corridor?: CorridorGraphics;
         cylinder?: CylinderGraphics;
         ellipse?: EllipseGraphics;
@@ -2248,8 +2255,9 @@ declare namespace Cesium {
 
     class ImageMaterialProperty extends MaterialProperty {
         image: Property;
+        color: Property | Color;
         repeat: Property;
-        constructor(options?: { image?: string; repeat?: Cartesian2, color?: Color });
+        constructor(options?: { image?: string; repeat?: Cartesian2, color?: Color, transparent?: boolean });
     }
 
     class KmlDataSource extends DataSource {
@@ -2436,7 +2444,7 @@ declare namespace Cesium {
         extrudedHeight?: Property | number;
         show?: Property;
         fill?: boolean;
-        material?: MaterialProperty | Color;
+        material?: MaterialProperty | Color | string;
         outline?: boolean;
         outlineColor?: Color;
         outlineWidth?: number;
@@ -2448,7 +2456,7 @@ declare namespace Cesium {
     class PolygonGraphics {
         definitionChanged: Event;
         show: Property;
-        material: Material | MaterialProperty | Color;
+        material: MaterialProperty;
         positions: Property;
         hierarchy: Property;
         height: Property;
@@ -3233,6 +3241,7 @@ declare namespace Cesium {
         readyPromise: Promise<Cesium3DTileset>;
         allTilesLoaded: Event;
         boundingSphere: BoundingSphere;
+        show: boolean;
     }
 
     class ImageryLayer {
@@ -3899,6 +3908,7 @@ declare namespace Cesium {
         pickPosition(windowPosition: Cartesian2, result?: Cartesian3): Cartesian3;
         requestRender(): void;
         pickFromRay(ray: Ray, obk: any[]): { object: any, position: Cartesian3 };
+        render(): void;
     }
 
     class ScreenSpaceCameraController {

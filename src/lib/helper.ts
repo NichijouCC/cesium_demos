@@ -126,5 +126,12 @@ export class Helper {
         return out;
     }
 
+    static computeMatToWorld(pos: Cesium.Cartesian3, headingPitchRoll?: Cesium.HeadingPitchRoll, result?: Cesium.Matrix4): Cesium.Matrix4 {
+        let hpr = headingPitchRoll || new Cesium.HeadingPitchRoll();
+        let orientation = Cesium.Transforms.headingPitchRollQuaternion(pos, hpr);
+        let modelToWorldMatrix = Cesium.Matrix4.fromTranslationQuaternionRotationScale(pos, orientation, new Cesium.Cartesian3(1, 1, 1), result);
+        return modelToWorldMatrix;
+    }
+
 
 }

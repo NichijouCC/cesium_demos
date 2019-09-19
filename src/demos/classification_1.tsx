@@ -3,30 +3,28 @@ import { CesiumMap } from "../lib/map";
 import { CameraRot } from "./cameraRotation";
 import { Debug } from "../lib/debug";
 
-export class Classification extends React.Component {
-    static title = "单体化_1";
+export class Classification_1 extends React.Component {
+    static title = "单体化_一号";
     render() {
         return (
             <CesiumMap id={CameraRot.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
         )
     }
     handleViewerLoaded(viewer: Cesium.Viewer) {
-
-        Debug.activePick(viewer);
-
-        let scene = viewer.scene;
-        let camera = scene.camera;
-        var tileset = viewer.scene.primitives.add(
+        // Debug.activePick(viewer);//用于找点
+        let tileset = viewer.scene.primitives.add(
             new Cesium.Cesium3DTileset({
                 url: Cesium.IonResource.fromAssetId(17732)
             })
-        );
-        viewer.zoomTo(tileset);
+        ) as Cesium.Cesium3DTileset;
+        tileset.readyPromise.then(() => {
+            viewer.zoomTo(tileset);
+            this.doneClassify(viewer);
+            this.addMouseInteractive(viewer, tileset);
+        });
+    }
 
-
-
-
-
+    private doneClassify(viewer: Cesium.Viewer) {
         //-----------这种方式写的单体化,有的时候pick不到，so舍弃
         // let redPolygon = viewer.entities.add({
         //     polygon: {
@@ -42,7 +40,7 @@ export class Classification extends React.Component {
         //         classificationType: Cesium.ClassificationType.CESIUM_3D_TILE
         //     }
         // });
-
+        let scene = viewer.scene;
         scene.primitives.add(new Cesium.ClassificationPrimitive({
             geometryInstances: new Cesium.GeometryInstance({
                 geometry: new Cesium.PolygonGeometry({
@@ -87,8 +85,6 @@ export class Classification extends React.Component {
             }),
             classificationType: Cesium.ClassificationType.CESIUM_3D_TILE
         }));
-
-        this.addMouseInteractive(viewer, tileset);
     }
     private currentId: string;
     private currentPirmitive: Cesium.ClassificationPrimitive;

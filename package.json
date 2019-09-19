@@ -9,6 +9,7 @@
     "@types/react-router-dom": "^4.3.5",
     "antd": "^3.23.1",
     "cesium": "^1.60.0",
+    "dat.gui": "^0.7.6",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1"

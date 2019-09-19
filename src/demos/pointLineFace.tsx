@@ -48,12 +48,17 @@ export class PointLineFace extends React.Component {
             }
         });
         viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
-        this.addMouseInteraction(viewer);
+        this.handler = this.addMouseInteraction(viewer);
+    }
+    private handler: Cesium.ScreenSpaceEventHandler
+    componentWillUnmount() {
+        if (this.handler) {
+            this.handler.destroy();
+        }
     }
 
     //增加交互
     private addMouseInteraction(viewer: Cesium.Viewer) {
-
         let pointArr = [];
         let handler = new Cesium.ScreenSpaceEventHandler();
         handler.setInputAction((event) => {
@@ -66,6 +71,7 @@ export class PointLineFace extends React.Component {
                 this.refreshpolygon(viewer, pointArr.concat([]));
             }
         }, Cesium.ScreenSpaceEventType.LEFT_UP);
+        return handler;
     }
     private customedataSource: Cesium.CustomDataSource;
     private refreshpolygon(viewer: Cesium.Viewer, pointArr: Cesium.Cartesian3[]) {

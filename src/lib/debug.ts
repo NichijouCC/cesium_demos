@@ -22,4 +22,5 @@ export class Debug {
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     }
+
 }

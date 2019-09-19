@@ -9,6 +9,7 @@ declare global {
 
 export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
 
+    private viewer: Cesium.Viewer;
     componentDidMount() {
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMzJmNDgwZi1iNmQ2LTQ0NWEtOWRkNi0wODkxYzYxYTg0ZDIiLCJpZCI6ODUzMiwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjIwMjY4OH0.u4d7x0IxZY06ThT4JFmxrfgBxVjQcfI6xXDLu-fsWsY';
         // CesiumIon.defaultAccessToken = Config.ION;
@@ -16,6 +17,12 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
 
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//移除双击选中
+
+        // var terrainProvider = Cesium.createWorldTerrain({
+        //     requestVertexNormals: true
+        // });
+        // viewer.terrainProvider = terrainProvider;
+
         viewer.scene.globe.enableLighting = MapConfig.global.enableLighting;//光照开关
         viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;//depth
         viewer.scene.highDynamicRange = true;
@@ -32,6 +39,12 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
 
         if (this.props.onViewerLoaded != null) {
             this.props.onViewerLoaded(viewer);
+        }
+        this.viewer = viewer;
+    }
+    componentWillUnmount() {
+        if (this.viewer) {
+            this.viewer.destroy();
         }
     }
 
