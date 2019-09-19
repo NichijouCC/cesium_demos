@@ -22,6 +22,7 @@ import { CustomeMaterial_2 } from "./demos/customeMaterial_2";
 import { Classification_1 } from "./demos/classification_1";
 import { Classification_2 } from "./demos/classification_2";
 import { InstancesModel } from "./demos/InstancesModel";
+import { ClipModels } from "./demos/clipModels";
 
 export class Main extends React.Component {
     state = {
@@ -33,6 +34,7 @@ export class Main extends React.Component {
             { title: PointLineFace.title, element: < PointLineFace /> },
             { title: Adjust3dtilesHeight.title, element: < Adjust3dtilesHeight /> },
             { title: Load3dtiles.title, element: < Load3dtiles /> },
+            { title: ClipModels.title, element: < ClipModels /> },
             { title: AutoAdjust3dtilesHeight.title, element: < AutoAdjust3dtilesHeight /> },
             { title: CameraRot.title, element: < CameraRot /> },
             { title: AIPatrol.title, element: < AIPatrol /> },

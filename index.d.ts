@@ -3224,7 +3224,21 @@ declare namespace Cesium {
         constructor(heading?: number, pitch?: number, range?: number);
         static clone(hpr: HeadingPitchRange, result?: HeadingPitchRange): HeadingPitchRange;
     }
+    class ClippingPlane {
+        constructor(normal: Cartesian3, distance: number);
+        distance: number
+    }
+    class ClippingPlaneCollection {
+        constructor(options: {
+            planes?: ClippingPlane[];
+            edgeColor?: Color;
+            edgeWidth?: number;
+            unionClippingRegions?: boolean
+        });
+        get(index: number): ClippingPlane;
+        length: number;
 
+    }
     // tslint:disable-next-line:no-unnecessary-class
     class Cesium3DTileset {
         constructor(Cesium3DTilesetItem: {
@@ -3235,7 +3249,8 @@ declare namespace Cesium {
             cullRequestsWhileMoving?: boolean;
             preloadWhenHidden?: boolean;
             preloadFlightDestinations?: boolean;
-            dynamicScreenSpaceError?: boolean
+            dynamicScreenSpaceError?: boolean;
+            clippingPlanes?: ClippingPlaneCollection;
         })
         modelMatrix: Matrix4;
         readyPromise: Promise<Cesium3DTileset>;
