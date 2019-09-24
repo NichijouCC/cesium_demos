@@ -18,6 +18,7 @@ npm start
 - 建筑单体化1
 - 点扩散
 - 物体标签
+- instances gltf并更新位置
 - 更新单个geometryinstance属性
 - 自定义几何体
 - 自定义材质-电子围栏1
