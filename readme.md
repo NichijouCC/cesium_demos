@@ -12,10 +12,11 @@ npm start
 - 加载3dtiles
 - 调整3dtiles高度
 - 自动调整3dtiles贴合地面
+- 建筑单体化1
+- 3dtiles 裁剪
 - 地球自旋转
 - 画河流
 - 自定义路线巡游
-- 建筑单体化1
 - 点扩散
 - 物体标签
 - instances gltf并更新位置
