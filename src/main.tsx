@@ -21,8 +21,8 @@ import { PointLineFace } from "./demos/pointLineFace";
 import { CustomeMaterial_2 } from "./demos/customeMaterial_2";
 import { Classification_1 } from "./demos/classification_1";
 import { Classification_2 } from "./demos/classification_2";
-import { InstancesModel } from "./demos/InstancesModel";
 import { ClipModels } from "./demos/clipModels";
+import { InstancesGltf } from "./demos/InstancesGltf";
 
 export class Main extends React.Component {
     state = {
@@ -43,7 +43,7 @@ export class Main extends React.Component {
             { title: Classification_2.title, element: < Classification_2 /> },
             { title: Dom_animationPoint.title, element: < Dom_animationPoint /> },
             { title: Dom_tagInfo.title, element: < Dom_tagInfo /> },
-            { title: InstancesModel.title, element: < InstancesModel /> },
+            { title: InstancesGltf.title, element: < InstancesGltf /> },
             { title: UpdateInstancesAttribute.title, element: < UpdateInstancesAttribute /> },
             { title: CustomeGeometry.title, element: < CustomeGeometry /> },
             { title: CustomeMaterial_1.title, element: < CustomeMaterial_1 /> },
