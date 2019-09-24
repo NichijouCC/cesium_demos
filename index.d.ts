@@ -38,9 +38,14 @@ declare namespace Cesium {
     }
 
     class ModelInstanceCollection {
-        constructor(options: { url: string, instances: { modelMatrix: Matrix4 }[], shadows?: ShadowMode })
+        constructor(options: { url: string, instances: { modelMatrix: Matrix4 }[], shadows?: ShadowMode, dynamic?: boolean })
         readyPromise: Promise<ModelInstanceCollection>;
         _boundingSphere: BoundingSphere;
+        _instances: ModelInstance[];
+        _dirty: boolean;
+    }
+    class ModelInstance {
+        _modelMatrix: Matrix4;
     }
     class AssociativeArray {
         length: number;
@@ -2935,7 +2940,7 @@ declare namespace Cesium {
         getRectangleCameraCoordinates(rectangle: Rectangle, result?: Cartesian3): Cartesian3;
         look(axis: Cartesian3, angle?: number): void;
         lookAt(target: Cartesian3, offset: Cartesian3 | HeadingPitchRange): void;
-        lookAtTransform(transform: Matrix4, offset: Cartesian3 | HeadingPitchRange): void;
+        lookAtTransform(transform: Matrix4, offset?: Cartesian3 | HeadingPitchRange): void;
         lookDown(amount?: number): void;
         lookLeft(amount?: number): void;
         lookRight(amount?: number): void;
