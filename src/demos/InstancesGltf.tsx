@@ -29,8 +29,10 @@ export class InstancesGltf extends React.Component {
         let centerLatitude = 31;
         let height = 250.0;
         let count = 1024;
-        let spacing = 0.0004;
+        let spacing = 0.00004;
         let modelUrl = "./static/models/ship/scene.gltf";
+        modelUrl = "./static/models/excavator/1.gltf";
+
 
         let instances = [];
         let gridSize = Math.sqrt(count);
