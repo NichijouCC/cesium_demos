@@ -43,6 +43,8 @@ declare namespace Cesium {
         _boundingSphere: BoundingSphere;
         _instances: ModelInstance[];
         _dirty: boolean;
+        activeAnimations: ModelAnimationCollection;
+        _model: Model;
     }
     class ModelInstance {
         _modelMatrix: Matrix4;
@@ -3539,7 +3541,8 @@ declare namespace Cesium {
             removeOnStop?: boolean;
             speedup?: number;
             reverse?: boolean;
-            loop?: ModelAnimationLoop
+            loop?: ModelAnimationLoop;
+            multiplier?: number
         }): ModelAnimation[];
         remove(animation: ModelAnimation): boolean;
         removeAll(): void;
