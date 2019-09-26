@@ -60,6 +60,13 @@ export class InstancesGltf extends React.Component {
             shadows: Cesium.ShadowMode.CAST_ONLY,
             dynamic: true
         })) as Cesium.ModelInstanceCollection;
+        collection.readyPromise.then(function (collection) {
+            // Play and loop all animations at half-speed
+            collection.activeAnimations.addAll({
+                multiplier: 0.5,
+                loop: Cesium.ModelAnimationLoop.REPEAT
+            });
+        })
         return collection;
     }
 
