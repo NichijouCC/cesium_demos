@@ -1,11 +1,10 @@
 import React from "react";
 
 // require("@cesiumBuild/Cesium");
-require("@cesiumDebug/Cesium");
+const cs = require("@cesiumDebug/Cesium");
+window.Cesium = cs;
+// require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
-declare global {
-    export module Cesium { }
-}
 
 export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
 

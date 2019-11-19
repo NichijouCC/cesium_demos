@@ -36,7 +36,7 @@ export class Classification_2 extends React.Component {
         //     box: {
         //         dimensions: ,
         //         material: new Cesium.ImageMaterialProperty({
-        //             image: "./static/images/wall.png",
+        //             image: "./images/wall.png",
         //             transparent: true,
         //             color: Cesium.Color.BLUE
         //         }),
@@ -109,8 +109,8 @@ export class Classification_2 extends React.Component {
             box: {
                 dimensions: options.dimensions,
                 material: new Cesium.ImageMaterialProperty({
-                    // image: "./static/images/wall.png",
-                    image: "./static/images/riverNormal.jpg",
+                    // image: "./images/wall.png",
+                    image: "./images/riverNormal.jpg",
 
                     // transparent: true,
                     color: color
@@ -163,8 +163,8 @@ export class Classification_2 extends React.Component {
             fabric: {
                 type: 'Image',
                 uniforms: {
-                    image: './static/images/wall.png',
-                    // image: "./static/images/riverNormal.jpg",
+                    image: './images/wall.png',
+                    // image: "./images/riverNormal.jpg",
                     color: color
                 },
             }

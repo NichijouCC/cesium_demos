@@ -9,7 +9,7 @@ export class CustomeRiver extends React.Component {
     static title: string = "画河流"
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        Axios.get("./static/json/islandRiver.json").then((res) => {
+        Axios.get("./json/islandRiver.json").then((res) => {
             let data = (res.data as IriverJson).data;
             let riverPoint: number[] = [];
             for (let i = 0; i < data.length; i++) {
@@ -43,7 +43,7 @@ export class CustomeRiver extends React.Component {
                     uniforms: {
                         baseWaterColor: colorg,
                         specularIntensity: 0.0001,
-                        normalMap: './static/images/riverNormal.jpg',
+                        normalMap: './images/riverNormal.jpg',
                         frequency: 500.0,
                         animationSpeed: 0.01,
                         amplitude: 10.0

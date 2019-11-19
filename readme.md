@@ -2,10 +2,9 @@
 
 使用cesium+react+ts编写
 
-## 启动
-``` 
-npm start
-```
+## 启动项目
+1. ``yarn``安装依赖
+2. ``yarn start``启动项目
 
 ## 样例类容
 - 点线面与鼠标交互

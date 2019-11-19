@@ -1,7 +1,7 @@
 .content div{
-    background:red;
-    width: 4px;
-    height: 4px;
+    background:rgb(255, 136, 0);
+    width: 16px;
+    height: 16px;
     /* border: 4px #009FD9 solid; */
     border-radius:50%;
     position: relative;
@@ -10,21 +10,29 @@
 .content p, .content span{
     display: inline-block;
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     border-radius:50%;
     animation: myfirst 1.5s  infinite;
-    box-shadow: 0px 0px 2px red; 
+    box-shadow: 0px 0px 2px rgb(255, 136, 0); 
     margin: 0px;
+}
+.content p{
+    width: 8px;
+    height: 8px;
+    left: 50%;
+    top: 50%;
+    margin-top: -4px;
+    margin-left: -4px;
 }
 
 .content  span{
-    width: 2px;
-    height: 2px;
+    width: 4px;
+    height: 4px;
     left: 50%;
     top: 50%;
-    margin-top: -1px;
-    margin-left: -1px;
+    margin-top: -2px;
+    margin-left: -2px;
 }
 
 .content .one{position: absolute;left:600px; top:100px;}

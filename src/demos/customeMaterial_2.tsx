@@ -40,7 +40,7 @@ export class CustomeMaterial_2 extends React.Component {
                 type: "custome_2",
                 uniforms: {
                     color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
-                    image: "./static/images/arrow.png",
+                    image: "./images/arrow.png",
                     time: 0,
                     repeat: 30
                 },

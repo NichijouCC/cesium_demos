@@ -1,7 +1,7 @@
 import DomTagInfo from "./domTag";
 import React from "react";
 
-require("./domAnimationPoint.css");
+import "./domAnimationPoint.css";
 export class DomAnimationPoint extends DomTagInfo {
     render() {
         return (

@@ -54,13 +54,15 @@ export class Main extends React.Component {
     }
 
     render() {
-        let cssStyle: React.CSSProperties = { width: "100%", height: "100%", position: "fixed" };
+        let cssStyle: React.CSSProperties = {
+            width: "100%", height: "100%", position: "fixed"
+        };
         return (
             <div >
                 {
                     this.state.demos ? this.state.demos[this.state.demoIndex].element : null
                 }
-                <Menu
+                < Menu
                     onClick={(Item) => {
                         this.setState({ demoIndex: Item.key })
                     }}
@@ -79,9 +81,9 @@ export class Main extends React.Component {
                             return <Menu.Item key={index}>{item.title}</Menu.Item>
                         }) : null
                     }
-                </Menu>
+                </Menu >
 
-            </div>
+            </div >
         );
     }
 }

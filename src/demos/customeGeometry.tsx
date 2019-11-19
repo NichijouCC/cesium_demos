@@ -45,7 +45,7 @@ export class CustomeGeometry extends React.Component {
             fabric: {
                 type: 'Image',
                 uniforms: {
-                    image: "./static/images/riverNormal.jpg"
+                    image: "./images/riverNormal.jpg"
                 }
             }
         });

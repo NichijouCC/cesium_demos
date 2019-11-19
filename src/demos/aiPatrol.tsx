@@ -7,7 +7,7 @@ export class AIPatrol extends React.Component {
     static title = "自定义路线巡游";
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        let modelUrl = "./static/models/ship/scene.gltf";
+        let modelUrl = "./models/ship/scene.gltf";
         let ship = viewer.entities.add({
             position: Cesium.Cartesian3.ZERO,
             orientation: Cesium.Quaternion.IDENTITY,
@@ -17,7 +17,7 @@ export class AIPatrol extends React.Component {
             }
         });
 
-        Axios.get("./static/json/shipPath.json")
+        Axios.get("./json/shipPath.json")
             .then((res) => {
                 let degreeArr = [];
                 let allpos = res.data.data;

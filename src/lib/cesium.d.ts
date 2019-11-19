@@ -1,19 +1,7 @@
-// Type definitions for cesium 1.59
-// Project: http://cesiumjs.org
-// Definitions by: Aigars Zeiza <https://github.com/Zuzon>
-//                 Harry Nicholls <https://github.com/hnipps>
-//                 Jared Szechy <https://github.com/szechyjs>
-//                 Radek Goláň jr. <https://github.com/golyalpha>
-//                 Emma Krantz <https://github.com/KeyboardSounds>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 3.0
 
-// tslint:disable-next-line:export-just-namespace
-export = Cesium;
-export as namespace Cesium;
-type TypedArray = Float64Array | Float32Array | Int32Array | Int16Array;
 
-declare namespace Cesium {
+declare module Cesium {
+    type TypedArray = Float64Array | Float32Array | Int32Array | Int16Array;
     type RenderState = any;
 
     interface Proxy {
@@ -2342,7 +2330,7 @@ declare namespace Cesium {
         shadows?: Property;
         heightReference?: Property;
         distanceDisplayCondition?: Property;
-        silhouetteColor?: Property;
+        silhouetteColor?: Property | Color;
         silhouetteSize?: Property | number;
         color?: Property;
         colorBlendMode?: Property;
@@ -2446,7 +2434,7 @@ declare namespace Cesium {
     }
 
     interface IPolygonGraphics {
-        hierarchy?: Cartesian3[] | PolygonHierarchy;
+        hierarchy?: Cartesian3[] | PolygonHierarchy | any;
         height?: number;
         extrudedHeight?: Property | number;
         show?: Property;
@@ -2488,7 +2476,7 @@ declare namespace Cesium {
     class PolylineGlowMaterialProperty extends MaterialProperty {
         color: Color;
         glowPower: Property;
-        constructor(options?: { color?: Property; glowPower?: Property });
+        constructor(options?: { color?: Color | Property; glowPower?: number | Property });
     }
 
     class PolylineDashMaterialProperty extends MaterialProperty {
@@ -2505,13 +2493,14 @@ declare namespace Cesium {
         constructor(entity: Entity, scene: Scene);
     }
     interface IPolylineGraphics {
-        positions?: Cartesian3[];
+        positions?: Cartesian3[] | any;
         followSurface?: Property;
         width?: number;
         show?: Property;
-        material?: Color | string;
+        material?: any | Color | string;
         granularity?: Property;
-        zIndex?: number
+        zIndex?: number;
+        clampToGround?: boolean;
     }
     class PolylineGraphics {
         definitionChanged: Event;
@@ -2530,7 +2519,7 @@ declare namespace Cesium {
         color: Color;
         outlineColor: Color;
         outlineWidth: Property;
-        constructor(options?: { color?: Property; outlineColor?: Property; outlineWidth?: Property });
+        constructor(options?: { color?: Color | Property; outlineColor?: Color | Property; outlineWidth?: number | Property });
     }
 
     class PolylineVolumeGeometryUpdater extends GeometryUpdater {
@@ -6005,3 +5994,4 @@ declare namespace Cesium {
         MAX_TEXTURE_MAX_ANISOTROPY_EXT
     }
 }
+// }

@@ -11,7 +11,7 @@ export class CustomeMaterial_1 extends React.Component {
     handleViewerLoaded(viewer: Cesium.Viewer) {
 
         // let mat = new Cesium.ImageMaterialProperty({
-        //     image: './static/images/arrow.png',
+        //     image: './images/arrow.png',
         //     color: Cesium.Color.RED,
         //     repeat: new Cesium.Cartesian2(50, 1)
         // });
@@ -65,7 +65,7 @@ export class CustomeMaterial_1 extends React.Component {
                 type: "custome_1",
                 uniforms: {
                     color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
-                    image: "./static/images/arrow.png",
+                    image: "./images/arrow.png",
                     time: 0,
                     repeat: 50
                 },

@@ -30,8 +30,8 @@ export class InstancesGltf extends React.Component {
         let height = 250.0;
         let count = 1024;
         let spacing = 0.00004;
-        let modelUrl = "./static/models/ship/scene.gltf";
-        modelUrl = "./static/models/excavator/1.gltf";
+        let modelUrl = "./models/ship/scene.gltf";
+        modelUrl = "./models/excavator/1.gltf";
 
 
         let instances = [];
