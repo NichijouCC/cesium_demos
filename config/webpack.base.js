@@ -64,7 +64,7 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'public', ignore: [] },
+            { from: 'public', ignore: ['index.html'] },
         ]),
         new HtmlWebpackPlugin({
             template: pathsMap.indexHtmlPath,
