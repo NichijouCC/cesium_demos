@@ -30,6 +30,7 @@ export class Main extends React.Component {
         demoIndex: 0,
     }
     componentDidMount() {
+        test();
         let _demos = [
             { title: PointLineFace.title, element: < PointLineFace /> },
             { title: Adjust3dtilesHeight.title, element: < Adjust3dtilesHeight /> },
@@ -86,4 +87,32 @@ export class Main extends React.Component {
             </div >
         );
     }
+}
+
+class TestA {
+    fuc() {
+        return 2;
+    }
+    arr = [1, 2];
+}
+
+function test() {
+    let a = new TestA();
+    let proxyA = new Proxy(a, {
+        set(target, prop, value, receiver) {
+            if (prop == "arr") {
+                console.warn("set arr!");
+                value = new Proxy(value, {
+                    get(target, prop, receiver) {
+                        console.warn("func", prop)
+                        return Reflect.get(target, prop, receiver);
+                    }
+                })
+            }
+            return Reflect.set(target, prop, value, receiver);
+        }
+    });
+    proxyA.arr = [223, 231, 234];
+    proxyA.arr.push(55);
+    console.warn(proxyA.arr)
 }
