@@ -1,7 +1,7 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 
-export class UpdateInstancesAttribute extends React.Component {
+export default class UpdateInstancesAttribute extends React.Component {
     static title: string = "动态更改instances 的属性";
 
     handleViewerLoaded(viewer: Cesium.Viewer) {

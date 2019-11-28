@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 
 export class PointLineFace extends React.Component {
     static title = "点线面与鼠标交互";

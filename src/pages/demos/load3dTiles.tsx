@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 
 export class Load3dtiles extends React.Component {
 

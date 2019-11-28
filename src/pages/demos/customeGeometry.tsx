@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 
 export class CustomeGeometry extends React.Component {
     static title: string = "自定义几何体(非以地心为原点建模)";

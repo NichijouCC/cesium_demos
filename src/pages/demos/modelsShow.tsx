@@ -1,8 +1,8 @@
 import Axios from "axios"
 import React from "react";
-import { CesiumMap } from "../lib/map";
-import { Helper } from "../lib/helper";
-import { Debug, PosType } from "../lib/debug";
+import { CesiumMap } from "../../lib/map";
+import { Helper } from "../../lib/helper";
+import { Debug, PosType } from "../../lib/debug";
 
 export class AislandModelShow extends React.Component {
     static title: string = "模型展示";

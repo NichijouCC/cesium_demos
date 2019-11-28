@@ -1,6 +1,6 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
-import DomTagInfo from "../lib/components/domTag";
+import { CesiumMap } from "../../lib/map";
+import DomTagInfo from "../../lib/components/domTag";
 
 export class Dom_tagInfo extends React.Component {
     static title = "物体标签";

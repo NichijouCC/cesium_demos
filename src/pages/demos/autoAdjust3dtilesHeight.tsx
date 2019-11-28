@@ -1,7 +1,7 @@
 import Axios from "axios"
 import React from "react";
-import { CesiumMap } from "../lib/map";
-import { Helper } from "../lib/helper";
+import { CesiumMap } from "../../lib/map";
+import { Helper } from "../../lib/helper";
 
 export class AutoAdjust3dtilesHeight extends React.Component {
     static title: string = "自动调整3dtiles高度贴合地面";

@@ -1,10 +1,9 @@
 import React from "react";
 import Axios from "axios";
-import { CesiumMap } from "../lib/map";
-import { Helper } from "../lib/helper";
+import { CesiumMap } from "../../lib/map";
+import { Helper } from "../../lib/helper";
 
-export class AIPatrol extends React.Component {
-    static title = "自定义路线巡游";
+export default class AIPatrol extends React.Component {
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelUrl = "./models/ship/scene.gltf";

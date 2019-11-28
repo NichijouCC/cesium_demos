@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 
 export class MutilplyPick extends React.Component {
     static title: string = "各种pick"

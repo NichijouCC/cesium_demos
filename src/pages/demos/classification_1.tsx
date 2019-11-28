@@ -1,7 +1,7 @@
 import React from "react";
-import { CesiumMap } from "../lib/map";
+import { CesiumMap } from "../../lib/map";
 import { CameraRot } from "./cameraRotation";
-import { Debug } from "../lib/debug";
+import { Debug } from "../../lib/debug";
 
 export class Classification_1 extends React.Component {
     static title = "单体化_一号";
