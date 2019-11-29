@@ -9,6 +9,7 @@ class Options {
     rotAngle: number = 0;
 }
 export default class Adjust3dtilesHeight extends React.Component {
+
     gui: any;
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
@@ -52,9 +53,7 @@ export default class Adjust3dtilesHeight extends React.Component {
     }
 
     render() {
-        return (
-            <CesiumMap id={Adjust3dtilesHeight.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
+        return null
     }
 }
 

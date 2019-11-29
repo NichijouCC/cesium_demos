@@ -1,8 +1,4 @@
-#root .ant-tabs .ant-tabs-left-content{
-    padding-left: 0 ;
-}
-#root .ant-tabs .ant-tabs-left-bar{
-    position: absolute;
-    background-color:rgba(139, 165, 165, 0.5);
-    z-index: 1000;
+#root
+{
+    height: 100%;
 }

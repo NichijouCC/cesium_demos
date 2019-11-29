@@ -107,7 +107,7 @@ export const Demos = () => {
                 <Redirect from="/" exact to="/hello"></Redirect>
                 <Route path='/hello' exact component={DeafaultPage} />
                 {
-                    demosInfo.map(item => <AsyncRoute exact path={item.path} asyncComponent={item.asyncComponent} />)
+                    demosInfo.map(item => <AsyncRoute key={item.path} exact path={item.path} asyncComponent={item.asyncComponent} />)
                 }
             </Switch>
         </HashRouter>

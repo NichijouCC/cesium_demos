@@ -1,12 +1,10 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
-import { Adjust3dtilesHeight } from "./adjust3dtilesHeight";
 import dat from 'dat.gui'
 class Options {
     width: number = 10
 }
 export class ClipModels extends React.Component {
-    static title: string = "模型裁剪"
     render() {
         return (
             <CesiumMap id={Adjust3dtilesHeight.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />

@@ -6,13 +6,53 @@ window.Cesium = cs;
 // require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
 
-export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
+let _cesiummapIns: CesiumMap;
+export const cesiumMapIns = () => {
+    return _cesiummapIns;
+}
 
-    private viewer: Cesium.Viewer;
+export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
+
+    private _viewer: Cesium.Viewer;
+    state = {
+        beActived: false
+    }
+    private get containerId() {
+        return this.props.id || "__cesiumContainer"
+    }
+
+    private static _ins: CesiumMap;
+    private static newIns = (ins: CesiumMap) => {
+        CesiumMap._ins = ins;
+        if (CesiumMap.listener.length > 0) {
+            CesiumMap.listener.forEach(func => func());
+            CesiumMap.listener = [];
+        }
+    }
+    private static listener: any[] = [];
+    static addEventlistenerToMapLoaded(handler: (map: CesiumMap) => void) {
+        if (this._ins != null) {
+            handler(this._ins);
+        } else {
+            this.listener.push(handler);
+        }
+    }
+
+
     componentDidMount() {
+        if (this.props.setUp) {
+            this._setUp();
+        }
+        CesiumMap.newIns(this);
+    }
+
+    private _setUp(): Cesium.Viewer {
+
+        console.warn("ceisum 启动！！");
+        this.setState({ beActived: true });
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMzJmNDgwZi1iNmQ2LTQ0NWEtOWRkNi0wODkxYzYxYTg0ZDIiLCJpZCI6ODUzMiwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjIwMjY4OH0.u4d7x0IxZY06ThT4JFmxrfgBxVjQcfI6xXDLu-fsWsY';
         // CesiumIon.defaultAccessToken = Config.ION;
-        let viewer: Cesium.Viewer = new Cesium.Viewer(this.props.id || "cesiumContainer", MapConfig.MAPOPTIONS);
+        let viewer: Cesium.Viewer = new Cesium.Viewer(this.containerId, MapConfig.MAPOPTIONS);
 
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//移除双击选中
@@ -39,12 +79,31 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
         if (this.props.onViewerLoaded != null) {
             this.props.onViewerLoaded(viewer);
         }
-        this.viewer = viewer;
+        this._viewer = viewer;
+        return viewer;
     }
-    componentWillUnmount() {
-        if (this.viewer) {
-            this.viewer.destroy();
+
+    destroy() {
+        if (this.state.beActived) {
+            this.setState({ beActived: false });
+            if (this._viewer) {
+                console.warn("ceisum destroy！！");
+                this._viewer.destroy();
+                this._viewer = null;
+            }
         }
+    }
+
+    get viewer(): Cesium.Viewer {
+        if (this.state.beActived) {
+            return this._viewer;
+        } else {
+            return this._setUp();
+        }
+    }
+
+    componentWillUnmount() {
+        this.destroy();
     }
 
     render() {
@@ -56,9 +115,10 @@ export class CesiumMap extends React.Component<{ id?: string, onViewerLoaded?: (
             bottom: 0,
             right: 0,
             position: "absolute",
+            display: this.state.beActived ? "inline" : "none"
         };
         return (
-            <div id={this.props.id || "cesiumContainer"} style={containerStyle}>
+            <div id={this.containerId} style={containerStyle}>
             </div>
         );
     }

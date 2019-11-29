@@ -1,11 +1,15 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class Load3dtiles extends React.Component {
+export default class Load3dtiles extends React.Component {
 
-    static title: string = "加载3dtiles";
+    componentDidMount() {
+        CesiumMap.addEventlistenerToMapLoaded((map) => {
+            this.handleViewerLoaded(map.viewer);
+        });
+    }
 
-    handleViewerLoaded(viewer: Cesium.Viewer) {
+    private handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
 
         let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
@@ -17,8 +21,6 @@ export class Load3dtiles extends React.Component {
         viewer.zoomTo(tileset);
     }
     render() {
-        return (
-            <CesiumMap id={Load3dtiles.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
+        return null;
     }
 }
