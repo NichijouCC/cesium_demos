@@ -1,8 +1,12 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class MutilplyPick extends React.Component {
-    static title: string = "各种pick"
+export default class MutilplyPick extends React.Component {
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         //--------------windows position pick
@@ -24,10 +28,5 @@ export class MutilplyPick extends React.Component {
         let somPlane = Cesium.Plane.fromPointNormal(sompoint, normal);
         let someRay = new Cesium.Ray(viewer.camera.position, viewer.camera.direction);
         Cesium.IntersectionTests.rayPlane(someRay, somPlane);
-    }
-    render() {
-        return (
-            <CesiumMap id={MutilplyPick.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
     }
 }

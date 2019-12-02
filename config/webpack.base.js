@@ -56,6 +56,7 @@ module.exports = {
         extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'], // 自动判断后缀名，引入时可以不带后缀
         alias: {
             '@': path.resolve(__dirname, '../src/'), // 以 @ 表示src目录
+            '@public': path.resolve(__dirname, '../public/'), // 以 @ 表示src目录
             // CesiumJS module name-----------------------------------------------------------------------------cesium
             '@cesiumSource': path.resolve(__dirname, "../node_modules/cesium/Source"),
             '@cesiumBuild': path.resolve(__dirname, "../node_modules/cesium/Build/Cesium"),

@@ -4,12 +4,14 @@ import dat from 'dat.gui'
 class Options {
     width: number = 10
 }
-export class ClipModels extends React.Component {
+export default class ClipModels extends React.Component {
     render() {
         return (
-            <CesiumMap id={Adjust3dtilesHeight.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
+
+
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let clippingPlanes = new Cesium.ClippingPlaneCollection({
             planes: [

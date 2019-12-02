@@ -1,9 +1,17 @@
 import React from "react";
-import Axios from "axios";
 import { CesiumMap } from "../../lib/map";
 import { Helper } from "../../lib/helper";
+// import path from "../../../public/json/shipPath.json";
+import path from "@public/json/shipPath.json";
+
+// import path from "./shipPath.json"
 
 export default class AIPatrol extends React.Component {
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelUrl = "./models/ship/scene.gltf";
@@ -16,63 +24,53 @@ export default class AIPatrol extends React.Component {
             }
         });
 
-        Axios.get("./json/shipPath.json")
-            .then((res) => {
-                let degreeArr = [];
-                let allpos = res.data.data;
-                for (let i = 0; i < allpos.length; i++) {
-                    let item = allpos[i];
-                    degreeArr.push(item.longitude * Math.PI / 180);
-                    degreeArr.push(item.latitude * Math.PI / 180);
-                    degreeArr.push(2);
-                }
+        let degreeArr = [];
+        let allpos = path.data;
+        for (let i = 0; i < allpos.length; i++) {
+            let item = allpos[i];
+            degreeArr.push(parseFloat(item.longitude) * Math.PI / 180);
+            degreeArr.push(parseFloat(item.latitude) * Math.PI / 180);
+            degreeArr.push(2);
+        }
 
-                let pointArr = Cesium.Cartesian3.fromRadiansArrayHeights(degreeArr);
-                let dirArr = [];
-                for (let i = 0; i < pointArr.length - 1; i++) {
-                    let dir = Cesium.Cartesian3.subtract(pointArr[i + 1], pointArr[i], new Cesium.Cartesian3());
-                    dir = Cesium.Cartesian3.normalize(dir, dir);
-                    dirArr.push(dir);
-                }
-                viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
+        let pointArr = Cesium.Cartesian3.fromRadiansArrayHeights(degreeArr);
+        let dirArr = [];
+        for (let i = 0; i < pointArr.length - 1; i++) {
+            let dir = Cesium.Cartesian3.subtract(pointArr[i + 1], pointArr[i], new Cesium.Cartesian3());
+            dir = Cesium.Cartesian3.normalize(dir, dir);
+            dirArr.push(dir);
+        }
+        viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
 
-                let speed = 0.01;
-                let curPointIndex = 0;
-                let curPos = pointArr[0];
-                let quat = this.calculateOrientation(pointArr[0], pointArr[1]);
+        let speed = 0.01;
+        let curPointIndex = 0;
+        let curPos = pointArr[0];
+        let quat = this.calculateOrientation(pointArr[0], pointArr[1]);
+        ship.orientation = new Cesium.ConstantProperty(quat);
+
+        viewer.frameUpdate.addEventListener((deltalTime) => {
+            let moveDelta = Cesium.Cartesian3.multiplyByScalar(dirArr[curPointIndex], speed * deltalTime, new Cesium.Cartesian3());
+            let newPos = Cesium.Cartesian3.add(curPos, moveDelta, new Cesium.Cartesian3());
+
+            let distance = Cesium.Cartesian3.distance(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
+            let newdistance = Cesium.Cartesian3.distance(pointArr[curPointIndex], newPos);
+
+            if (newdistance >= distance) {
+                newPos = Cesium.Cartesian3.clone(pointArr[curPointIndex + 1]);
+                curPointIndex++;
+                if (curPointIndex >= pointArr.length - 1) {//end
+                    curPointIndex = 0;
+                    newPos = Cesium.Cartesian3.clone(pointArr[0]);
+                }
+                let quat = this.calculateOrientation(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
                 ship.orientation = new Cesium.ConstantProperty(quat);
-
-                viewer.frameUpdate.addEventListener((deltalTime) => {
-                    let moveDelta = Cesium.Cartesian3.multiplyByScalar(dirArr[curPointIndex], speed * deltalTime, new Cesium.Cartesian3());
-                    let newPos = Cesium.Cartesian3.add(curPos, moveDelta, new Cesium.Cartesian3());
-
-                    let distance = Cesium.Cartesian3.distance(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
-                    let newdistance = Cesium.Cartesian3.distance(pointArr[curPointIndex], newPos);
-
-                    if (newdistance >= distance) {
-                        newPos = Cesium.Cartesian3.clone(pointArr[curPointIndex + 1]);
-                        curPointIndex++;
-                        if (curPointIndex >= pointArr.length - 1) {//end
-                            curPointIndex = 0;
-                            newPos = Cesium.Cartesian3.clone(pointArr[0]);
-                        }
-                        let quat = this.calculateOrientation(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
-                        ship.orientation = new Cesium.ConstantProperty(quat);
-                    }
-                    ship.position = new Cesium.ConstantPositionProperty(newPos);
-                    curPos = newPos;
-                });
-
-            }).catch(err => {
-                console.error(err)
-            });
+            }
+            ship.position = new Cesium.ConstantPositionProperty(newPos);
+            curPos = newPos;
+        });
     }
 
-    render() {
-        return (
-            <CesiumMap id={AIPatrol.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
-    }
+
 
     private calculateOrientation(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
         let dir = new Cesium.Cartesian3();

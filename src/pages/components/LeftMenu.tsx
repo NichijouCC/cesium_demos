@@ -6,7 +6,7 @@ import { demosInfo } from "@/router/routes";
 export class LeftMenu extends React.Component {
     render() {
         return (
-            <div style={{ height: '100%', width: 200, backgroundColor: '#2B2C30' }}>
+            <div style={{ height: '100%', width: 200, backgroundColor: '#2B2C30', position: "absolute", top: "0" }}>
                 {/* <div className="main-logo" style={{ textAlign: "center" }}>
                 <span>
                     <img src={Logo} alt="logo" style={{ width: "80%", height: "10%", marginTop: '24px', }} />

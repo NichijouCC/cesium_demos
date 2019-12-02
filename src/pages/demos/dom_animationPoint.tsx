@@ -2,8 +2,15 @@ import React from "react";
 import { CesiumMap } from "../../lib/map";
 import { DomAnimationPoint } from "../../lib/components/domAnimationPoint";
 
-export class Dom_animationPoint extends React.Component {
-    static title = "点扩散";
+export default class Dom_animationPoint extends React.Component {
+
+    handleViewerLoaded(viewer: Cesium.Viewer) {
+        this.setState({ viewer: viewer });
+        let pointArr = Cesium.Cartesian3.fromDegreesArray([121, 31, 121.2, 31.1, 121.5, 31.2]);
+        viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
+        this.pointArr = pointArr;
+    }
+
     state = {
         viewer: null
     }
@@ -11,23 +18,16 @@ export class Dom_animationPoint extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <CesiumMap id={Dom_animationPoint.title} onViewerLoaded={(viewer) => {
-
-                    this.setState({ viewer: viewer });
-                    let pointArr = Cesium.Cartesian3.fromDegreesArray([121, 31, 121.2, 31.1, 121.5, 31.2]);
-                    viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
-                    this.pointArr = pointArr;
-                }} />
+                <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
                     this.state.viewer ?
                         this.pointArr.map((item, index) => {
                             return (
-                                <DomAnimationPoint viewer={this.state.viewer} worldPos={item} />
+                                <DomAnimationPoint key={index} viewer={this.state.viewer} worldPos={item} />
                             )
                         }) : null
                 }
             </React.Fragment>
-
         )
     }
 }

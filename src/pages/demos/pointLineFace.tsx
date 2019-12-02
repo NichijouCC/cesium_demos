@@ -1,14 +1,13 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class PointLineFace extends React.Component {
-    static title = "点线面与鼠标交互";
+export default class PointLineFace extends React.Component {
     render() {
         return (
-            <CesiumMap id={PointLineFace.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
-            } />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
+
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
             121.444409, 31.247417, 200.0,

@@ -2,7 +2,11 @@ import React from "react";
 import { CesiumMap } from "../../lib/map";
 
 export default class UpdateInstancesAttribute extends React.Component {
-    static title: string = "动态更改instances 的属性";
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         viewer.scene.globe.depthTestAgainstTerrain = false;
@@ -41,11 +45,4 @@ export default class UpdateInstancesAttribute extends React.Component {
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     }
-    render() {
-        return (
-            <CesiumMap id={UpdateInstancesAttribute.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
-            } />
-        )
-    }
-
 }

@@ -1,8 +1,12 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class CustomeGeometry extends React.Component {
-    static title: string = "自定义几何体(非以地心为原点建模)";
+export default class CustomeGeometry extends React.Component {
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let hwidth = 2.0;
@@ -63,10 +67,5 @@ export class CustomeGeometry extends React.Component {
         }));
 
         viewer.camera.lookAt(pos, new Cesium.HeadingPitchRange(-30, -90, 100));
-    }
-    render() {
-        return (
-            <CesiumMap id={CustomeGeometry.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
     }
 }

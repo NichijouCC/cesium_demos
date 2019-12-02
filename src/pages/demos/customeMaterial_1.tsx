@@ -1,13 +1,13 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class CustomeMaterial_1 extends React.Component {
-    static title = "自定义材质_围栏一号"
+export default class CustomeMaterial_1 extends React.Component {
     render() {
         return (
-            <CesiumMap id={CustomeMaterial_1.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
+
     handleViewerLoaded(viewer: Cesium.Viewer) {
 
         // let mat = new Cesium.ImageMaterialProperty({

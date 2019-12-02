@@ -2,10 +2,8 @@ import React from "react";
 import { CesiumMap } from "../../lib/map";
 
 
-export class CameraRot extends React.Component {
-    static title: string = "地球自旋转"
+export default class CameraRot extends React.Component {
     speed: number = 0.001;
-
     handleViewerLoaded(viewer: Cesium.Viewer) {
         viewer.frameUpdate.addEventListener((deltaTime) => {
             viewer.camera.rotate(Cesium.Cartesian3.UNIT_Z, deltaTime * this.speed);
@@ -13,7 +11,7 @@ export class CameraRot extends React.Component {
     }
     render() {
         return (
-            <CesiumMap id={CameraRot.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
 }

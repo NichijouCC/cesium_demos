@@ -5,8 +5,13 @@ import { CesiumMap } from "../../lib/map";
 interface IriverJson {
     data: { longitude: string, latitude: string }[]
 }
-export class CustomeRiver extends React.Component {
-    static title: string = "画河流"
+export default class CustomeRiver extends React.Component {
+
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         Axios.get("./json/islandRiver.json").then((res) => {
@@ -65,10 +70,4 @@ export class CustomeRiver extends React.Component {
             console.error(err);
         });
     }
-    render() {
-        return (
-            <CesiumMap id={CustomeRiver.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
-    }
-
 }

@@ -20,33 +20,37 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
     private get containerId() {
         return this.props.id || "__cesiumContainer"
     }
-
     private static _ins: CesiumMap;
-    private static newIns = (ins: CesiumMap) => {
-        CesiumMap._ins = ins;
+    private static listener: any[] = [];
+    static get ins(): Promise<CesiumMap> {
+        if (this._ins != null) {
+            return Promise.resolve(this._ins);
+        } else {
+            return new Promise((resolve, reject) => {
+                let active = (ins) => {
+                    resolve(ins);
+                };
+                this.listener.push(active);
+            });
+        }
+    }
+
+    private static set __ins(value: CesiumMap) {
         if (CesiumMap.listener.length > 0) {
-            CesiumMap.listener.forEach(func => func());
+            CesiumMap.listener.forEach(func => func(value));
             CesiumMap.listener = [];
         }
+        this._ins = value;
     }
-    private static listener: any[] = [];
-    static addEventlistenerToMapLoaded(handler: (map: CesiumMap) => void) {
-        if (this._ins != null) {
-            handler(this._ins);
-        } else {
-            this.listener.push(handler);
-        }
-    }
-
 
     componentDidMount() {
-        if (this.props.setUp) {
-            this._setUp();
+        if (this.props.setUp != false) {
+            this.setUp();
         }
-        CesiumMap.newIns(this);
+        CesiumMap.__ins = this;
     }
 
-    private _setUp(): Cesium.Viewer {
+    setUp(): Cesium.Viewer {
 
         console.warn("ceisum 启动！！");
         this.setState({ beActived: true });
@@ -83,6 +87,8 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         return viewer;
     }
 
+
+
     destroy() {
         if (this.state.beActived) {
             this.setState({ beActived: false });
@@ -93,12 +99,14 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             }
         }
     }
-
+    /**
+     * 如果未启动，启动
+     */
     get viewer(): Cesium.Viewer {
         if (this.state.beActived) {
             return this._viewer;
         } else {
-            return this._setUp();
+            return this.setUp();
         }
     }
 

@@ -5,19 +5,15 @@ import dat from 'dat.gui';
 import { Helper } from "../../lib/helper";
 
 
-export class InstancesGltf extends React.Component {
+export default class InstancesGltf extends React.Component {
     static title = "Instances Gltf 并更新位置";
     gui: any;
     render() {
         return (
-            <CesiumMap id={InstancesGltf.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }
-            } />
+            <CesiumMap setUp id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
 
-    componentDidMount() {
-
-    }
     componentWillUnmount() {
         if (this.gui) {
             this.gui.destroy();
@@ -31,7 +27,7 @@ export class InstancesGltf extends React.Component {
         let count = 1024;
         let spacing = 0.00004;
         let modelUrl = "./models/ship/scene.gltf";
-        modelUrl = "./models/excavator/1.gltf";
+        modelUrl = "./models/1.gltf";
 
 
         let instances = [];
@@ -75,7 +71,6 @@ export class InstancesGltf extends React.Component {
     private autoUpdateInstancesPosition(collection: Cesium.ModelInstanceCollection) {
         let instances = collection._instances;
         setInterval(() => {
-            console.warn("update!!")
             for (let i = 0; i < instances.length; i++) {
                 instances[i]._modelMatrix[12] += Math.random() * 5;
                 instances[i]._modelMatrix[13] += Math.random() * 5;

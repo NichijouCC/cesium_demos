@@ -3,10 +3,10 @@ import { CesiumMap } from "../../lib/map";
 
 export default class Load3dtiles extends React.Component {
 
-    componentDidMount() {
-        CesiumMap.addEventlistenerToMapLoaded((map) => {
-            this.handleViewerLoaded(map.viewer);
-        });
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
     }
 
     private handleViewerLoaded(viewer: Cesium.Viewer) {
@@ -19,8 +19,5 @@ export default class Load3dtiles extends React.Component {
             // shadows: Cesium.ShadowMode.DISABLED
         }));
         viewer.zoomTo(tileset);
-    }
-    render() {
-        return null;
     }
 }

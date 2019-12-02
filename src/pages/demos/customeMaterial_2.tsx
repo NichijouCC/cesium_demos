@@ -1,13 +1,13 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
 
-export class CustomeMaterial_2 extends React.Component {
-    static title = "自定义材质_围栏二号"
+export default class CustomeMaterial_2 extends React.Component {
     render() {
         return (
-            <CesiumMap id={CustomeMaterial_2.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
+
     handleViewerLoaded(viewer: Cesium.Viewer) {
 
         let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([

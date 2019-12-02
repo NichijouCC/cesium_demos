@@ -22,7 +22,7 @@ export class Debug {
         rayHandler.setInputAction((event) => {
             let ray = viewer.camera.getPickRay(event.position);
             let picked = viewer.scene.pickFromRay(ray, []);
-            if (picked.object != null) {
+            if (picked && picked.object != null) {
                 switch (type) {
                     case PosType.Cartesian:
                         console.warn(picked.position.toString());

@@ -1,16 +1,15 @@
 import React from "react";
 import { CesiumMap } from "../../lib/map";
-import { CameraRot } from "./cameraRotation";
 import { Debug } from "../../lib/debug";
 import { Helper } from "../../lib/helper";
 
-export class Classification_2 extends React.Component {
-    static title = "单体化_二号";
+export default class Classification_2 extends React.Component {
     render() {
         return (
-            <CesiumMap id={CameraRot.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
         )
     }
+
     handleViewerLoaded(viewer: Cesium.Viewer) {
         Debug.activePick(viewer);//用于找点
         let tileset = viewer.scene.primitives.add(

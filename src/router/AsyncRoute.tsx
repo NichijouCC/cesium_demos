@@ -17,7 +17,7 @@ export class AsyncRoute extends Route<IAsyncRouteProps & IcustomeAsyProps> {
     async componentDidMount() {
         const { default: component } = await this.props.asyncComponent();
         if (component == null) {
-            console.error("importComponent must to be a Deault Export class in AsyncRoute component params(asyncComponent) return!");
+            console.error("AsyncRoute: importComponent must to be a Deault Export class in props params(asyncComponent) return!");
         } else {
             this.setState({ component })
         }

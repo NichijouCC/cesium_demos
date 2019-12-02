@@ -4,8 +4,12 @@ import { CesiumMap } from "../../lib/map";
 import { Helper } from "../../lib/helper";
 import { Debug, PosType } from "../../lib/debug";
 
-export class AislandModelShow extends React.Component {
-    static title: string = "模型展示";
+export default class AislandModelShow extends React.Component {
+    render() {
+        return (
+            <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
+        )
+    }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
@@ -43,10 +47,5 @@ export class AislandModelShow extends React.Component {
                 scale: scale
             }
         });
-    }
-    render() {
-        return (
-            <CesiumMap id={AislandModelShow.title} onViewerLoaded={(viewer) => { this.handleViewerLoaded(viewer) }} />
-        )
     }
 }
