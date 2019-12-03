@@ -92,18 +92,16 @@ export const demosInfo = [
         path: "/customeMaterial_2",
         asyncComponent: () => import("../pages/demos/customeMaterial_2")
     },
-    {
-        title: "模型展示",
-        path: "/modelsShow",
-        asyncComponent: () => import("../pages/demos/modelsShow")
-    },
-    {
-        title: "各种pick",
-        path: "/pick",
-        asyncComponent: () => import("../pages/demos/pick")
-    },
-
-
+    // {
+    //     title: "模型展示",
+    //     path: "/modelsShow",
+    //     asyncComponent: () => import("../pages/demos/modelsShow")
+    // },
+    // {
+    //     title: "各种pick",
+    //     path: "/pick",
+    //     asyncComponent: () => import("../pages/demos/pick")
+    // },
 ]
 
 
