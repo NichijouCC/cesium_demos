@@ -19,11 +19,19 @@ export default class AutoAdjust3dtilesHeight extends React.Component {
 
         })) as Cesium.Cesium3DTileset;
         tileset.readyPromise.then((tileset) => {
+            if (!this._beMount) return;
             //----------------调整高度
             Helper.clamp3dtilesToGround(viewer, tileset, (tilest) => {
                 viewer.scene.camera.flyToBoundingSphere(tilest.boundingSphere);
             });
         });
+    }
+    private _beMount: boolean = false;
+    componentDidMount() {
+        this._beMount = true;
+    }
+    componentWillUnmount() {
+        this._beMount = false;
     }
 }
 

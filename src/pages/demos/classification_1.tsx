@@ -17,11 +17,18 @@ export default class Classification_1 extends React.Component {
             })
         ) as Cesium.Cesium3DTileset;
         tileset.readyPromise.then(() => {
+            if (!this._beMount) return;
+
             viewer.zoomTo(tileset);
             this.doneClassify(viewer);
-            this.addMouseInteractive(viewer, tileset);
+            let handler = this.addMouseInteractive(viewer, tileset);
+
+            this.componentWillUnmount = () => {
+                handler.destroy();
+            }
         });
     }
+
 
     private doneClassify(viewer: Cesium.Viewer) {
         //-----------这种方式写的单体化,有的时候pick不到，so舍弃
@@ -117,5 +124,15 @@ export default class Classification_1 extends React.Component {
                 }
             }
         }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        return handler;
+    }
+
+
+    private _beMount: boolean = false;
+    componentDidMount() {
+        this._beMount = true;
+    }
+    componentWillUnmount() {
+        this._beMount = false;
     }
 }

@@ -44,5 +44,9 @@ export default class UpdateInstancesAttribute extends React.Component {
                 attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.fromRandom());
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        this.componentWillUnmount = () => {
+            handler.destroy();
+        }
     }
 }

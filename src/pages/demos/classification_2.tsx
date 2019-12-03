@@ -11,7 +11,7 @@ export default class Classification_2 extends React.Component {
     }
 
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        Debug.activePick(viewer);//用于找点
+        // Debug.activePick(viewer);//用于找点
         let tileset = viewer.scene.primitives.add(
             new Cesium.Cesium3DTileset({
                 url: Cesium.IonResource.fromAssetId(17732)

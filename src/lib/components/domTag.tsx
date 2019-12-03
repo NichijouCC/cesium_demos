@@ -12,10 +12,6 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
     private trackEntity: Cesium.Entity | undefined;
     protected element: HTMLDivElement;
 
-    componentWillReceiveProps(nextProps: ItagInfoProps) {
-        this.trackPos = nextProps.worldPos;
-        this.trackEntity = nextProps.trackEntity;
-    }
 
     constructor(props: ItagInfoProps) {
         super(props);
@@ -27,16 +23,16 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
         this.props.viewer.scene.preUpdate.addEventListener(this.onUpdate);
     }
 
-    componentWillUnmount() {
-        this.props.viewer.scene.preUpdate.removeEventListener(this.onUpdate);
-    }
+    // componentWillUnmount() {
+    //     this.props.viewer.scene.preUpdate.removeEventListener(this.onUpdate);
+    // }
     private onUpdate = () => {
         let screenPos;
-        if (this.trackEntity) {
+        if (this.props.trackEntity) {
             let pos = this.trackEntity.position.getValue(Cesium.JulianDate.now());
             screenPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.props.viewer.scene, pos);
 
-        } else if (this.trackPos) {
+        } else if (this.props.worldPos) {
             screenPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.props.viewer.scene, this.trackPos);
         }
 
@@ -54,7 +50,7 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
             //     <div className="tag" style={{color:"#FFFF",position:"absolute",top:"14px",left:"17px"}} >{this.props.text}</div>
             // </div>
 
-            < div className="tag" ref={element => this.element = element} style={{ ...this.props.textCss, position: "absolute", whiteSpace: "nowrap" }} >
+            < div className="tag" ref={element => this.element = element} style={{ ...this.props.textCss, color: "#FF33FF", position: "absolute", whiteSpace: "nowrap" }} >
                 {this.props.text}
             </div >
 

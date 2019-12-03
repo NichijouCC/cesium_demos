@@ -13,6 +13,11 @@ export const demosInfo = [
         asyncComponent: () => import("../pages/demos/pointLineFace")
     },
     {
+        title: "地球自转",
+        path: "/earthRotate",
+        asyncComponent: () => import("../pages/demos/cameraRotation")
+    },
+    {
         title: "加载3dtiles",
         path: "/load3dTiles",
         asyncComponent: () => import("../pages/demos/load3dTiles")

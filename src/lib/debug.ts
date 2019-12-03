@@ -38,6 +38,7 @@ export class Debug {
                 // console.warn(Cesium.Cartographic.fromCartesian(picked.position).toString())
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        return rayHandler;
     }
 
 }

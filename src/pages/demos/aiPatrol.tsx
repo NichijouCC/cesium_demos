@@ -34,43 +34,83 @@ export default class AIPatrol extends React.Component {
         }
 
         let pointArr = Cesium.Cartesian3.fromRadiansArrayHeights(degreeArr);
-        let dirArr = [];
-        for (let i = 0; i < pointArr.length - 1; i++) {
-            let dir = Cesium.Cartesian3.subtract(pointArr[i + 1], pointArr[i], new Cesium.Cartesian3());
-            dir = Cesium.Cartesian3.normalize(dir, dir);
-            dirArr.push(dir);
-        }
         viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));
 
-        let speed = 0.01;
-        let curPointIndex = 0;
-        let curPos = pointArr[0];
-        let quat = this.calculateOrientation(pointArr[0], pointArr[1]);
-        ship.orientation = new Cesium.ConstantProperty(quat);
+        new PatrolModel({ ins: ship, viewer: viewer, speed: 0.01, pointArr: pointArr, initRot: Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, Math.PI) });
+    }
+}
 
-        viewer.frameUpdate.addEventListener((deltalTime) => {
-            let moveDelta = Cesium.Cartesian3.multiplyByScalar(dirArr[curPointIndex], speed * deltalTime, new Cesium.Cartesian3());
-            let newPos = Cesium.Cartesian3.add(curPos, moveDelta, new Cesium.Cartesian3());
 
-            let distance = Cesium.Cartesian3.distance(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
-            let newdistance = Cesium.Cartesian3.distance(pointArr[curPointIndex], newPos);
+enum LoopEnum {
+    pingpong,
+    restart
+}
 
-            if (newdistance >= distance) {
-                newPos = Cesium.Cartesian3.clone(pointArr[curPointIndex + 1]);
-                curPointIndex++;
-                if (curPointIndex >= pointArr.length - 1) {//end
-                    curPointIndex = 0;
-                    newPos = Cesium.Cartesian3.clone(pointArr[0]);
-                }
-                let quat = this.calculateOrientation(pointArr[curPointIndex], pointArr[curPointIndex + 1]);
-                ship.orientation = new Cesium.ConstantProperty(quat);
-            }
-            ship.position = new Cesium.ConstantPositionProperty(newPos);
-            curPos = newPos;
-        });
+class PatrolModel {
+    private ins: Cesium.Entity;
+    private options: { ins: Cesium.Entity, viewer: Cesium.Viewer, speed: number, pointArr: Cesium.Cartesian3[], initRot: Cesium.Quaternion, loopType: LoopEnum };
+    constructor(options: { ins: Cesium.Entity, viewer: Cesium.Viewer, speed: number, pointArr: Cesium.Cartesian3[], initRot?: Cesium.Quaternion, loopType?: LoopEnum }) {
+        options.viewer.frameUpdate.addEventListener(this.loop);
+        this.options = { ...options, initRot: options.initRot || Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : LoopEnum.pingpong };
+        this.ins = options.ins;
+
+        this.dispose = () => {
+            options.viewer.frameUpdate.removeEventListener(this.loop);
+        }
+
+        //----------------init
+        this.currentDir = this.calculateDirection(options.pointArr[1], options.pointArr[0]);
+        this.curPointIndex = 0;
+
+        this.curPos = Cesium.Cartesian3.clone(options.pointArr[0]);
+        let quat = this.calculateOrientation(options.pointArr[this.curPointIndex + 1], options.pointArr[this.curPointIndex]);
+        this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.initRot, new Cesium.Quaternion());
+
+
+        //------------start
+        this.active();
     }
 
+    private currentDir: Cesium.Cartesian3;
+    private curPos: Cesium.Cartesian3;
+    private curPointIndex: number;
+    private loop = (deltalTime) => {
+        if (!this.beActived) return;
+        let { pointArr, speed } = this.options;
+        let moveDelta = Cesium.Cartesian3.multiplyByScalar(this.currentDir, speed * deltalTime, new Cesium.Cartesian3());
+        let newPos = Cesium.Cartesian3.add(this.curPos, moveDelta, new Cesium.Cartesian3());
 
+        let distance = Cesium.Cartesian3.distance(pointArr[this.curPointIndex], pointArr[this.curPointIndex + 1]);
+        let newdistance = Cesium.Cartesian3.distance(pointArr[this.curPointIndex], newPos);
+
+        if (newdistance >= distance) {
+            this.curPointIndex++;
+            if (this.curPointIndex >= pointArr.length - 1) {//end
+                this.curPointIndex = 0;
+
+                if (this.options.loopType == LoopEnum.pingpong) {
+                    pointArr.reverse();
+                }
+            }
+            newPos = Cesium.Cartesian3.clone(pointArr[this.curPointIndex]);
+            this.currentDir = this.calculateDirection(pointArr[this.curPointIndex + 1], pointArr[this.curPointIndex]);
+            let quat = this.calculateOrientation(pointArr[this.curPointIndex + 1], pointArr[this.curPointIndex]);
+            this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.initRot, new Cesium.Quaternion());
+        }
+        this.ins.position = newPos;
+        this.curPos = newPos;
+    };
+    private beActived: boolean = false;
+
+    active() {
+        this.beActived = true;
+    }
+
+    disActive() {
+        this.beActived = false;
+    }
+
+    dispose() { }
 
     private calculateOrientation(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
         let dir = new Cesium.Cartesian3();
@@ -84,5 +124,11 @@ export default class AIPatrol extends React.Component {
         let diry = Cesium.Cartesian3.cross(surfaceNormal, right, new Cesium.Cartesian3());
         let quat = Helper.unitxyzToRotation(right, diry, surfaceNormal, new Cesium.Quaternion())
         return quat;
+    }
+
+    private calculateDirection(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
+        let dir = Cesium.Cartesian3.subtract(nextPosition, position, new Cesium.Cartesian3());
+        Cesium.Cartesian3.normalize(dir, dir);
+        return dir;
     }
 }

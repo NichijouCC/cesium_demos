@@ -31,7 +31,7 @@ export default class AislandModelShow extends React.Component {
     }
 
     showModels(viewer: Cesium.Viewer) {
-        Debug.activePick(viewer, PosType.Cartographic_angle);
+        // Debug.activePick(viewer, PosType.Cartographic_angle);
         this.loadModel(viewer, "./models/aisland/robotM.glb", Cesium.Cartesian3.fromRadians(2.1223943281417106, 0.5443208677930021, 6.1775470701822615));
         this.loadModel(viewer, "./models/aisland/drone.glb", Cesium.Cartesian3.fromRadians(2.1223943281417106, 0.5443208677930021, 16.1775470701822615));
         this.loadModel(viewer, "./models/aisland/shipM.glb", Cesium.Cartesian3.fromRadians(2.1223947358329927, 0.5443187651652112, 6.078191713518405), 0.05);

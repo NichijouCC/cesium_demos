@@ -13,14 +13,20 @@ export class AsyncRoute extends Route<IAsyncRouteProps & IcustomeAsyProps> {
     state = {
         component: null,
     }
-
+    private _bemount: boolean = false;
     async componentDidMount() {
+        this._bemount = true;
         const { default: component } = await this.props.asyncComponent();
         if (component == null) {
             console.error("AsyncRoute: importComponent must to be a Deault Export class in props params(asyncComponent) return!");
         } else {
-            this.setState({ component })
+            if (this._bemount) {
+                this.setState({ component })
+            }
         }
+    }
+    componentWillUnmount() {
+        this._bemount = false;
     }
 
     render() {

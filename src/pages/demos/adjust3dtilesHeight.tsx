@@ -10,6 +10,7 @@ class Options {
 }
 export default class Adjust3dtilesHeight extends React.Component {
     gui: any;
+    private bemount: boolean;
     handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
 
@@ -24,6 +25,8 @@ export default class Adjust3dtilesHeight extends React.Component {
         var gui = new dat.GUI();
         this.gui = gui;
         tileset.readyPromise.then((tileset) => {
+            if (!this.bemount) return;
+
             gui.add(options, 'heightAdjust', -50, 50).onChange((value) => {
                 // tiles_a.show = value;
                 let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
@@ -45,8 +48,12 @@ export default class Adjust3dtilesHeight extends React.Component {
             // });
         })
     }
+    componentDidMount() {
+        this.bemount = true;
+    }
 
     componentWillUnmount() {
+        this.bemount = false;
         if (this.gui) {
             this.gui.destroy();
         }

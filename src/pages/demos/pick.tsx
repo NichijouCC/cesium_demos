@@ -28,5 +28,11 @@ export default class MutilplyPick extends React.Component {
         let somPlane = Cesium.Plane.fromPointNormal(sompoint, normal);
         let someRay = new Cesium.Ray(viewer.camera.position, viewer.camera.direction);
         Cesium.IntersectionTests.rayPlane(someRay, somPlane);
+
+
+        this.componentWillUnmount = () => {
+            handler.destroy();
+            rayHandler.destroy();
+        }
     }
 }
