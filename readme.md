@@ -1,6 +1,8 @@
 # ceisum 使用demo、方法或components总结
 
 使用cesium+react+ts编写
+[线上地址](http://106.14.16.109:1010)
+
 
 ## 启动项目
 1. ``yarn``安装依赖
