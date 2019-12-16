@@ -1,8 +1,8 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
+import { CesiumMap } from "../../../lib/map";
 
 import dat from 'dat.gui';
-import { Helper } from "../../lib/helper";
+import { Helper } from "../../../lib/helper";
 
 
 export default class InstancesGltf extends React.Component {

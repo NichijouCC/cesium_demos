@@ -1,7 +1,7 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
-import { Debug } from "../../lib/debug";
-import { Helper } from "../../lib/helper";
+import { CesiumMap } from "../../../lib/map";
+import { Debug } from "../../../lib/debug";
+import { Helper } from "../../../lib/helper";
 
 export default class Classification_2 extends React.Component {
     render() {

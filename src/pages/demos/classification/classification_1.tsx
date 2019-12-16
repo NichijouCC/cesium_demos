@@ -1,6 +1,6 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
-import { Debug } from "../../lib/debug";
+import { CesiumMap } from "../../../lib/map";
+import { Debug } from "../../../lib/debug";
 
 export default class Classification_1 extends React.Component {
     render() {

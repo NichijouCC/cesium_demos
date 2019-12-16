@@ -22,29 +22,45 @@ module.exports = {
         ...baseConfig.module,
         rules: [
             {
-                test: /\.(j|t)sx?$/,
-                include: pathsMap.appPath,
-                exclude: pathsMap.node_modules_path,
-                use: "babel-loader",
-            },
-            {
-                test: /\.(html)$/,
-                loader: 'html-loader'
-            },
-            {
-                test: /\.(scss|css)$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]// 将 Sass 编译成 CSS-》将 CSS 转化成 CommonJS 模块-》将 JS 字符串生成为 style 节点
-            },
-            {
-                test: /\.(jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
-                loader: 'url-loader',
-                options: {
-                    // limit: 8 * 1024, // 小于这个大小的图片，会自动base64编码后插入到代码中
-                    name: '_static/img/[name].[contenthash:8].[ext]',
-                    outputPath: pathsMap.buildPath,
-                    publicPath: pathsMap.publicPath
-                }
-            },
+                oneOf: [
+                    {
+                        test: /\.(j|t)sx?$/,
+                        include: pathsMap.appPath,
+                        exclude: pathsMap.node_modules_path,
+                        use: "babel-loader",
+                    },
+                    {
+                        test: /\.(html)$/,
+                        loader: 'html-loader'
+                    },
+                    {
+                        test: /\.(scss|css)$/,
+                        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]// 将 Sass 编译成 CSS-》将 CSS 转化成 CommonJS 模块-》将 JS 字符串生成为 style 节点
+                    },
+                    {
+                        test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
+                        loader: 'url-loader',
+                        options: {
+                            // limit: 8 * 1024, // 小于这个大小的图片，会自动base64编码后插入到代码中
+                            name: '_static/img/[name].[contenthash:8].[ext]',
+                            outputPath: pathsMap.buildPath,
+                            publicPath: pathsMap.publicPath
+                        }
+                    },
+                    {
+                        loader: 'file-loader',
+                        // Exclude `js` files to keep "css" loader working as it injects
+                        // it's runtime that would otherwise be processed through "file" loader.
+                        // Also exclude `html` and `json` extensions so they get processed
+                        // by webpacks internal loaders.
+                        exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+                        options: {
+                            name: '_static/media/[name].[contenthash:8].[ext]',
+                        },
+                    }
+                ]
+            }
+
         ]
     },
     plugins: [

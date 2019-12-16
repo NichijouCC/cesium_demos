@@ -1,6 +1,6 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
-import { DomAnimationPoint } from "../../lib/components/domAnimationPoint";
+import { CesiumMap } from "../../../lib/map";
+import { DomAnimationPoint } from "../../../lib/components/domAnimationPoint";
 
 export default class Dom_animationPoint extends React.Component {
 

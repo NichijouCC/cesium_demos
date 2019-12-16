@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
+import { CesiumMap } from "../../../lib/map";
 
 export default class UpdateInstancesAttribute extends React.Component {
     render() {

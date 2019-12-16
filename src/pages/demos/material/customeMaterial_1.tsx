@@ -1,5 +1,5 @@
 import React from "react";
-import { CesiumMap } from "../../lib/map";
+import { CesiumMap } from "../../../lib/map";
 
 export default class CustomeMaterial_1 extends React.Component {
     render() {

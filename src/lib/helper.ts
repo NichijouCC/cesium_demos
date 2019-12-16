@@ -133,5 +133,17 @@ export class Helper {
         return modelToWorldMatrix;
     }
 
+    static calculateOrientation(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
+        let dir = new Cesium.Cartesian3();
+        Cesium.Cartesian3.subtract(nextPosition, position, dir);
+        Cesium.Cartesian3.normalize(dir, dir);
+        var surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(position, new Cesium.Cartesian3());
 
+        let right = Cesium.Cartesian3.cross(dir, surfaceNormal, new Cesium.Cartesian3());
+        Cesium.Cartesian3.normalize(right, right);
+
+        let diry = Cesium.Cartesian3.cross(surfaceNormal, right, new Cesium.Cartesian3());
+        let quat = Helper.unitxyzToRotation(right, diry, surfaceNormal, new Cesium.Quaternion())
+        return quat;
+    }
 }
