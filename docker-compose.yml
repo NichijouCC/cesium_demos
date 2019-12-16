@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+    # 服务名称
+  nginx:
+    # 镜像:版本
+    image: nginx:latest 
+    container_name: cesium_demos_nginx
+    restart: always
+    # 映射容器80端口到本地80端口
+    ports:
+     - "1010:80"
+    # 数据卷 映射本地文件到容器
+    volumes:
+    # 映射nginx.conf文件到容器的/etc/nginx/conf.d目录并覆盖default.conf文件
+     - ./nginx.conf:/etc/nginx/nginx.conf
+    # 映射build文件夹到容器的/usr/share/nginx/html文件夹
+     - ./build:/usr/share/nginx/html
+    # 覆盖容器启动后默认执行的命令。
+    command: /bin/bash -c "nginx"
