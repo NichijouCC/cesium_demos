@@ -9,24 +9,32 @@
 2. ``yarn start``启动项目
 
 ## 样例类容
+- 3dtiles
+    - 加载3dtiles
+    - 调整3dtiles高度
+    - 自动调整3dtiles贴合地面
+
+- 地标
+    - 点扩散
+    - 物体标签
+- ai模拟
+    - 自定义路线巡游
+    - 指令机器人
+- 单体化
+    - 建筑单体化1
+    - 建筑单体化2
+- 自定义材质
+    - 电子围栏1
+    - 电子围栏2
+- 性能优化
+    - instances gltf并更新位置
+    - 更新单个geometryinstance属性
 - 点线面与鼠标交互
-- 加载3dtiles
-- 调整3dtiles高度
-- 自动调整3dtiles贴合地面
-- 建筑单体化1
-- 3dtiles 裁剪
 - 地球自旋转
 - 画河流
-- 自定义路线巡游
-- 点扩散
-- 物体标签
-- instances gltf并更新位置
-- 更新单个geometryinstance属性
 - 自定义几何体
-- 自定义材质-电子围栏1
-- 自定义材质-电子围栏2
 - 各种常用pick
-
+- 3dtiles 裁剪
 
 ## 组件
 - domTag （3d物体的dom标签）
