@@ -1,5 +1,5 @@
 import { Helper } from "@/lib/helper";
-import { ImodelOptions } from "./PatrolRobot";
+import { ImodelOptions } from "./patrolRobot";
 export class CommandRobot {
     readonly ins: Cesium.Entity;
     readonly adjustRot: Cesium.Quaternion;

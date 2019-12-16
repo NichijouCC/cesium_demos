@@ -12,14 +12,12 @@ export interface ImodelOptions {
 export class PatrolModel {
     private ins: Cesium.Entity;
     private options: {
-        ins: Cesium.Entity | ImodelOptions;
         speed: number;
         pointArr: Cesium.Cartesian3[];
         loopType: LoopEnum;
         adjustRot: Cesium.Quaternion;
     };
-    constructor(viewer: Cesium.Viewer, options: {
-        ins: Cesium.Entity | ImodelOptions;
+    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | ImodelOptions, options: {
         adjustRot?: Cesium.Quaternion;
         speed: number;
         pointArr: Cesium.Cartesian3[];
@@ -27,11 +25,11 @@ export class PatrolModel {
     }) {
         viewer.frameUpdate.addEventListener(this.loop);
         this.options = { ...options, adjustRot: options.adjustRot != null ? options.adjustRot : Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : LoopEnum.pingpong };
-        if (this.options.ins instanceof Cesium.Entity) {
-            this.ins = this.options.ins;
+        if (ins instanceof Cesium.Entity) {
+            this.ins = ins;
         }
         else {
-            let modelOps = this.options.ins as ImodelOptions;
+            let modelOps = ins as ImodelOptions;
             this.ins = viewer.entities.add({
                 position: modelOps.pos ? modelOps.pos : Cesium.Cartesian3.ZERO,
                 orientation: Cesium.Quaternion.IDENTITY,
@@ -87,7 +85,7 @@ export class PatrolModel {
     disActive() {
         this.beActived = false;
     }
-    dispose() { }
+    dispose() { };
     private calculateDirection(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
         let dir = Cesium.Cartesian3.subtract(nextPosition, position, new Cesium.Cartesian3());
         Cesium.Cartesian3.normalize(dir, dir);
