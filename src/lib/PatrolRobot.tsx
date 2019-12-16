@@ -3,10 +3,11 @@ enum LoopEnum {
     pingpong,
     restart
 }
-interface ImodelOptions {
+export interface ImodelOptions {
     url: string;
     scale?: number;
     pos?: Cesium.Cartesian3;
+    rot?: Cesium.Quaternion;
 }
 export class PatrolModel {
     private ins: Cesium.Entity;
@@ -15,17 +16,17 @@ export class PatrolModel {
         speed: number;
         pointArr: Cesium.Cartesian3[];
         loopType: LoopEnum;
-        initRot: Cesium.Quaternion;
+        adjustRot: Cesium.Quaternion;
     };
     constructor(viewer: Cesium.Viewer, options: {
         ins: Cesium.Entity | ImodelOptions;
-        initRot?: Cesium.Quaternion;
+        adjustRot?: Cesium.Quaternion;
         speed: number;
         pointArr: Cesium.Cartesian3[];
         loopType?: LoopEnum;
     }) {
         viewer.frameUpdate.addEventListener(this.loop);
-        this.options = { ...options, initRot: options.initRot != null ? options.initRot : Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : LoopEnum.pingpong };
+        this.options = { ...options, adjustRot: options.adjustRot != null ? options.adjustRot : Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : LoopEnum.pingpong };
         if (this.options.ins instanceof Cesium.Entity) {
             this.ins = this.options.ins;
         }
@@ -48,7 +49,7 @@ export class PatrolModel {
         this.curPointIndex = 0;
         this.curPos = Cesium.Cartesian3.clone(options.pointArr[0]);
         let quat = Helper.calculateOrientation(options.pointArr[this.curPointIndex + 1], options.pointArr[this.curPointIndex]);
-        this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.initRot, new Cesium.Quaternion());
+        this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.adjustRot, new Cesium.Quaternion());
         //------------start
         this.active();
     }
@@ -74,7 +75,7 @@ export class PatrolModel {
             newPos = Cesium.Cartesian3.clone(pointArr[this.curPointIndex]);
             this.currentDir = this.calculateDirection(pointArr[this.curPointIndex + 1], pointArr[this.curPointIndex]);
             let quat = Helper.calculateOrientation(pointArr[this.curPointIndex + 1], pointArr[this.curPointIndex]);
-            this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.initRot, new Cesium.Quaternion());
+            this.ins.orientation = Cesium.Quaternion.multiply(quat, this.options.adjustRot, new Cesium.Quaternion());
         }
         this.ins.position = newPos;
         this.curPos = newPos;

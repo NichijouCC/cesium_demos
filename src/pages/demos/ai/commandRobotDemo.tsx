@@ -4,9 +4,7 @@ import { CommandRobot } from "../../../lib/commandRobot";
 
 export default class CommandRobotDemo extends React.Component {
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        let robot = new CommandRobot(viewer, "./models/ship/scene.gltf", {
-            initPos: Cesium.Cartesian3.fromDegrees(121, 31, 10)
-        });
+        let robot = new CommandRobot(viewer, { url: "./models/ship/scene.gltf", pos: Cesium.Cartesian3.fromDegrees(121, 31, 10) });
 
         viewer.flyTo(robot.ins, {
             offset: new Cesium.HeadingPitchRange(0, -45 * Math.PI / 180, 500)
