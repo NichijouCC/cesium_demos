@@ -1097,6 +1097,11 @@ declare module Cesium {
         static getRotation(matrix: Matrix4, result: Matrix3): Matrix3;
         static inverse(matrix: Matrix4, result: Matrix4): Matrix4;
         static inverseTransformation(matrix: Matrix4, result: Matrix4): Matrix4;
+        static fromTranslationRotationScale(rts: TranslationRotationScale, result: Matrix4);
+    }
+
+    class TranslationRotationScale {
+        constructor(pos: Cartesian3, quat: Quaternion, scale: Cartesian3);
     }
 
     class NearFarScalar extends Packable {
