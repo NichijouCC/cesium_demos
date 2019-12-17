@@ -3599,6 +3599,7 @@ declare module Cesium {
     abstract class Frustum {
         near: number;
         far: number;
+        fov: number;
         readonly projectionMatrix: Matrix4;
         computeCullingVolume(position: Cartesian3, direction: Cartesian3, up: Cartesian3): CullingVolume;
         getPixelDimensions(drawingBufferWidth: number, drawingBufferHeight: number, distance: number, result: Cartesian2): Cartesian2;

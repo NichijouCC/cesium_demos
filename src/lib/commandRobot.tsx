@@ -1,4 +1,4 @@
-import { Helper } from "@/lib/helper";
+import { Helper } from "./helper";
 import { ImodelOptions } from "./patrolRobot";
 export class CommandRobot {
     readonly ins: Cesium.Entity;

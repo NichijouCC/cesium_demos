@@ -109,6 +109,22 @@ export const demosInfo = [
         ]
     },
     {
+        title: "视屏",
+        path: "/videoFusion",
+        childs: [
+            {
+                title: "视频融合",
+                path: "/videoFusion",
+                asyncComponent: () => import("../pages/demos/video/videoFusion")
+            },
+            {
+                title: "视频融合编辑器",
+                path: "/videoFusionEditor",
+                asyncComponent: () => import("../pages/demos/video/videoFusionEditorTool")
+            }
+        ]
+    },
+    {
         title: "点线面",
         path: "/pointLineFace",
         asyncComponent: () => import("../pages/demos/pointLineFace")
