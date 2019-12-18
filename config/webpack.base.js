@@ -82,6 +82,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: 'public', ignore: ['index.html'] },
+            { from: "src/lib/libAssets", to: "./libAssets" }
         ]),
         new HtmlWebpackPlugin({
             template: pathsMap.indexHtmlPath,
