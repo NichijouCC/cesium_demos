@@ -1,28 +1,28 @@
-import { Helper } from "@/lib/helper";
+import { Helper } from "./helper";
+import { ImodelOptions } from "./patrolRobot";
 export class CommandRobot {
-    private haveInitPos: boolean;
     readonly ins: Cesium.Entity;
-    readonly initrot: Cesium.Quaternion;
-    constructor(viewer: Cesium.Viewer, url: string, options?: {
-        initPos?: Cesium.Cartesian3;
-        initRot?: number;
-        scale?: number;
-    }) {
-        this.haveInitPos = options != null && options.initPos != null;
-        options = options || {};
-        let pos = options.initPos || Cesium.Cartesian3.ZERO;
-        let rotAngle = options.initRot != null ? options.initRot : 0;
-        let rot = Cesium.Transforms.headingPitchRollQuaternion(pos, new Cesium.HeadingPitchRoll(0, rotAngle * Math.PI / 180));
-        this.initrot = Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, rotAngle * Math.PI / 180);
-        let scale = options.scale || 1.0;
-        this.ins = viewer.entities.add({
-            position: pos,
-            orientation: rot,
-            model: {
-                uri: url,
-                scale: scale
-            }
-        });
+    readonly adjustRot: Cesium.Quaternion;
+    /**
+     * 
+     * @param viewer 
+     * @param ins 
+     * @param adjustRotAngle 角度
+     */
+    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | ImodelOptions, adjustRotAngle?: number) {
+        if (ins instanceof Cesium.Entity) {
+            this.ins = ins;
+        } else {
+            let modelOps = ins as ImodelOptions;
+            this.ins = viewer.entities.add({
+                position: modelOps.pos ? modelOps.pos : Cesium.Cartesian3.ZERO,
+                model: {
+                    uri: modelOps.url,
+                    scale: modelOps.scale != null ? modelOps.scale : 1.0
+                }
+            });
+        }
+        this.adjustRot = adjustRotAngle != null ? Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, adjustRotAngle * Math.PI / 180) : Cesium.Quaternion.IDENTITY;
         viewer.frameUpdate.addEventListener(this.loop.bind(this));
         this.dispose = () => {
             viewer.frameUpdate.removeEventListener(this.loop.bind(this));
@@ -43,7 +43,7 @@ export class CommandRobot {
         this.costTime = 0;
         //-----------rot
         let quat = Helper.calculateOrientation(this.targetPos, this.startPos);
-        this.ins.orientation = Cesium.Quaternion.multiply(quat, this.initrot, new Cesium.Quaternion());
+        this.ins.orientation = Cesium.Quaternion.multiply(quat, this.adjustRot, new Cesium.Quaternion());
     }
     /**
      * 发送目标点给机器人
@@ -53,13 +53,9 @@ export class CommandRobot {
             pos: pos,
             time: new Date(),
         };
-        if (this.lastOrder == null && !this.haveInitPos) {
-            this.ins.position = newPos.pos;
-        }
-        else {
-            let duration = this.lastOrder ? newPos.time.getTime() - this.lastOrder.time.getTime() : 1000;
-            this._moveToPos(Cesium.Cartesian3.clone(pos), duration);
-        }
+        let duration = this.lastOrder ? newPos.time.getTime() - this.lastOrder.time.getTime() : 1000;
+        this._moveToPos(Cesium.Cartesian3.clone(pos), duration);
+
         this.lastOrder = newPos;
     }
     private loop(deltTime: number) {

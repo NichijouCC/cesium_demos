@@ -93,6 +93,22 @@ export const demosInfo = [
         ]
     },
     {
+        title: "视频",
+        path: "/videoFusion",
+        childs: [
+            {
+                title: "视频融合",
+                path: "/videoFusion",
+                asyncComponent: () => import("../pages/demos/video/videoFusion")
+            },
+            {
+                title: "视频融合编辑器",
+                path: "/videoFusionEditor",
+                asyncComponent: () => import("../pages/demos/video/videoFusionEditorTool")
+            }
+        ]
+    },
+    {
         title: "性能优化",
         path: "/performances",
         childs: [
