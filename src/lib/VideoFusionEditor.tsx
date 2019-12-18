@@ -52,11 +52,13 @@ export class VideoFusionEditor {
         options.LogVideoInfo = () => {
             let logInfo = {} as IvideoEditedInfo;
             logInfo.aspect = options.aspect;
-            logInfo.cameraOffset = options.camerOffset;
-
-            logInfo.pos = [this.currentPos.x, this.currentPos.y, this.currentPos.z];
+            // logInfo.cameraOffset = options.camerOffset;
+            let pos= Cesium.Matrix4.getTranslation(this.videoFusion.modelMatrix, new Cesium.Cartesian3());
+            let rotmat=Cesium.Matrix4.getRotation(this.videoFusion.modelMatrix,new Cesium.Matrix3());
+            let quat=Cesium.Quaternion.fromRotationMatrix(rotmat);
+            logInfo.pos = [pos.x, pos.y, pos.z];
             // logInfo.pos = getCarArr(this.currentPos);
-            logInfo.quat = [this.currentQuat.x, this.currentQuat.y, this.currentQuat.z, this.currentQuat.w];
+            logInfo.quat = [quat.x, quat.y, quat.z, quat.w];
             logInfo.cameraPositon = [viewer.camera.positionWC.x, viewer.camera.positionWC.y, viewer.camera.positionWC.z];
             // logInfo.cameraPositon = getCarArr(viewer.camera.positionWC);
             logInfo.cameraHeadPithRoll = [viewer.camera.heading, viewer.camera.pitch, viewer.camera.roll];
@@ -88,7 +90,7 @@ export class VideoFusionEditor {
                 let worldPos = Cesium.Matrix4.getTranslation(this.videoFusion.modelMatrix, new Cesium.Cartesian3());
                 let camWorldPos = this.viewer.camera.positionWC;
                 options.camerOffset = Cesium.Cartesian3.distance(worldPos, camWorldPos);
-                options.fov = this.viewer.camera.frustum.fov;
+                options.fov = this.viewer.camera.frustum.fov*180/Math.PI;
             }
         };
         gui.add(options, 'active').onChange((value) => {
@@ -198,7 +200,7 @@ class GuiOptions {
 }
 export interface IvideoEditedInfo {
     aspect: number;
-    cameraOffset: number;
+    // cameraOffset: number;
     pos: number[];
     quat: number[];
     cameraPositon: number[];

@@ -1,6 +1,6 @@
 # ceisum 使用demo、方法或components总结
 
-使用cesium+react+ts编写
+使用cesium+react+ts编写的cesium使用样例库。可作为学习cesium代码库，也可作为cesium项目的基本框架，本项目包含cesium各种使用的上层封装，以协助开发的编辑工具，也包含antd，react-route等常见lib的简单使用。
 [线上地址](http://106.14.16.109:1010)
 
 
@@ -26,6 +26,9 @@
 - 自定义材质
     - 电子围栏1
     - 电子围栏2
+- 视频
+    - 视频融合
+    - 视频融合编辑工具
 - 性能优化
     - instances gltf并更新位置
     - 更新单个geometryinstance属性
@@ -36,11 +39,7 @@
 - 各种常用pick
 - 3dtiles 裁剪
 
-## 组件
-- domTag （3d物体的dom标签）
-- domAnimationPoint (3d位置点或物体的 dom点扩散光环)
 
 
 ## 交流
-
 qq群 334522247
