@@ -150,7 +150,11 @@ export const demosInfo = [
         path: "/customeGeometry",
         asyncComponent: () => import("../pages/demos/customeGeometry")
     },
-
+    {
+        title: "屏幕色调调整",
+        path: "/screenAdjust",
+        asyncComponent: () => import("../pages/demos/screenAdjust")
+    },
     // {
     //     title: "模型展示",
     //     path: "/modelsShow",
