@@ -34,8 +34,10 @@ export class LeftMenu extends React.Component {
         } else {
             return (
                 <Menu.Item key={currentPath}>
-                    <Icon type="global" />
-                    <span><Link to={currentPath}></Link>{item.title}</span>
+                    <Link to={currentPath}>
+                        <Icon type="global" />
+                        <span>{item.title}</span>
+                    </Link>
                 </Menu.Item>
             )
         }
@@ -54,9 +56,11 @@ export class LeftMenu extends React.Component {
                     <img src={Logo} alt="logo" style={{ width: "80%", height: "10%", marginTop: '24px', }} />
                 </span>
                 </div> */}
-                <Button type="primary" onClick={this.toggleCollapsed} style={{ margin: 16 }}>
-                    <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
-                </Button>
+                <div style={{display:"flex",alignItems: "flex-end", justifyContent: "flex-end"}}>
+                    <Button type="primary" onClick={this.toggleCollapsed} style={{ margin: 16 }}>
+                        <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                    </Button>
+                </div>
                 <HashRouter>
                     <Menu 
                         defaultSelectedKeys={["0"]} 
