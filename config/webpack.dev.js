@@ -27,7 +27,7 @@ module.exports = {
         ...baseConfig.plugins,
     ],
     devServer: {
-        port: 8080,
+        port: 8181,
         host: 'localhost',
         contentBase: path.join(__dirname, '../public'),
         watchContentBase: true,
