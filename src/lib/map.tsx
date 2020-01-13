@@ -80,6 +80,16 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             viewer.frameUpdate.raiseEvent(deltaTime);
         });
 
+        //-----------------------------
+        (viewer as any).excuteFrameTask=(task:(deltaTime:number)=>void)=>{
+            viewer.frameUpdate.addEventListener(task);
+            return {
+                end:()=>{
+                    viewer.frameUpdate.removeEventListener(task);
+                }
+            }
+        }
+
         if (this.props.onViewerLoaded != null) {
             this.props.onViewerLoaded(viewer);
         }
@@ -131,7 +141,6 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         );
     }
 }
-
 
 const MapConfig = {
     ION: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGRlYTM0ZS0zYjQzLTQ0N2EtYTk4ZS0zNmIwMmU3MDRkNTIiLCJpZCI6MTkzMSwiaWF0IjoxNTMwNzU5NTg3fQ.nt8CVoWjIXTeDM9T6qPs-dM7tb7IWnNc56mzAqhcBBY',

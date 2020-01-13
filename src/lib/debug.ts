@@ -17,7 +17,7 @@ export class Debug {
         });
     }
 
-    static activePick(viewer: Cesium.Viewer, type: PosType = PosType.Cartographic) {
+    static activePick(viewer: Cesium.Viewer, type: PosType = PosType.Cartographic, onPick?: (pos: Cesium.Cartographic) => void) {
         let rayHandler = new Cesium.ScreenSpaceEventHandler();
         rayHandler.setInputAction((event) => {
             let ray = viewer.camera.getPickRay(event.position);
@@ -35,10 +35,34 @@ export class Debug {
                         console.warn(car.longitude * 180 / Math.PI + "," + car.latitude * 180 / Math.PI + "," + car.height);
                         break;
                 }
+                if (onPick) {
+                    let cargo = Cesium.Cartographic.fromCartesian(picked.position);
+                    onPick(cargo);
+                }
                 // console.warn(Cesium.Cartographic.fromCartesian(picked.position).toString())
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
         return rayHandler;
     }
 
+    static logCameraInfo(viewer: Cesium.Viewer) {
+        let pos = [viewer.camera.positionWC.x, viewer.camera.positionWC.y, viewer.camera.positionWC.z];
+        let hpr = [viewer.camera.heading, viewer.camera.pitch, viewer.camera.roll];
+        let info = JSON.stringify({ pos, hpr });
+        console.log(info);
+        return info;
+    }
+
+    static loadCameraInfo(viewer: Cesium.Viewer, info: string) {
+        let { pos, hpr } = JSON.parse(info);
+        viewer.camera.setView({
+            // destination: new Cesium.Cartesian3(this.editorInfo.cameraPositon[0], this.editorInfo.cameraPositon[1], this.editorInfo.cameraPositon[2]),
+            destination: new Cesium.Cartesian3(pos[0], pos[1], pos[2]),
+            orientation: {
+                heading: hpr[0],
+                pitch: hpr[1],
+                roll: hpr[2],
+            }
+        });
+    }
 }

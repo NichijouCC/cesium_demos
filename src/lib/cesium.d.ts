@@ -4616,7 +4616,8 @@ declare module Cesium {
         zoomTo(target: Cesium3DTileset | Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>, offset?: HeadingPitchRange): Promise<boolean>;
         flyTo(target: Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>,
             options?: { duration?: number; maximumHeight?: number; offset?: HeadingPitchRange }): Promise<boolean>;
-        frameUpdate: Event;
+        frameUpdate: Event;//毫秒
+        excuteFrameTask(task:(detalTime:number)=>void):{end:()=>void}
     }
 
     namespace Viewer {

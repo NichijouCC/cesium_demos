@@ -1,5 +1,20 @@
 import { Helper } from "./helper";
 import { ImodelOptions } from "./patrolRobot";
+/**
+ * --------------------------------------------------------------------------------
+ *              传递entity实例的方式使用
+ * --------------------------------------------------------------------------------
+ * let robot=new CommandRobot(viewer,entityIns)
+ * robot.sendTargetPos(xxpos);
+ * 
+ * 
+ * ----------------------------------------------------------------------------
+ *              传递entity gltf url的方式使用
+ * ------------------------------------------------------------------------------
+ * let robot=new CommandRobot(viewer,{url:xxx,pos:xxx,scale:xxx})
+ * robot.sendTargetPos(xxpos);
+ * 
+ */
 export class CommandRobot {
     readonly ins: Cesium.Entity;
     readonly adjustRot: Cesium.Quaternion;
