@@ -24,10 +24,13 @@ export default class CustomeRiver extends React.Component {
             }
             return riverPoint;
         }).then((riverPoint) => {
+
+            let points=Cesium.Cartesian3.fromDegreesArray(riverPoint);
+
             let polygon = new Cesium.PolygonGeometry({
-                polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray(riverPoint)),
+                polygonHierarchy: new Cesium.PolygonHierarchy(points),
                 extrudedHeight: 0,
-                height: 3,
+                height: 0.1,
                 vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT
             });
             let inc = new Cesium.GeometryInstance({
@@ -41,31 +44,33 @@ export default class CustomeRiver extends React.Component {
                 show: true
             });
             let a = 0.3;
-            let colorg = new Cesium.Color(a * 3.0 / 255, a * 42.0 / 255, a * 111.0 / 255, 1.0);
+            let colorg = new Cesium.Color(a * 3.0 / 255, a * 42.0 / 255, a * 111.0 / 255, 0.8);
             var River_Material = new Cesium.Material({
                 fabric: {
                     type: 'Water',
                     uniforms: {
                         baseWaterColor: colorg,
-                        specularIntensity: 0.0001,
+                        specularIntensity: 0.5,
                         normalMap: './images/riverNormal.jpg',
-                        frequency: 500.0,
+                        frequency: 5000.0,
                         animationSpeed: 0.01,
-                        amplitude: 10.0
+                        amplitude: 2
                     }
                 }
             });
             River.appearance.material = River_Material;
             viewer.scene.primitives.add(River);
 
-            viewer.camera.setView({
-                destination: new Cesium.Cartesian3(-2862254.210290102, 4651511.794501719, 3283563.2216813704),
-                orientation: {
-                    heading: 6.159615851035844, // east, default value is 0.0 (north)
-                    pitch: -0.6766046253129958,    // default value (looking down)
-                    roll: 6.282714572962707                             // default value
-                }
-            })
+            viewer.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(points),{offset:new Cesium.HeadingPitchRange(0,-90*Math.PI/180,1000)});
+
+            // viewer.camera.setView({
+            //     destination: new Cesium.Cartesian3(-2862254.210290102, 4651511.794501719, 3283563.2216813704),
+            //     orientation: {
+            //         heading: 0, // east, default value is 0.0 (north)
+            //         pitch: -90*Math.PI/180,    // default value (looking down)
+            //         roll: 0                             // default value
+            //     }
+            // })
         }).catch(err => {
             console.error(err);
         });

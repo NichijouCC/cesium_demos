@@ -3,3 +3,4 @@
 /static/3dtiles
 /*.lock
 /*.log
+/.vscode
