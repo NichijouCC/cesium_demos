@@ -8,7 +8,7 @@ import { DeafaultPage } from "@/pages/deaultPage";
 
 export const demosInfo = [
     {
-        title: "3dtiles",
+        title: "资源加载",
         path: "/3dtiles",
         childs: [
             {
@@ -25,6 +25,11 @@ export const demosInfo = [
                 title: "自动调整3dtiles高度贴合地面",
                 path: "/autoAdjust3dtilesHeight",
                 asyncComponent: () => import("../pages/demos/3dtiles/autoAdjust3dtilesHeight")
+            },
+            {
+                title: "加载kml",
+                path: "/loadKml",
+                asyncComponent: () => import("../pages/demos/3dtiles/loadKml")
             },
         ]
     },
@@ -167,19 +172,24 @@ export const demosInfo = [
     // },
 ]
 
-export interface IrouteInfo {
+export interface IrouteInfo
+{
     title: string,
     path: string,
     asyncComponent: () => Promise<any>,
     childs?: IrouteInfo[]
 }
 
-export const Demos = () => {
+export const Demos = () =>
+{
 
-    let func = (child: IrouteInfo, parentpath: string, routeArr: React.ReactNode[]) => {
-        if (child.childs != null) {
+    let func = (child: IrouteInfo, parentpath: string, routeArr: React.ReactNode[]) =>
+    {
+        if (child.childs != null)
+        {
             child.childs.forEach(item => func(item, child.path, routeArr))
-        } else {
+        } else
+        {
             let routePath = parentpath + child.path;
             routeArr.push(<AsyncRoute key={routePath} exact path={routePath} asyncComponent={child.asyncComponent} />);
         }
