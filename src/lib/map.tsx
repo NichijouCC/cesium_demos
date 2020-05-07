@@ -24,7 +24,13 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
 
     setUp(options?: {
         imageryProvider?: any,
-        imageryProviderViewModels?: Cesium.ProviderViewModel[]
+        imageryProviderViewModels?: Cesium.ProviderViewModel[],
+        orderIndependentTranslucency?: boolean,
+        contextOptions?: {
+            webgl?: {
+                alpha?: boolean,
+            }
+        }
     }): Cesium.Viewer {
         console.warn("ceisum 启动！！");
         this.setState({ beActived: true });

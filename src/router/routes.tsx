@@ -160,6 +160,11 @@ export const demosInfo = [
         path: "/screenAdjust",
         asyncComponent: () => import("../pages/demos/screenAdjust")
     },
+    {
+        title: "背景/图层清除",
+        path: "/cleatBg",
+        asyncComponent: () => import("../pages/demos/clearSky")
+    },
     // {
     //     title: "模型展示",
     //     path: "/modelsShow",
@@ -172,24 +177,19 @@ export const demosInfo = [
     // },
 ]
 
-export interface IrouteInfo
-{
+export interface IrouteInfo {
     title: string,
     path: string,
     asyncComponent: () => Promise<any>,
     childs?: IrouteInfo[]
 }
 
-export const Demos = () =>
-{
+export const Demos = () => {
 
-    let func = (child: IrouteInfo, parentpath: string, routeArr: React.ReactNode[]) =>
-    {
-        if (child.childs != null)
-        {
+    let func = (child: IrouteInfo, parentpath: string, routeArr: React.ReactNode[]) => {
+        if (child.childs != null) {
             child.childs.forEach(item => func(item, child.path, routeArr))
-        } else
-        {
+        } else {
             let routePath = parentpath + child.path;
             routeArr.push(<AsyncRoute key={routePath} exact path={routePath} asyncComponent={child.asyncComponent} />);
         }
