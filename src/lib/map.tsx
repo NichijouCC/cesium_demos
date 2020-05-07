@@ -6,57 +6,30 @@ window.Cesium = cs;
 // require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
 
-let _cesiummapIns: CesiumMap;
-export const cesiumMapIns = () => {
-    return _cesiummapIns;
-}
-
 export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
 
     private _viewer: Cesium.Viewer;
+    get viewer() { return this._viewer; }
     state = {
         beActived: false
     }
     private get containerId() {
         return this.props.id || "__cesiumContainer"
     }
-    private static _ins: CesiumMap;
-    private static listener: any[] = [];
-    static get ins(): Promise<CesiumMap> {
-        if (this._ins != null) {
-            return Promise.resolve(this._ins);
-        } else {
-            return new Promise((resolve, reject) => {
-                let active = (ins) => {
-                    resolve(ins);
-                };
-                this.listener.push(active);
-            });
-        }
-    }
-
-    private static set __ins(value: CesiumMap) {
-        if (CesiumMap.listener.length > 0) {
-            CesiumMap.listener.forEach(func => func(value));
-            CesiumMap.listener = [];
-        }
-        this._ins = value;
-    }
-
     componentDidMount() {
         if (this.props.setUp != false) {
             this.setUp();
         }
-        CesiumMap.__ins = this;
     }
 
-    setUp(): Cesium.Viewer {
-
+    setUp(options?: {
+        imageryProvider?: any,
+        imageryProviderViewModels?: Cesium.ProviderViewModel[]
+    }): Cesium.Viewer {
         console.warn("ceisum 启动！！");
         this.setState({ beActived: true });
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMzJmNDgwZi1iNmQ2LTQ0NWEtOWRkNi0wODkxYzYxYTg0ZDIiLCJpZCI6ODUzMiwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjIwMjY4OH0.u4d7x0IxZY06ThT4JFmxrfgBxVjQcfI6xXDLu-fsWsY';
-        // CesiumIon.defaultAccessToken = Config.ION;
-        let viewer: Cesium.Viewer = new Cesium.Viewer(this.containerId, MapConfig.MAPOPTIONS);
+        Cesium.Ion.defaultAccessToken = MapConfig.ION;
+        let viewer: Cesium.Viewer = new Cesium.Viewer(this.containerId, { ...MapConfig.MAPOPTIONS, ...options });
 
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//移除双击选中
@@ -81,23 +54,18 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         });
 
         //-----------------------------
-        (viewer as any).excuteFrameTask=(task:(deltaTime:number)=>void)=>{
+        (viewer as any).excuteFrameTask = (task: (deltaTime: number) => void) => {
             viewer.frameUpdate.addEventListener(task);
             return {
-                end:()=>{
-                    viewer.frameUpdate.removeEventListener(task);
-                }
+                end: () => viewer.frameUpdate.removeEventListener(task)
             }
         }
-
         if (this.props.onViewerLoaded != null) {
             this.props.onViewerLoaded(viewer);
         }
         this._viewer = viewer;
         return viewer;
     }
-
-
 
     destroy() {
         if (this.state.beActived) {
@@ -109,16 +77,7 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             }
         }
     }
-    /**
-     * 如果未启动，启动
-     */
-    get viewer(): Cesium.Viewer {
-        if (this.state.beActived) {
-            return this._viewer;
-        } else {
-            return this.setUp();
-        }
-    }
+
 
     componentWillUnmount() {
         this.destroy();
@@ -136,14 +95,13 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             display: this.state.beActived ? "inline" : "none"
         };
         return (
-            <div id={this.containerId} style={containerStyle}>
-            </div>
+            <div id={this.containerId} style={containerStyle}></div>
         );
     }
 }
 
 const MapConfig = {
-    ION: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGRlYTM0ZS0zYjQzLTQ0N2EtYTk4ZS0zNmIwMmU3MDRkNTIiLCJpZCI6MTkzMSwiaWF0IjoxNTMwNzU5NTg3fQ.nt8CVoWjIXTeDM9T6qPs-dM7tb7IWnNc56mzAqhcBBY',
+    ION: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMzJmNDgwZi1iNmQ2LTQ0NWEtOWRkNi0wODkxYzYxYTg0ZDIiLCJpZCI6ODUzMiwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjIwMjY4OH0.u4d7x0IxZY06ThT4JFmxrfgBxVjQcfI6xXDLu-fsWsY',
     global: {
         enableLighting: false,
         depthTestAgainstTerrain: true,

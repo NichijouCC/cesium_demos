@@ -55,7 +55,7 @@ export default class Classification_2 extends React.Component {
         handler.setInputAction((event) => {
             let ray = viewer.camera.getPickRay(event.endPosition);
             let picked = viewer.scene.pickFromRay(ray, [tileset]);
-            console.warn(picked)
+            // console.warn(picked)
             // let ray = viewer.camera.getPickRay(event.endPosition);
             // let picked = viewer.scene.pickFromRay(ray, [tileset]);
             // console.warn(picked)
@@ -168,7 +168,7 @@ export default class Classification_2 extends React.Component {
                 },
             }
         });
-        console.warn(appearance)
+        // console.warn(appearance)
         let geometry = new Cesium.GeometryInstance({
             geometry: Cesium.BoxGeometry.fromDimensions({
                 dimensions: options.dimensions,

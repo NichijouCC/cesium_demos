@@ -1,6 +1,7 @@
 import React from "react";
 import { CesiumMap } from "../../../lib/map";
 import DomTagInfo from "../../../lib/components/domTag";
+import { DomAnimationPoint } from "@/lib";
 
 export default class Dom_tagInfo extends React.Component {
     static title = "物体标签";
@@ -20,7 +21,7 @@ export default class Dom_tagInfo extends React.Component {
             <React.Fragment>
                 <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
-                    this.state.viewer ? this.pointArr.map((item, index) => <DomTagInfo key={index} viewer={this.state.viewer} worldPos={item} text={"xxx标签"} />) : null
+                    this.state.viewer ? this.pointArr.map((item, index) => <DomAnimationPoint key={index} viewer={this.state.viewer} worldPos={item} text={"xxx标签"} />) : null
                 }
             </React.Fragment>
         )

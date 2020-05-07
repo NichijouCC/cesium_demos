@@ -35,7 +35,18 @@
     margin-left: -2px;
 }
 
-.content .one{position: absolute;left:600px; top:100px;}
+.content .one{
+    position: absolute;
+    left:600px; 
+    top:100px;
+    .text {
+        white-space: nowrap;
+        width: 0;
+        height: 0;
+        font-size: 1.2rem;
+        transform: translate(2rem, -0.5rem);
+        color: greenyellow;
+      }}
 
 @keyframes myfirst{
     10% {transform: scale(1);}

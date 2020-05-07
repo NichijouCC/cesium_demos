@@ -21,12 +21,12 @@ export default class ScreenAdjustDemo extends React.Component {
             let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, -25, new Cesium.Cartesian3());
             tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
         });
-        this.adjustScreen();
+        this.adjustScreen(viewer);
     }
 
-    private adjustScreen() {
+    private adjustScreen(viewer: Cesium.Viewer) {
         let onchangeOption = () => {
-            ScreenAdjust.set(options);//调整屏幕色调
+            ScreenAdjust.set(viewer, options);//调整屏幕色调
         }
 
         let gui = new dat.GUI();

@@ -35,9 +35,8 @@ export class ScreenAdjust {
     }
 
     private static stage: Cesium.PostProcessStage;
-    static async set(options: { brightness?: number, saturation?: number, contrast?: number }) {
+    static async set(viewer: Cesium.Viewer, options: { brightness?: number, saturation?: number, contrast?: number }) {
         if (this.stage == null) {
-            let viewer = (await CesiumMap.ins).viewer;
             this.stage = this.init(viewer);
         }
         if (options.brightness != null) {

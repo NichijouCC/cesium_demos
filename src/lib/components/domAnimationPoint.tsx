@@ -1,7 +1,7 @@
 import DomTagInfo from "./domTag";
 import React from "react";
 
-import "./domAnimationPoint.css";
+import "./domAnimationPoint.scss";
 export class DomAnimationPoint extends DomTagInfo {
     render() {
         return (
@@ -9,6 +9,7 @@ export class DomAnimationPoint extends DomTagInfo {
                 <div className="one" ref={element => this.element = element}>
                     <p></p>
                     <span></span>
+                    <div className="text">{this.props.text}</div>
                 </div>
             </div>
         );
