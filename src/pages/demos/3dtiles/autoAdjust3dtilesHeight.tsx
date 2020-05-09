@@ -11,20 +11,29 @@ export default class AutoAdjust3dtilesHeight extends React.Component {
         )
     }
     handleViewerLoaded(viewer: Cesium.Viewer) {
-        let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
-        let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: modelPath,
-            maximumScreenSpaceError: 0.8,
-            maximumNumberOfLoadedTiles: 100,
+        let modelPath = Cesium.IonResource.fromAssetId(17732);
+        let tileset = viewer.scene.primitives.add(
+            new Cesium.Cesium3DTileset({
+                url: modelPath,
+                maximumScreenSpaceError: 0.8,
+                maximumNumberOfLoadedTiles: 100,
+            })
+        ) as Cesium.Cesium3DTileset;
 
-        })) as Cesium.Cesium3DTileset;
         tileset.readyPromise.then((tileset) => {
             if (!this._beMount) return;
-            //----------------调整高度
-            Helper.clamp3dtilesToGround(viewer, tileset, (tilest) => {
+            //抬高100m, 注意:因为用的官方资源是贴地的，所以先抬高100m，再用贴地方法进行贴地
+            let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
+            let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, 100, new Cesium.Cartesian3());
+            tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
+            viewer.zoomTo(tileset);
+        });
+
+        //------------进行贴地
+        Helper.clamp3dtilesToGround(viewer, tileset)
+            .then((tilest) => {
                 viewer.scene.camera.flyToBoundingSphere(tilest.boundingSphere);
             });
-        });
     }
     private _beMount: boolean = false;
     componentDidMount() {

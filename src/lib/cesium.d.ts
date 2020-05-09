@@ -3258,6 +3258,7 @@ declare module Cesium {
         allTilesLoaded: Event;
         boundingSphere: BoundingSphere;
         show: boolean;
+        initialTilesLoaded: Event;
     }
 
     class ImageryLayer {
@@ -3927,6 +3928,7 @@ declare module Cesium {
         requestRender(): void;
         pickFromRay(ray: Ray, obk: any[]): { object: any, position: Cartesian3 };
         render(): void;
+        clampToHeight: (pos: Cartesian3, objectExclude?: any[]) => Cartesian3;
     }
 
     class ScreenSpaceCameraController {
@@ -4617,7 +4619,7 @@ declare module Cesium {
         flyTo(target: Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>,
             options?: { duration?: number; maximumHeight?: number; offset?: HeadingPitchRange }): Promise<boolean>;
         frameUpdate: Event;//毫秒
-        excuteFrameTask(task:(detalTime:number)=>void):{end:()=>void}
+        excuteFrameTask(task: (detalTime: number) => void): { end: () => void }
     }
 
     namespace Viewer {

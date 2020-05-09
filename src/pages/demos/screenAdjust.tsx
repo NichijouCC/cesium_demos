@@ -7,20 +7,16 @@ export default class ScreenAdjustDemo extends React.Component {
     gui: any;
     private _beMount: boolean;
     private handleViewerLoaded(viewer: Cesium.Viewer) {
-        let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
-        let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: modelPath,
-            maximumScreenSpaceError: 0.8,
-            maximumNumberOfLoadedTiles: 100,
-            // shadows: Cesium.ShadowMode.DISABLED
-        }));
+        let modelPath = Cesium.IonResource.fromAssetId(17732);
+        let tileset = viewer.scene.primitives.add(
+            new Cesium.Cesium3DTileset({
+                url: modelPath,
+                maximumScreenSpaceError: 0.8,
+                maximumNumberOfLoadedTiles: 100,
+            })
+        ) as Cesium.Cesium3DTileset;
+
         viewer.zoomTo(tileset);
-        tileset.readyPromise.then((tileset) => {
-            if (!this._beMount) return;
-            let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
-            let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, -25, new Cesium.Cartesian3());
-            tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
-        });
         this.adjustScreen(viewer);
     }
 
@@ -55,7 +51,7 @@ export default class ScreenAdjustDemo extends React.Component {
 }
 
 class ScreenOptions {
-    brightness: number = 1.6;
-    saturation: number = 1.9;
-    contrast: number = 1.0;
+    brightness: number = 1.6;//亮度
+    saturation: number = 1.9;//饱和度
+    contrast: number = 1.0;//对比度
 }

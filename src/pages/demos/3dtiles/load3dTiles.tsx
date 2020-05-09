@@ -10,14 +10,15 @@ export default class Load3dtiles extends React.Component {
     }
 
     private handleViewerLoaded(viewer: Cesium.Viewer) {
-        let modelPath = "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json"
+        let modelPath = Cesium.IonResource.fromAssetId(17732);
+        let tileset = viewer.scene.primitives.add(
+            new Cesium.Cesium3DTileset({
+                url: modelPath,
+                maximumScreenSpaceError: 0.8,
+                maximumNumberOfLoadedTiles: 100,
+            })
+        ) as Cesium.Cesium3DTileset;
 
-        let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: modelPath,
-            maximumScreenSpaceError: 0.8,
-            maximumNumberOfLoadedTiles: 100,
-            // shadows: Cesium.ShadowMode.DISABLED
-        }));
         viewer.zoomTo(tileset);
     }
 }

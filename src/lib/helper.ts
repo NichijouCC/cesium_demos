@@ -1,21 +1,16 @@
 import { Debug } from "./debug";
 
 export class Helper {
-    static clamp3dtilesToGround(viewer: Cesium.Viewer, tileset: Cesium.Cesium3DTileset, callBack?: (tilest: Cesium.Cesium3DTileset) => void) {
-        viewer.scene.camera.viewBoundingSphere(tileset.boundingSphere);
-        let checked = false;
-        tileset.allTilesLoaded.addEventListener(() => {
-            if (!checked) {
-                checked = true;
+    static clamp3dtilesToGround(viewer: Cesium.Viewer, tileset: Cesium.Cesium3DTileset): Promise<Cesium.Cesium3DTileset> {
+        return new Promise((resolve, reject) => {
+            tileset.initialTilesLoaded.addEventListener(() => {
                 let lowestheight = this.pickLowestPostion(viewer, tileset.boundingSphere);
                 let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
                 let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, -lowestheight, new Cesium.Cartesian3());
                 tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
-                if (callBack != null) {
-                    callBack(tileset);
-                }
-            }
-        });
+                resolve(tileset);
+            });
+        })
     }
 
     static pickLowestPostion(viewer: Cesium.Viewer, boundingSpere: Cesium.BoundingSphere) {
@@ -25,13 +20,21 @@ export class Helper {
             for (let i = -1 * halfCount; i < halfCount; i += 2) {
                 let offset = Cesium.Cartesian3.multiplyByScalar(dir, i, new Cesium.Cartesian3());
                 let samplePos = Cesium.Cartesian3.add(offset, origin, new Cesium.Cartesian3());
-                let res = this.pickPosByNormalDir(samplePos, viewer);
-                if (res != null && res.object != null) {
-                    let height = Cesium.Cartographic.fromCartesian(res.position).height;
+                // let res = this.pickPosByNormalDir(samplePos, viewer);
+                // if (res != null && res.object != null) {
+                //     let height = Cesium.Cartographic.fromCartesian(res.position).height;
+                //     if (height < lowestheight) {
+                //         lowestheight = height;
+                //     }
+                //     // Debug.addSpriteMark(res.position, viewer);
+                // }
+
+                let clampPos = viewer.scene.clampToHeight(samplePos);
+                if (clampPos) {
+                    let height = Cesium.Cartographic.fromCartesian(clampPos).height;
                     if (height < lowestheight) {
                         lowestheight = height;
                     }
-                    // Debug.addSpriteMark(res.position, viewer);
                 }
             }
         }

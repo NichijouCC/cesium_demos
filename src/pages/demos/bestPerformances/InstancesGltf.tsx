@@ -27,7 +27,7 @@ export default class InstancesGltf extends React.Component {
         let count = 1024;
         let spacing = 0.00004;
         let modelUrl = "./models/ship/scene.gltf";
-        modelUrl = "./models/1.gltf";
+        // modelUrl = "./models/1.gltf";
 
 
         let instances = [];

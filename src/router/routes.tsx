@@ -166,11 +166,6 @@ export const demosInfo = [
         asyncComponent: () => import("../pages/demos/clearSky")
     },
     // {
-    //     title: "模型展示",
-    //     path: "/modelsShow",
-    //     asyncComponent: () => import("../pages/demos/modelsShow")
-    // },
-    // {
     //     title: "各种pick",
     //     path: "/pick",
     //     asyncComponent: () => import("../pages/demos/pick")
