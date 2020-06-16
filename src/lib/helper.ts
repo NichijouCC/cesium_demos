@@ -137,16 +137,21 @@ export class Helper {
     }
 
     static calculateOrientation(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {
-        let dir = new Cesium.Cartesian3();
-        Cesium.Cartesian3.subtract(nextPosition, position, dir);
-        Cesium.Cartesian3.normalize(dir, dir);
-        var surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(position, new Cesium.Cartesian3());
+        let dir_x = Cesium.Cartesian3.subtract(nextPosition, position, new Cesium.Cartesian3());
+        Cesium.Cartesian3.normalize(dir_x, dir_x);//x
+        var dir_z = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(position, new Cesium.Cartesian3());//z
+        let dir_y = Cesium.Cartesian3.cross(dir_z, dir_x, new Cesium.Cartesian3());
+        // Cesium.Cartesian3.normalize(right, right);
 
-        let right = Cesium.Cartesian3.cross(dir, surfaceNormal, new Cesium.Cartesian3());
-        Cesium.Cartesian3.normalize(right, right);
+        // let diry = Cesium.Cartesian3.cross(surfaceNormal, right, new Cesium.Cartesian3());
+        // let quat = Helper.unitxyzToRotation(right, diry, surfaceNormal, new Cesium.Quaternion())
 
-        let diry = Cesium.Cartesian3.cross(surfaceNormal, right, new Cesium.Cartesian3());
-        let quat = Helper.unitxyzToRotation(right, diry, surfaceNormal, new Cesium.Quaternion())
-        return quat;
+        let rotMat = new Cesium.Matrix3(
+            dir_x.x, dir_y.x, dir_z.x,
+            dir_x.y, dir_y.y, dir_z.y,
+            dir_x.z, dir_y.z, dir_z.z
+        );
+        let qut = Cesium.Quaternion.fromRotationMatrix(rotMat);
+        return qut;
     }
 }

@@ -24,7 +24,7 @@ export default class AIPatrol extends React.Component {
         }
         let pointArr = Cesium.Cartesian3.fromRadiansArrayHeights(degreeArr);
 
-        new PatrolModel(viewer, { url: "./models/ship/scene.gltf", scale: 2.5 }, { speed: 0.01, pointArr: pointArr });
+        new PatrolModel(viewer, { url: "./models/Cesium_Air.glb", scale: 2.5 }, { speed: 0.1, pointArr: pointArr });
 
         let boundingSphere = Cesium.BoundingSphere.fromPoints(pointArr)
         viewer.scene.camera.flyToBoundingSphere(new Cesium.BoundingSphere(boundingSphere.center, boundingSphere.radius * 2));

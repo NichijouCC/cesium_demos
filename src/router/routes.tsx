@@ -31,6 +31,11 @@ export const demosInfo = [
                 path: "/loadKml",
                 asyncComponent: () => import("../pages/demos/3dtiles/loadKml")
             },
+            {
+                title: "加载Dsm地形",
+                path: "/loadDsmTerrain",
+                asyncComponent: () => import("../pages/demos/terrain/dsm")
+            },
         ]
     },
     {
@@ -130,6 +135,11 @@ export const demosInfo = [
         ]
     },
     {
+        title: "测量工具",
+        path: "/measureTool",
+        asyncComponent: () => import("../pages/demos/measureTool")
+    },
+    {
         title: "点线面",
         path: "/pointLineFace",
         asyncComponent: () => import("../pages/demos/pointLineFace")
@@ -164,6 +174,11 @@ export const demosInfo = [
         title: "背景/图层清除",
         path: "/cleatBg",
         asyncComponent: () => import("../pages/demos/clearSky")
+    },
+    {
+        title: "测试",
+        path: "/testDemo",
+        asyncComponent: () => import("../pages/testUploadFolder")
     },
     // {
     //     title: "各种pick",

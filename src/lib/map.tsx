@@ -1,10 +1,10 @@
 import React from "react";
-
 // require("@cesiumBuild/Cesium");
 const cs = require("@cesiumDebug/Cesium");
 window.Cesium = cs;
 // require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
+// import Cesium from "cesium";
 
 export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
 
@@ -30,11 +30,12 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             webgl?: {
                 alpha?: boolean,
             }
-        }
+        },
+        ION?: string
     }): Cesium.Viewer {
         console.warn("ceisum 启动！！");
         this.setState({ beActived: true });
-        Cesium.Ion.defaultAccessToken = MapConfig.ION;
+        Cesium.Ion.defaultAccessToken = options?.ION || MapConfig.ION;
         let viewer: Cesium.Viewer = new Cesium.Viewer(this.containerId, { ...MapConfig.MAPOPTIONS, ...options });
 
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息

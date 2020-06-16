@@ -62,7 +62,9 @@
     "resolveJsonModule": true,
     "downlevelIteration": true,
     "typeRoots": [
-      "./node_modules/@types",
+      "node_modules/@types",
+      "./src/*.d.ts",
+      "./src/**/*.d.ts",
     ],
     "baseUrl": ".",
     "paths": {

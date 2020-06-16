@@ -65,4 +65,15 @@ export class Debug {
             }
         });
     }
+
+    static drawPoint(viewer: Cesium.Viewer, point: Cesium.Cartesian3) {
+        viewer.entities.add({
+            position: point,
+            point: {
+                color: Cesium.Color.RED,
+                pixelSize: 5,
+                disableDepthTestDistance: Number.POSITIVE_INFINITY
+            }
+        })
+    }
 }

@@ -9,7 +9,7 @@ declare module Cesium {
     }
 
     class IonResource {
-        static fromAssetId(id: number): string
+        static fromAssetId(id: number, otions?: { accessToken?: string }): string
     }
     class ClassificationPrimitive {
         constructor(options: { classificationType?: ClassificationType, geometryInstances: GeometryInstance[] | GeometryInstance, appearance?: Appearance, show?: boolean });
@@ -1158,6 +1158,7 @@ declare module Cesium {
         constructor(normal: Cartesian3, distance: number);
         static fromPointNormal(point: Cartesian3, normal: Cartesian3, result?: Plane): Plane;
         static getPointDistance(plane: Plane, point: Cartesian3): number;
+        static projectPointOntoPlane(plane: Plane, point: Cartesian3): Cartesian3
     }
 
     class PolygonGeometry extends Packable {
@@ -2408,7 +2409,7 @@ declare module Cesium {
         translucencyByDistance?: Property;
         heightReference?: HeightReference;
         distanceDisplayCondition?: Property;
-        disableDepthTestDistance?: Property;
+        disableDepthTestDistance?: number;
         zIndex?: number
 
     }
@@ -2503,6 +2504,7 @@ declare module Cesium {
         width?: number;
         show?: Property;
         material?: any | Color | string;
+        depthFailMaterial?: any | Color | string;
         granularity?: Property;
         zIndex?: number;
         clampToGround?: boolean;
