@@ -71,6 +71,22 @@ export const demosInfo = [
         ]
     },
     {
+        title: "测量工具",
+        path: "/measureTool",
+        childs: [
+            {
+                title: "体积测量",
+                path: "/volumeMeasure",
+                asyncComponent: () => import("../pages/demos/measure/volumeMeasureDemo")
+            },
+            {
+                title: "线段测量",
+                path: "/lineMeasure",
+                asyncComponent: () => import("../pages/demos/measure/lineMeasureDemo")
+            },
+        ]
+    },
+    {
         title: "单体化",
         path: "/classification",
         childs: [
@@ -133,11 +149,6 @@ export const demosInfo = [
                 asyncComponent: () => import("../pages/demos/bestPerformances/updateInstancesAttribute")
             },
         ]
-    },
-    {
-        title: "测量工具",
-        path: "/measureTool",
-        asyncComponent: () => import("../pages/demos/measureTool")
     },
     {
         title: "点线面",

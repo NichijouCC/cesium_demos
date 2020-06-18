@@ -21,7 +21,7 @@ export default class Dom_tagInfo extends React.Component {
             <React.Fragment>
                 <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
-                    this.state.viewer ? this.pointArr.map((item, index) => <DomAnimationPoint key={index} viewer={this.state.viewer} worldPos={item} text={"xxx标签"} />) : null
+                    this.state.viewer ? this.pointArr.map((item, index) => <DomAnimationPoint key={index} viewer={this.state.viewer} trackPos={item} text={"xxx标签"} />) : null
                 }
             </React.Fragment>
         )

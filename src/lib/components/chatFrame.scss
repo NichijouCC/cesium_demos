@@ -1,0 +1,22 @@
+.chat-frame{
+
+    padding-left: 5px;
+    margin-top: -23px;
+    span{
+        background-color: #fff;
+        padding: 5px 8px;
+        display: inline-block;
+        border-radius: 4px;
+        margin:10px 0 10px 10px;
+        position: relative;
+        
+    }
+    span::after{
+        content: '';
+        border: 8px solid #ffffff00;
+        border-right: 8px solid #fff;
+        position: absolute;
+        top: 6px;
+        left: -16px;
+    }
+}

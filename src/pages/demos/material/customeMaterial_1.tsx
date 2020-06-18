@@ -34,15 +34,23 @@ export default class CustomeMaterial_1 extends React.Component {
 
 
 
-        let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
-            121.444409, 31.247417, 800.0,
-            121.533521, 31.235685, 800.0,
-            121.563273, 31.190347, 800.0,
-            121.546744, 31.194054, 800.0,
-            121.516705, 31.191459, 800.0,
-            121.502188, 31.203074, 800.0,
-            121.444409, 31.247417, 800.0,
+        // let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
+        //     121.444409, 31.247417, 800.0,
+        //     121.533521, 31.235685, 800.0,
+        //     121.563273, 31.190347, 800.0,
+        //     121.546744, 31.194054, 800.0,
+        //     121.516705, 31.191459, 800.0,
+        //     121.502188, 31.203074, 800.0,
+        //     121.444409, 31.247417, 800.0,
 
+        // ])
+
+        let pointArr = Cesium.Cartesian3.fromDegreesArrayHeights([
+            121.00, 31.00, 200.0,
+            121.01, 31.003, 200.0,
+            121.013, 31.01, 200.0,
+            121.0, 31.013, 200.0,
+            121.00, 31.00, 200.0,
         ])
         //-----内建的wall模型,按照position来分配uv的规则观察可知:点与点之间均分uv,和点的位置没有关系
 
@@ -64,10 +72,10 @@ export default class CustomeMaterial_1 extends React.Component {
             fabric: {
                 type: "custome_1",
                 uniforms: {
-                    color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
-                    image: "./images/arrow.png",
+                    color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
+                    image: "./images/wall.svg",
                     time: 0,
-                    repeat: 50
+                    repeat: 10
                 },
                 source: source
             }
@@ -88,7 +96,7 @@ export default class CustomeMaterial_1 extends React.Component {
         }));
         rectangle.appearance.material = material;
         viewer.frameUpdate.addEventListener((delta) => {
-            material.uniforms["time"] = material.uniforms["time"] + delta * 0.001;
+            material.uniforms["time"] = material.uniforms["time"] + delta * 0.0001;
         });
 
         viewer.scene.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(pointArr));

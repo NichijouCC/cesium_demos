@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1240px" height="800px" viewBox="0 0 1240 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>画板</title>
+    <defs>
+        <linearGradient x1="50%" y1="48.0415963%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#ED9A34" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="348" width="240" height="20"></rect>
+        <filter x="-37.5%" y="-450.0%" width="175.0%" height="1000.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="30" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.873824537   0 0 0 0 0.414517403   0 0 0 0 0.381172448  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-4" x="1000" y="348" width="240" height="20"></rect>
+        <filter x="-37.5%" y="-450.0%" width="175.0%" height="1000.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="30" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.873824537   0 0 0 0 0.414517403   0 0 0 0 0.381172448  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <text id="text-6" font-family="DINAlternate-Bold, DIN Alternate" font-size="140" font-weight="bold" letter-spacing="-3.376471" fill="#ED3434">
+            <tspan x="334" y="401">WARNING</tspan>
+        </text>
+        <filter x="-15.7%" y="-55.2%" width="131.5%" height="210.4%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="30" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.873824537   0 0 0 0 0.414517403   0 0 0 0 0.381172448  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-8" x="0" y="0" width="1240" height="1"></rect>
+        <filter x="-1.2%" y="-1500.0%" width="102.4%" height="3100.0%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-10" x="0" y="169" width="1240" height="1"></rect>
+        <filter x="-1.2%" y="-1500.0%" width="102.4%" height="3100.0%" filterUnits="objectBoundingBox" id="filter-11">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-12" x="0" y="0" width="1240" height="1"></rect>
+        <filter x="-1.2%" y="-1500.0%" width="102.4%" height="3100.0%" filterUnits="objectBoundingBox" id="filter-13">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-14" x="0" y="169" width="1240" height="1"></rect>
+        <filter x="-1.2%" y="-1500.0%" width="102.4%" height="3100.0%" filterUnits="objectBoundingBox" id="filter-15">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="画板" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="1240" height="800"></rect>
+        <rect id="矩形" fill-opacity="0.5" fill="#FFFFFF" x="0" y="0" width="1240" height="28"></rect>
+        <g id="矩形备份-28">
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            <use fill="#ED3434" fill-rule="evenodd" xlink:href="#path-2"></use>
+        </g>
+        <g id="矩形备份-29">
+            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+            <use fill="#ED3434" fill-rule="evenodd" xlink:href="#path-4"></use>
+        </g>
+        <g id="WARNING" fill="#ED3434" fill-opacity="1">
+            <use filter="url(#filter-7)" xlink:href="#text-6"></use>
+            <use xlink:href="#text-6"></use>
+        </g>
+        <rect id="矩形备份" fill-opacity="0.5" fill="#FFFFFF" x="0" y="772" width="1240" height="28"></rect>
+        <g id="编组" transform="translate(0.000000, 64.000000)">
+            <g id="矩形备份-2">
+                <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-8"></use>
+            </g>
+            <g id="矩形备份-27">
+                <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-10"></use>
+            </g>
+            <polyline id="路径备份-2" stroke="#ED9A34" stroke-width="18" points="123 37 171 85 123 133"></polyline>
+            <polyline id="路径备份-3" stroke="#ED9A34" stroke-width="18" points="299 37 347 85 299 133"></polyline>
+            <polyline id="路径备份-4" stroke="#ED9A34" stroke-width="18" points="475 37 523 85 475 133"></polyline>
+            <polyline id="路径备份-5" stroke="#ED9A34" stroke-width="18" points="651 37 699 85 651 133"></polyline>
+            <polyline id="路径备份-6" stroke="#ED9A34" stroke-width="18" points="827 37 875 85 827 133"></polyline>
+            <polyline id="路径备份-7" stroke="#ED9A34" stroke-width="18" points="1003 37 1051 85 1003 133"></polyline>
+            <polyline id="路径备份-8" stroke="#ED9A34" stroke-width="18" points="1179 37 1227 85 1179 133"></polyline>
+        </g>
+        <g id="编组备份" transform="translate(0.000000, 503.000000)">
+            <g id="矩形备份-2">
+                <use fill="black" fill-opacity="1" filter="url(#filter-13)" xlink:href="#path-12"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-12"></use>
+            </g>
+            <g id="矩形备份-27">
+                <use fill="black" fill-opacity="1" filter="url(#filter-15)" xlink:href="#path-14"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-14"></use>
+            </g>
+            <polyline id="路径备份-8" stroke="#ED9A34" stroke-width="18" transform="translate(1203.000000, 85.000000) scale(-1, 1) translate(-1203.000000, -85.000000) " points="1179 37 1227 85 1179 133"></polyline>
+            <polyline id="路径备份-9" stroke="#ED9A34" stroke-width="18" transform="translate(1027.000000, 85.000000) scale(-1, 1) translate(-1027.000000, -85.000000) " points="1003 37 1051 85 1003 133"></polyline>
+            <polyline id="路径备份-10" stroke="#ED9A34" stroke-width="18" transform="translate(851.000000, 85.000000) scale(-1, 1) translate(-851.000000, -85.000000) " points="827 37 875 85 827 133"></polyline>
+            <polyline id="路径备份-11" stroke="#ED9A34" stroke-width="18" transform="translate(675.000000, 85.000000) scale(-1, 1) translate(-675.000000, -85.000000) " points="651 37 699 85 651 133"></polyline>
+            <polyline id="路径备份-12" stroke="#ED9A34" stroke-width="18" transform="translate(499.000000, 85.000000) scale(-1, 1) translate(-499.000000, -85.000000) " points="475 37 523 85 475 133"></polyline>
+            <polyline id="路径备份-13" stroke="#ED9A34" stroke-width="18" transform="translate(323.000000, 85.000000) scale(-1, 1) translate(-323.000000, -85.000000) " points="299 37 347 85 299 133"></polyline>
+            <polyline id="路径备份-14" stroke="#ED9A34" stroke-width="18" transform="translate(147.000000, 85.000000) scale(-1, 1) translate(-147.000000, -85.000000) " points="123 37 171 85 123 133"></polyline>
+        </g>
+    </g>
+</svg>

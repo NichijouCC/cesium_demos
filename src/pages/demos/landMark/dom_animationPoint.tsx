@@ -23,7 +23,7 @@ export default class Dom_animationPoint extends React.Component {
                     this.state.viewer ?
                         this.pointArr.map((item, index) => {
                             return (
-                                <DomAnimationPoint key={index} viewer={this.state.viewer} worldPos={item} />
+                                <DomAnimationPoint key={index} viewer={this.state.viewer} trackPos={item} />
                             )
                         }) : null
                 }

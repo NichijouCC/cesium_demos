@@ -66,11 +66,11 @@ export class Debug {
         });
     }
 
-    static drawPoint(viewer: Cesium.Viewer, point: Cesium.Cartesian3) {
+    static drawPoint(viewer: Cesium.Viewer, point: Cesium.Cartesian3, color = Cesium.Color.RED) {
         viewer.entities.add({
             position: point,
             point: {
-                color: Cesium.Color.RED,
+                color: color,
                 pixelSize: 5,
                 disableDepthTestDistance: Number.POSITIVE_INFINITY
             }

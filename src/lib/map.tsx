@@ -50,6 +50,14 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         viewer.scene.globe.depthTestAgainstTerrain = MapConfig.global.depthTestAgainstTerrain;//depth
         viewer.scene.highDynamicRange = true;
 
+
+        //-----------------
+        viewer.canvas.oncontextmenu = function (e) {
+            //左键--button属性=1，右键button属性=2
+            if (e.button == 2) {
+                e.preventDefault();
+            }
+        }
         //------------
         viewer.frameUpdate = new Cesium.Event();
         let lasTime;
@@ -98,7 +106,7 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             left: 0,
             bottom: 0,
             right: 0,
-            position: "absolute",
+            // position: "absolute",
             display: this.state.beActived ? "inline" : "none"
         };
         return (

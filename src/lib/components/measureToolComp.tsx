@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { message } from "antd";
-import { ImeasureTool, ToolEnum, PointTool, LineTool, VolumeTool } from "../measureTool";
+import { message, Slider, Switch, Button } from "antd";
+import { ImeasureTool, ToolEnum, PointTool, LineTool, VolumeTool, IvolumeReusult } from "../measureTool";
 
+import './volumeMeasure.scss'
 
 export function GroupsMeasureTool(props: { viewer: Cesium.Viewer, style: React.CSSProperties }) {
     let [tools, setTools] = useState<{ [key in ToolEnum]?: ImeasureTool }>({});
@@ -40,8 +41,15 @@ export function GroupsMeasureTool(props: { viewer: Cesium.Viewer, style: React.C
             {
                 Object.keys(tools).map(item => <div
                     key={item}
-                    onClick={() => clickTool(item as any)}
-                    style={{ backgroundColor: choosedType == item ? "green" : "gray" }}
+                    onClick={(event) => {
+                        clickTool(item as any);
+                        event.stopPropagation();
+                    }}
+                    style={{
+                        backgroundColor: choosedType == item ? "green" : "gray",
+                        userSelect: 'none',
+                        cursor: 'pointer'
+                    }}
                 >{item}</div>)
             }
         </div>)
@@ -67,11 +75,15 @@ export class SingleMeasureTool extends React.Component<{ viewer: Cesium.Viewer, 
         this.ins = newTool;
     }
     render() {
-        return <div style={{ padding: "4px" }} onClick={() => { this.props.onclick(); }}>{this.props.type}</div>
+        return <div
+            style={{ padding: "4px" }}
+            onClick={() => { this.props.onclick(); }}
+        >{this.props.type}</div>
     }
 };
 
-export function createMeasureTool(viewer: Cesium.Viewer, type: ToolEnum) {
+
+export function createMeasureTool(viewer: Cesium.Viewer, type: ToolEnum): ImeasureTool {
     if (type == ToolEnum.POINT) {
         return new PointTool(viewer);
     } else if (type == ToolEnum.LINE) {
