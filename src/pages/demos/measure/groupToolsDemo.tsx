@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CesiumMap } from "@/lib";
-import { VolumeMeasureComp } from "@/lib/components/volumeMeasureComp";
+import MeasureGroupTool from "@/lib/components/measureToolComp/measureToolComp";
 
-export default class VolumeMeasureDemo extends React.Component {
+export default class GroupToolsDemo extends React.Component {
+
     state = {
         viewer: null
     }
+
     render() {
         return (
             <React.Fragment>
@@ -14,12 +16,11 @@ export default class VolumeMeasureDemo extends React.Component {
                     this.handleViewerLoaded(viewer);
                 }} />
                 {
-                    this.state.viewer ? <VolumeMeasureComp viewer={this.state.viewer} /> : null
+                    this.state.viewer ? <MeasureGroupTool viewer={this.state.viewer} /> : null
                 }
             </React.Fragment>
         )
     }
-
     private handleViewerLoaded(viewer: Cesium.Viewer) {
         let modelPath = Cesium.IonResource.fromAssetId(17732);
         let tileset = viewer.scene.primitives.add(

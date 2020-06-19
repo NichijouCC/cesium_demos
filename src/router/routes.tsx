@@ -3,9 +3,6 @@ import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import { AsyncRoute, CustomeAsyncRoute } from "./AsyncRoute";
 import { DeafaultPage } from "@/pages/deaultPage";
 
-// 这个在项目里应该很有用
-// let CustomeRoute = CustomeAsyncRoute({ checkFunc: () => window.localStorage.token != null, redirectPath: './login' });
-
 export const demosInfo = [
     {
         title: "资源加载",
@@ -88,6 +85,11 @@ export const demosInfo = [
                 title: "点测量",
                 path: "/pointMeasure",
                 asyncComponent: () => import("../pages/demos/measure/pointMeasureDemo")
+            },
+            {
+                title: "测量工具组",
+                path: "/groupMeasureTools",
+                asyncComponent: () => import("../pages/demos/measure/groupToolsDemo")
             },
         ]
     },
@@ -191,11 +193,11 @@ export const demosInfo = [
         path: "/cleatBg",
         asyncComponent: () => import("../pages/demos/clearSky")
     },
-    {
-        title: "测试",
-        path: "/testDemo",
-        asyncComponent: () => import("../pages/demos/tempt/testUploadFolder")
-    },
+    // {
+    //     title: "测试",
+    //     path: "/testDemo",
+    //     asyncComponent: () => import("../pages/demos/tempt/datacenter")
+    // },
     // {
     //     title: "各种pick",
     //     path: "/pick",

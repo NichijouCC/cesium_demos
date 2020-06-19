@@ -1,11 +1,12 @@
 import React from "react";
-import { VolumeTool, IvolumeReusult, ToolEnum } from "../measureTool";
-import { createMeasureTool } from "./measureToolComp";
+import { VolumeTool, IvolumeReusult } from "../measure/volumeTool";
 import { message, Switch, Slider } from "antd";
 import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "./domTag";
 import { ChatFrame } from "./chatFrame";
 
-export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer }> {
+import './measureTool.scss'
+
+export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer, show?: boolean }> {
 
     state = {
         basePlaneHeight: 0,
@@ -16,7 +17,7 @@ export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer }
     ins: VolumeTool;
     private lastMeasureData: IvolumeReusult;
     componentDidMount() {
-        this.ins = createMeasureTool(this.props.viewer, ToolEnum.VOLUME) as any;
+        this.ins = new VolumeTool(this.props.viewer);
         // this.ins.active();
         this.ins.onMeasureEnd = (data) => {
             message.warn(`挖方体积：${data.cutVolume.toFixed(2)}\n填方体积：${data.fillVolume.toFixed(2)}`, 7);
@@ -48,7 +49,7 @@ export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer }
         }
     }
 
-    private setToolState(checked: boolean) {
+    setToolState(checked: boolean) {
         this.setState({ beActived: checked });
         if (checked) {
             this.ins.active();
@@ -69,8 +70,7 @@ export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer }
                     ) : null
                 }
 
-                <div className='volume-measure'>
-
+                <div className='volume-measure' style={{ display: this.props.show != false ? "block" : 'none' }}>
                     <div className="measure-options">
                         <div>测量开关：</div>
                         <Switch defaultChecked={false} checked={this.state.beActived} onChange={

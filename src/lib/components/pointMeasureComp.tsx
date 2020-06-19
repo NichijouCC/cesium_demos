@@ -1,12 +1,12 @@
 import React from "react";
-import { PointTool } from "../measureTool";
+import { PointTool } from "../measure/pointTool";
 import { message, Switch } from "antd";
 import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "./domTag";
 import { ChatFrame, ChatLocationEnum } from "./chatFrame";
 
-import './volumeMeasure.scss'
+import './measureTool.scss'
 
-export class PointMeasureComp extends React.Component<{ viewer: Cesium.Viewer }> {
+export class PointMeasureComp extends React.Component<{ viewer: Cesium.Viewer, show?: boolean }> {
     state = {
         beActived: false,
         tagText: null,
@@ -34,7 +34,7 @@ export class PointMeasureComp extends React.Component<{ viewer: Cesium.Viewer }>
                         </DomTagInfo>
                     ) : null
                 }
-                <div className='volume-measure'>
+                <div className='volume-measure' style={{ display: this.props.show != false ? "block" : 'none' }}>
                     <div className="measure-options">
                         <div>测量开关：</div>
                         <Switch defaultChecked={false} checked={this.state.beActived} onChange={

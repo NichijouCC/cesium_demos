@@ -1,0 +1,32 @@
+.measure-group-tool{
+    position: absolute;
+    right: 20px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #444444;
+    border-radius: 4px;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    .toolItem{
+        width: 15px;
+        text-align: center;
+        height: 16px;
+        margin: 20px 7px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .cuttLine{
+        content: '';
+        height: 1px;
+        width: 20px;
+        background: rgba(255,255,255,0.12);
+    }
+}

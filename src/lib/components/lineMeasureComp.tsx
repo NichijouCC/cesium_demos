@@ -2,11 +2,11 @@ import React from "react";
 import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "./domTag";
 import { ChatFrame } from "./chatFrame";
 import { Switch, message } from "antd";
-import { LineTool } from "../measureTool";
+import { LineTool } from "../measure/lineTool";
 
-import './volumeMeasure.scss'
+import './measureTool.scss'
 
-export class LineMeasureComp extends React.Component<{ viewer: Cesium.Viewer }> {
+export class LineMeasureComp extends React.Component<{ viewer: Cesium.Viewer, show?: boolean }> {
 
     state = {
         beActived: false,
@@ -41,13 +41,13 @@ export class LineMeasureComp extends React.Component<{ viewer: Cesium.Viewer }> 
             <React.Fragment>
                 {
                     this.state.beActived ? (
-                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.TOP}>
+                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.CENTER}>
                             <ChatFrame text={this.state.tagText}></ChatFrame>
                         </DomTagInfo>
                     ) : null
                 }
 
-                <div className='volume-measure'>
+                <div className='volume-measure' style={{ display: this.props.show != false ? "block" : 'none' }}>
 
                     <div className="measure-options">
                         <div>测量开关：</div>
