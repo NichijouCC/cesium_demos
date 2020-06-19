@@ -27,6 +27,7 @@ export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer, 
         }
 
         this.ins.onPickPoint = (index) => {
+            if (index == -1) this.setState({ tagText: "计算中..." });
             if (index == 0) this.setState({ tagText: "左单击-开始绘制" });
             if (index == 1) this.setState({ tagText: "左单击-增加点 右单击删除点" });
             if (index == 2) this.setState({ tagText: "左单击-增加点 右单击删除点 \n左双击结束绘制" })

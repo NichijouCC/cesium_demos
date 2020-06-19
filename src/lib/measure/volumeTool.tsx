@@ -66,6 +66,8 @@ export class VolumeTool implements ImeasureTool {
                     this.addSamplePoint(point);
                 let posArr = this.points;
                 this.points = [];
+                if (this.onPickPoint) this.onPickPoint(-1);
+
                 try {
                     let sampleData = await VolumeTool.sampleVolume(this.viewer, { posArr: posArr.map(item => item.pos) });
                     let volume = VolumeTool.computeVolumeBySampleHeight(this.viewer, sampleData);
