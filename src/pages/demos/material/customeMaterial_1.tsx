@@ -73,7 +73,7 @@ export default class CustomeMaterial_1 extends React.Component {
                 type: "custome_1",
                 uniforms: {
                     color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
-                    image: "./images/wall.svg",
+                    image: "./images/cardon.svg",
                     time: 0,
                     repeat: 10
                 },

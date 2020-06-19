@@ -63,7 +63,7 @@ export class VolumeMeasureComp extends React.Component<{ viewer: Cesium.Viewer }
             <React.Fragment>
                 {
                     this.state.beActived ? (
-                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.TOP}>
+                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.CENTER}>
                             <ChatFrame text={this.state.tagText}></ChatFrame>
                         </DomTagInfo>
                     ) : null

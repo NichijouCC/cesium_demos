@@ -9,6 +9,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     ...baseConfig,
@@ -79,22 +80,38 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: path.resolve(__dirname, "../node_modules/cesium/Build/Cesium"), ignore: ['Cesium.js'] }
         ]),
+        new BundleAnalyzerPlugin(
+            {
+                analyzerMode: 'server',
+                analyzerHost: '127.0.0.1',
+                analyzerPort: 8888, // 运行后的端口号
+                reportFilename: 'report.html',
+                defaultSizes: 'parsed',
+                openAnalyzer: true,
+                generateStatsFile: false,
+                statsFilename: 'stats.json',
+                statsOptions: null,
+                logLevel: 'info'
+            }
+        ),
     ],
     optimization: {
         splitChunks: {
             chunks: 'all',
-            minChunks: 2,
-            maxInitialRequests: 5,
+            maxInitialRequests: Infinity,
+            minSize: 100000,
             cacheGroups: {
-                // 提取公共模块
-                commons: {
-                    chunks: 'all',
+                vendor: {
                     test: /[\\/]node_modules[\\/]/,
-                    minChunks: 2,
-                    maxInitialRequests: 5,
-                    minSize: 0,
-                    name: 'common'
-                }
+                    name(module) {
+                        // get the name. E.g. node_modules/packageName/not/this/part.js
+                        // or node_modules/packageName
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+                        // npm package names are URL-safe, but some servers don't like @ symbols
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
             },
         },
         runtimeChunk: true,

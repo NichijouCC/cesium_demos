@@ -12,6 +12,17 @@ export interface ImeasureTool {
     disActive: () => void;
     onMeasureEnd: (data: any) => void;
 }
+
+function samplePoint(viewer, position: Cesium.Cartesian2) {
+    let ray = viewer.camera.getPickRay(position);
+    let picked = viewer.scene.pickFromRay(ray, []);
+    if (picked && picked.position != null) {
+        let clampPos = viewer.scene.clampToHeight(picked.position);
+        return clampPos;
+    }
+    return null;
+}
+
 export class PointTool implements ImeasureTool {
     handler: Cesium.ScreenSpaceEventHandler;
     viewer: Cesium.Viewer;
@@ -22,39 +33,51 @@ export class PointTool implements ImeasureTool {
     }
     private createHandler() {
         let handler = new Cesium.ScreenSpaceEventHandler();
+        this.handler = handler;
         handler.setInputAction((event) => {
             if (this.beActived) {
-                let ray = this.viewer.camera.getPickRay(event.position);
-                let picked = this.viewer.scene.pickFromRay(ray, []);
-                if (picked && picked.position != null) {
+                let point = samplePoint(this.viewer, event.position);
+                if (point) {
+                    let cargo = Cesium.Cartographic.fromCartesian(point);
+                    let gps = [cargo.longitude * 180 / Math.PI, cargo.latitude * 180 / Math.PI, cargo.height];
                     let newPoint = this.viewer.entities.add({
-                        position: picked.position,
+                        position: point,
                         point: {
                             pixelSize: 5,
                             color: Cesium.Color.WHITE,
-                            outlineColor: Cesium.Color.BLUE,
-                            outlineWidth: 5,
+                            outlineColor: Cesium.Color.DEEPPINK,
+                            outlineWidth: 2,
                             disableDepthTestDistance: Number.POSITIVE_INFINITY
-                        }
+                        },
+                        // label: {
+                        //     text: `点：${gps[0].toFixed(2)}, ${gps[1].toFixed(2)}, ${gps[2].toFixed(2)}`,
+                        //     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                        //     horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+                        //     showBackground: true,
+                        //     disableDepthTestDistance: Number.POSITIVE_INFINITY,
+                        //     scale: 0.5,
+                        //     pixelOffset: new Cesium.Cartesian2(0, -10)
+                        // } as any
                     });
                     if (this.onMeasureEnd) {
-                        let cargo = Cesium.Cartographic.fromCartesian(picked.position);
-                        this.onMeasureEnd([cargo.longitude * 180 / Math.PI, cargo.latitude * 180 / Math.PI, cargo.height]);
+                        this.onMeasureEnd(gps);
                     };
                 }
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-        this.handler = handler;
+
     }
     active() {
         if (this.handler == null)
             this.createHandler();
         this.beActived = true;
+        if (this.onPickPoint) this.onPickPoint(0);
     }
     disActive() {
         this.beActived = false;
     }
     onMeasureEnd: (point: number[]) => void;
+    onPickPoint: (index: number) => void;
 }
 export class LineTool implements ImeasureTool {
     handler: Cesium.ScreenSpaceEventHandler;
@@ -91,7 +114,7 @@ export class LineTool implements ImeasureTool {
                         }
                     }, false),
                     width: 4,
-                    material: Cesium.Color.AQUA.withAlpha(0.3),
+                    material: Cesium.Color.YELLOW.withAlpha(0.7),
                     depthFailMaterial: Cesium.Color.AQUA.withAlpha(0.3)
                 }
             });
@@ -102,8 +125,8 @@ export class LineTool implements ImeasureTool {
             point: {
                 pixelSize: 5,
                 color: Cesium.Color.WHITE,
-                outlineColor: Cesium.Color.BLUE,
-                outlineWidth: 5,
+                outlineColor: Cesium.Color.DEEPPINK,
+                outlineWidth: 2,
                 disableDepthTestDistance: Number.POSITIVE_INFINITY
             }
         });
@@ -137,14 +160,9 @@ export class LineTool implements ImeasureTool {
         handler.setInputAction((event) => {
             if (this.beActived) {
                 let timeoutID = setTimeout(() => {
-                    let ray = this.viewer.camera.getPickRay(event.position);
-                    let picked = this.viewer.scene.pickFromRay(ray, []);
-                    if (picked && picked.position != null) {
-                        let clampPos = this.viewer.scene.clampToHeight(picked.position);
-                        if (clampPos) {
-                            this.addSamplePoint(clampPos);
-                        }
-                    }
+                    let point = samplePoint(this.viewer, event.position);
+                    if (point) this.addSamplePoint(point);
+
                 }, 200);
                 timeoutIDs.push(timeoutID);
             }
@@ -154,13 +172,12 @@ export class LineTool implements ImeasureTool {
             timeoutIDs.forEach(item => clearTimeout(item));
 
             if (this.beActived && this.enableBrokenLine) {
-                let ray = this.viewer.camera.getPickRay(event.position);
-                let picked = this.viewer.scene.pickFromRay(ray, []);
-                if (picked && picked.position != null) {
-                    let clampPos = this.viewer.scene.clampToHeight(picked.position);
-                    this.addSamplePoint(clampPos);
+                let point = samplePoint(this.viewer, event.position);
+                if (point) {
+                    this.addSamplePoint(point);
                     this.computeSample();
                 }
+
             }
         }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
@@ -241,8 +258,8 @@ export class VolumeTool implements ImeasureTool {
             point: {
                 pixelSize: 5,
                 color: Cesium.Color.WHITE,
-                outlineColor: Cesium.Color.BLUE,
-                outlineWidth: 5,
+                outlineColor: Cesium.Color.DEEPPINK,
+                outlineWidth: 2,
                 disableDepthTestDistance: Number.POSITIVE_INFINITY
             }
         });
@@ -262,12 +279,9 @@ export class VolumeTool implements ImeasureTool {
         handler.setInputAction((event) => {
             if (this.beActived) {
                 let timeoutID = setTimeout(() => {
-                    let ray = this.viewer.camera.getPickRay(event.position);
-                    let picked = this.viewer.scene.pickFromRay(ray, []);
-                    if (picked && picked.position != null) {
-                        let clampPos = this.viewer.scene.clampToHeight(picked.position);
-                        if (clampPos) this.addSamplePoint(clampPos);
-                    }
+                    let point = samplePoint(this.viewer, event.position);
+                    if (point) this.addSamplePoint(point);
+
                 }, 200);
                 timeoutIDs.push(timeoutID);
             }
@@ -277,12 +291,8 @@ export class VolumeTool implements ImeasureTool {
                 clearTimeout(itme);
             });
             if (this.beActived && this.points.length >= 2) {
-                let ray = this.viewer.camera.getPickRay(event.position);
-                let picked = this.viewer.scene.pickFromRay(ray, []);
-                if (picked && picked.position != null) {
-                    let clampPos = this.viewer.scene.clampToHeight(picked.position);
-                    if (clampPos) this.addSamplePoint(clampPos);
-                }
+                let point = samplePoint(this.viewer, event.position);
+                if (point) this.addSamplePoint(point);
 
                 let posArr = this.points;
                 this.points = [];

@@ -75,19 +75,23 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
                 case AlignXPosEnum.RIGHT:
                     this.element.style.left = (screenPos.x + this.element.clientWidth * 0.5) + "px";
                     break;
+                case AlignXPosEnum.RIGHT:
                 default:
                     this.element.style.left = (screenPos.x - this.element.clientWidth * 0.5) + "px";
             }
 
             switch (this.props.aligny) {
                 case AlignYPosEnum.TOP:
-                    this.element.style.top = screenPos.y + "px";
+                    this.element.style.top = (screenPos.y - this.element.clientHeight) + "px";
                     break;
                 case AlignYPosEnum.BOTOOM:
-                    this.element.style.top = (screenPos.y + this.element.clientHeight * 0.5) + "px";
+                    // this.element.style.top = (screenPos.y + this.element.clientHeight * 0.5) + "px";
+                    this.element.style.top = screenPos.y + "px";
                     break;
+                case AlignYPosEnum.CENTER:
                 default:
                     this.element.style.top = (screenPos.y - this.element.clientHeight * 0.5) + "px";
+
             }
 
         } else {

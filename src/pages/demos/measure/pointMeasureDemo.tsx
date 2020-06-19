@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CesiumMap } from "@/lib";
-import { LineMeasureComp } from "@/lib/components/lineMeasureComp";
+import { PointMeasureComp } from "@/lib/components/pointMeasureComp";
 
-export default class LineMeasureDemo extends React.Component {
+export default class PointMeasureDemo extends React.Component {
     state = {
         viewer: null
     }
@@ -14,7 +14,7 @@ export default class LineMeasureDemo extends React.Component {
                     this.handleViewerLoaded(viewer);
                 }} />
                 {
-                    this.state.viewer ? <LineMeasureComp viewer={this.state.viewer} /> : null
+                    this.state.viewer ? <PointMeasureComp viewer={this.state.viewer} /> : null
                 }
             </React.Fragment>
         )

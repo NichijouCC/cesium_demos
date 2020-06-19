@@ -10,7 +10,6 @@ const htmlPath = path.resolve(__dirname, "../src/index.html");
 module.exports = {
     entry: {
         app: path.resolve(pathsMap.appPath, "index.tsx"),
-        vendor: ['react', 'react-dom']// 不变的代码分包
     },
     output: {
         filename: 'js/[name].bundle.js',

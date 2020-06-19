@@ -84,6 +84,11 @@ export const demosInfo = [
                 path: "/lineMeasure",
                 asyncComponent: () => import("../pages/demos/measure/lineMeasureDemo")
             },
+            {
+                title: "点测量",
+                path: "/pointMeasure",
+                asyncComponent: () => import("../pages/demos/measure/pointMeasureDemo")
+            },
         ]
     },
     {
@@ -189,7 +194,7 @@ export const demosInfo = [
     {
         title: "测试",
         path: "/testDemo",
-        asyncComponent: () => import("../pages/testUploadFolder")
+        asyncComponent: () => import("../pages/demos/tempt/testUploadFolder")
     },
     // {
     //     title: "各种pick",
