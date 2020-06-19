@@ -1,6 +1,6 @@
 import React from "react";
 // require("@cesiumBuild/Cesium");
-const cs = require("@cesiumDebug/Cesium");
+const cs = require("@cesiumBuild/Cesium");
 window.Cesium = cs;
 // require("@cesiumDebug/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
