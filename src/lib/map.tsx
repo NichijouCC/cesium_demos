@@ -1,8 +1,5 @@
 import React from "react";
-// require("@cesiumBuild/Cesium");
-const cs = require("@cesiumBuild/Cesium");
-window.Cesium = cs;
-// require("@cesiumDebug/Cesium");
+window.Cesium = process.env.NODE_ENV == "development" ? require("@cesiumDebug/Cesium") : require("@cesiumBuild/Cesium");
 require('@cesiumSource/Widgets/widgets.css');
 // import Cesium from "cesium";
 
@@ -86,9 +83,11 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         if (this.state.beActived) {
             this.setState({ beActived: false });
             if (this._viewer) {
-                console.warn("ceisum destroy！！");
-                this._viewer.destroy();
-                this._viewer = null;
+                setTimeout(() => {//因为react是父节点到子节点的顺序卸载，所以延迟一下，让子节点先卸载掉。【不然viewer丢失，子节点报错】
+                    console.warn("ceisum destroy！！");
+                    this._viewer.destroy();
+                    this._viewer = null;
+                }, 1000)
             }
         }
     }
@@ -110,7 +109,9 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             display: this.state.beActived ? "inline" : "none"
         };
         return (
-            <div id={this.containerId} style={containerStyle}></div>
+            <div id={this.containerId} style={containerStyle}>
+                {this.props.children}
+            </div>
         );
     }
 }

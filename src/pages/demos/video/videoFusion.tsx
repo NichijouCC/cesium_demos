@@ -38,8 +38,9 @@ export default class VideoFusionDemo extends React.Component {
     }
 
     get videoFusionIns() {
-        return this.refs.VideoFusion as VideoFusion;
+        return this.videoRef;
     }
+    private videoRef = React.createRef<VideoFusion>();
 
     render() {
         return (
@@ -47,7 +48,7 @@ export default class VideoFusionDemo extends React.Component {
                 <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
                     this.state.viewer ?
-                        <VideoFusion ref="VideoFusion" editorInfo={this.state.editorInfo} aspect={this.state.aspect} postion={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
+                        <VideoFusion ref={this.videoRef} editorInfo={this.state.editorInfo} aspect={this.state.aspect} postion={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
                 }
             </React.Fragment>
         )

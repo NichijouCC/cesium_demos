@@ -1,6 +1,6 @@
 import React from "react";
 import { CesiumMap } from "@/lib";
-import { PointMeasureComp } from "@/lib/components/pointMeasureComp";
+import { PointMeasureComp } from "@/lib/components/measureTools/pointMeasureComp";
 
 export default class PointMeasureDemo extends React.Component {
     state = {
@@ -8,15 +8,14 @@ export default class PointMeasureDemo extends React.Component {
     }
     render() {
         return (
-            <React.Fragment>
-                <CesiumMap onViewerLoaded={(viewer) => {
-                    this.setState({ viewer });
-                    this.handleViewerLoaded(viewer);
-                }} />
+            <CesiumMap onViewerLoaded={(viewer) => {
+                this.setState({ viewer });
+                this.handleViewerLoaded(viewer);
+            }} >
                 {
-                    this.state.viewer ? <PointMeasureComp viewer={this.state.viewer} /> : null
+                    this.state.viewer ? <PointMeasureComp viewer={this.state.viewer} showSwitch={true} /> : null
                 }
-            </React.Fragment>
+            </CesiumMap>
         )
     }
 

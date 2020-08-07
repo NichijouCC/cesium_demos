@@ -1,6 +1,6 @@
 import React from "react";
 import { CesiumMap } from "@/lib";
-import MeasureGroupTool from "@/lib/components/measureToolComp/measureToolComp";
+import GroupMeasureComp from "@/lib/components/measureTools/groupMeasureComp";
 
 export default class GroupToolsDemo extends React.Component {
 
@@ -10,15 +10,14 @@ export default class GroupToolsDemo extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
-                <CesiumMap onViewerLoaded={(viewer) => {
-                    this.setState({ viewer });
-                    this.handleViewerLoaded(viewer);
-                }} />
+            <CesiumMap onViewerLoaded={(viewer) => {
+                this.setState({ viewer });
+                this.handleViewerLoaded(viewer);
+            }} >
                 {
-                    this.state.viewer ? <MeasureGroupTool viewer={this.state.viewer} /> : null
+                    this.state.viewer ? <GroupMeasureComp viewer={this.state.viewer} /> : null
                 }
-            </React.Fragment>
+            </CesiumMap>
         )
     }
     private handleViewerLoaded(viewer: Cesium.Viewer) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CesiumMap } from "@/lib";
-import { VolumeMeasureComp } from "@/lib/components/volumeMeasureComp";
+import { VolumeMeasureComp } from "@/lib/components/measureTools/volumeMeasureComp";
 
 export default class VolumeMeasureDemo extends React.Component {
     state = {
@@ -8,15 +8,14 @@ export default class VolumeMeasureDemo extends React.Component {
     }
     render() {
         return (
-            <React.Fragment>
-                <CesiumMap onViewerLoaded={(viewer) => {
-                    this.setState({ viewer });
-                    this.handleViewerLoaded(viewer);
-                }} />
+            <CesiumMap onViewerLoaded={(viewer) => {
+                this.setState({ viewer });
+                this.handleViewerLoaded(viewer);
+            }} >
                 {
-                    this.state.viewer ? <VolumeMeasureComp viewer={this.state.viewer} /> : null
+                    this.state.viewer ? <VolumeMeasureComp viewer={this.state.viewer} showSwitch={true} /> : null
                 }
-            </React.Fragment>
+            </CesiumMap>
         )
     }
 

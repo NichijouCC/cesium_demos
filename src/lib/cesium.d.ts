@@ -218,6 +218,7 @@ declare module Cesium {
         referenceFrame: ReferenceFrame;
         getValue(time: JulianDate, result?: Cartesian3): Cartesian3;
         getValueInReferenceFrame(time: JulianDate, referenceFrame: ReferenceFrame, result?: Cartesian3): Cartesian3;
+        static unpackArray(array: number[]): Cartesian3[]
     }
 
     class Cartesian4 extends Packable {
@@ -2281,7 +2282,7 @@ declare module Cesium {
 
     class LabelGraphics {
         definitionChanged: Event;
-        text: Property;
+        text: string;
         font: string;
         style: Property;
         fillColor: Color;
@@ -3931,6 +3932,7 @@ declare module Cesium {
         pickFromRay(ray: Ray, obk: any[]): { object: any, position: Cartesian3 };
         render(): void;
         clampToHeight: (pos: Cartesian3, objectExclude?: any[]) => Cartesian3;
+        sampleHeightMostDetailed: (positions: Cartographic[], objectsToExclude?: any[], width?: number) => Promise<Cartographic[]>
     }
 
     class ScreenSpaceCameraController {

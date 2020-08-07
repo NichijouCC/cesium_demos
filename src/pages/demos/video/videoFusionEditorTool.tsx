@@ -10,7 +10,7 @@ export default class VideoFusionEditorToolDemo extends React.Component {
         pos: new Cesium.Cartesian3(-2862001.0959806717, 4651306.438826122, 3283702.9141938747),
         quat: new Cesium.Quaternion(-0.3554680319936638, 0.3186025875155842, 0.8575975474538291, 0.1914714497258105),
         aspect: 1.7979678238780694,
-        editorInfo: { "aspect": 1.7979678238780694, "cameraOffset": 30.00000000036392, "pos": [-2861999.8843600666, 4651308.262380583, 3283701.9702296667], "quat": [-0.35565499986088944, 0.3184325958649666, 0.8574897840777559, 0.19188922108063622], "cameraPositon": [-2861983.216648571, 4651329.969133107, 3283689.681849448], "cameraHeadPithRoll": [1.0240711517455319, -0.06604407712253324, 0.002514721490340044], "cameraFov":  0.8979678238780694 }
+        editorInfo: { "aspect": 1.7979678238780694, "cameraOffset": 30.00000000036392, "pos": [-2861999.8843600666, 4651308.262380583, 3283701.9702296667], "quat": [-0.35565499986088944, 0.3184325958649666, 0.8574897840777559, 0.19188922108063622], "cameraPositon": [-2861983.216648571, 4651329.969133107, 3283689.681849448], "cameraHeadPithRoll": [1.0240711517455319, -0.06604407712253324, 0.002514721490340044], "cameraFov": 0.8979678238780694 }
     }
     editor: VideoFusionEditor;
 
@@ -46,15 +46,17 @@ export default class VideoFusionEditorToolDemo extends React.Component {
     }
 
     get videoFusionIns() {
-        return this.refs.VideoFusion as VideoFusion;
+        return this.videoRef.current;
     }
+    private videoRef = React.createRef<VideoFusion>();
+
     render() {
         return (
             <React.Fragment>
                 <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
                     this.state.viewer ?
-                        <VideoFusion ref="VideoFusion" editorInfo={this.state.editorInfo} aspect={this.state.aspect} postion={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
+                        <VideoFusion ref={this.videoRef} editorInfo={this.state.editorInfo} aspect={this.state.aspect} postion={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
                 }
                 <div style={{ position: "absolute", top: "350px", right: "30px", zIndex: 99, backgroundColor: "#dd4f" }}>
                     <div>==gui介绍==</div>

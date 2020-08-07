@@ -26,20 +26,16 @@ export enum AlignYPosEnum {
 }
 
 export default class DomTagInfo extends React.Component<ItagInfoProps> {
-    private trackPos: Cesium.Cartesian3 | undefined;
-    private trackEntity: Cesium.Entity | undefined;
     protected element: HTMLDivElement;
-
     private mousePos: Cesium.Cartesian2;
     constructor(props: ItagInfoProps) {
         super(props);
-        this.trackPos = props.trackPos;
-        this.trackEntity = props.trackEntity;
 
         if (props.trackCursor) {
             const handler = new Cesium.ScreenSpaceEventHandler();
             handler.setInputAction((event) => {
-                this.mousePos = event.endPosition;
+                let offsetToLeftTop = this.props.viewer.container.getBoundingClientRect();
+                this.mousePos = Cesium.Cartesian2.subtract(event.endPosition, new Cesium.Cartesian2(offsetToLeftTop.left, offsetToLeftTop.top), new Cesium.Cartesian2());
             }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
         }
     }
@@ -58,11 +54,11 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
             screenPos = this.mousePos;
         }
         else if (this.props.trackEntity) {
-            let pos = this.trackEntity.position.getValue(Cesium.JulianDate.now());
+            let pos = this.props.trackEntity.position.getValue(Cesium.JulianDate.now());
             screenPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.props.viewer.scene, pos);
 
         } else if (this.props.trackPos) {
-            screenPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.props.viewer.scene, this.trackPos);
+            screenPos = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.props.viewer.scene, this.props.trackPos);
         }
 
         if (screenPos) {
