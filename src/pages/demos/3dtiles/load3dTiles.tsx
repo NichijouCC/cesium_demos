@@ -2,7 +2,6 @@ import React from "react";
 import { CesiumMap } from "../../../lib/map";
 
 export default class Load3dtiles extends React.Component {
-
     render() {
         return (
             <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />

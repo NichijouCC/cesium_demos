@@ -1,5 +1,5 @@
 import { Helper } from "./helper";
-import { ImodelOptions } from "./patrolRobot";
+import { IModelOptions } from "./patrolRobot";
 /**
  * --------------------------------------------------------------------------------
  *              传递entity实例的方式使用
@@ -24,11 +24,11 @@ export class CommandRobot {
      * @param ins 
      * @param adjustRotAngle 角度
      */
-    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | ImodelOptions, adjustRotAngle?: number) {
+    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | IModelOptions, adjustRotAngle?: number) {
         if (ins instanceof Cesium.Entity) {
             this.ins = ins;
         } else {
-            let modelOps = ins as ImodelOptions;
+            let modelOps = ins as IModelOptions;
             this.ins = viewer.entities.add({
                 position: modelOps.pos ? modelOps.pos : Cesium.Cartesian3.ZERO,
                 model: {
@@ -43,7 +43,7 @@ export class CommandRobot {
             viewer.frameUpdate.removeEventListener(this.loop.bind(this));
         };
     }
-    private lastOrder: IposInfo;
+    private lastOrder: IPosInfo;
     //--------------target parameters
     private beActive: boolean = false;
     private startPos: Cesium.Cartesian3;
@@ -73,9 +73,9 @@ export class CommandRobot {
 
         this.lastOrder = newPos;
     }
-    private loop(deltTime: number) {
+    private loop(deltaTime: number) {
         if (this.beActive) {
-            this.costTime += deltTime;
+            this.costTime += deltaTime;
             let lerp = Math.min(this.costTime / this.duration, 1.0);
             let pos = Cesium.Cartesian3.lerp(this.startPos, this.targetPos, lerp, new Cesium.Cartesian3());
             this.ins.position = pos;
@@ -86,7 +86,7 @@ export class CommandRobot {
     }
     dispose() { }
 }
-interface IposInfo {
+interface IPosInfo {
     pos: Cesium.Cartesian3;
     time: Date;
 }

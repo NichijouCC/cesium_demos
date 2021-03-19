@@ -1,5 +1,5 @@
 import React from "react";
-import './chatBox.scss'
+import './chatBox.css'
 
 export enum ChatLocationEnum {
     LEFT = "left",

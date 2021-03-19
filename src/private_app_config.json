@@ -1,0 +1,8 @@
+{
+    "common": {
+        "domain": "target_domain"
+    },
+    "dev": {},
+    "test": {},
+    "prod": {}
+}

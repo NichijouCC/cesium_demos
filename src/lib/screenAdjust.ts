@@ -1,5 +1,3 @@
-import { CesiumMap } from "./map";
-
 export class ScreenAdjust {
     private static init(viewer: Cesium.Viewer) {
         let fragmentShaderSource =

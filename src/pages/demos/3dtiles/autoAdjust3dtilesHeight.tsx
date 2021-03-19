@@ -1,10 +1,8 @@
-import Axios from "axios"
 import React from "react";
 import { CesiumMap } from "../../../lib/map";
 import { Helper } from "../../../lib/helper";
 
 export default class AutoAdjust3dtilesHeight extends React.Component {
-
     render() {
         return (
             <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
@@ -24,8 +22,8 @@ export default class AutoAdjust3dtilesHeight extends React.Component {
             if (!this._beMount) return;
             //抬高100m, 注意:因为用的官方资源是贴地的，所以先抬高100m，再用贴地方法进行贴地
             let surfaceNormal = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(tileset.boundingSphere.center);
-            let translationb = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, 100, new Cesium.Cartesian3());
-            tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translationb);
+            let translation = Cesium.Cartesian3.multiplyByScalar(surfaceNormal, 100, new Cesium.Cartesian3());
+            tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
             viewer.zoomTo(tileset);
         });
 

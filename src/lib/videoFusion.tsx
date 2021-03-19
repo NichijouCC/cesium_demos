@@ -1,17 +1,18 @@
 import React from "react";
 import { Helper } from "@/lib";
 import { IvideoEditedInfo } from "./VideoFusionEditor";
+import tmask from './libAssets/tMask.jpg'
 
-interface Iprops {
+interface IProps {
     url: string;
     viewer: Cesium.Viewer;
-    postion: Cesium.Cartesian3;
+    position: Cesium.Cartesian3;
     quat: Cesium.Quaternion;
     aspect?: number;
 
     editorInfo?: any;
 }
-export class VideoFusion extends React.Component<Iprops> {
+export class VideoFusion extends React.Component<IProps> {
     private primitiveIns: Cesium.Primitive;
 
     componentDidMount() {
@@ -31,7 +32,7 @@ export class VideoFusion extends React.Component<Iprops> {
             this.modelMatrix = mat;
         } else {
             this._aspect = this.props.aspect != null ? this.props.aspect : 1.3;
-            let mat = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(this.props.postion, this.props.quat, new Cesium.Cartesian3(this._aspect * 1, 1, 1)), new Cesium.Matrix4());
+            let mat = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(this.props.position, this.props.quat, new Cesium.Cartesian3(this._aspect * 1, 1, 1)), new Cesium.Matrix4());
             this.modelMatrix = mat;
         }
     }
@@ -52,7 +53,7 @@ export class VideoFusion extends React.Component<Iprops> {
     private _aspect: number = 1.3;
     set aspect(value: number) {
         this._aspect = value;
-        let modelToWorldMatrix = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(this.props.postion, this.props.quat, new Cesium.Cartesian3(this._aspect * 1, 1, 1)), new Cesium.Matrix4());
+        let modelToWorldMatrix = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(this.props.position, this.props.quat, new Cesium.Cartesian3(this._aspect * 1, 1, 1)), new Cesium.Matrix4());
         this.primitiveIns.modelMatrix = modelToWorldMatrix;
     }
 
@@ -117,7 +118,7 @@ class VideoFusionHelper {
                 uniforms: {
                     color: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
                     image: "./images/arrow.png",
-                    tmask: "./libAssets/tMask.jpg",
+                    tmask: tmask,
                 },
                 source: source
             }

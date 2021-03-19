@@ -1,4 +1,4 @@
-.content div{
+.cesium-domPoint div{
     background:rgb(255, 136, 0);
     width: 16px;
     height: 16px;
@@ -7,7 +7,7 @@
     position: relative;
 }
 
-.content p, .content span{
+.cesium-domPoint p, .cesium-domPoint span{
     display: inline-block;
     position: absolute;
     width: 8px;
@@ -17,7 +17,7 @@
     box-shadow: 0px 0px 2px rgb(255, 136, 0); 
     margin: 0px;
 }
-.content p{
+.cesium-domPoint p{
     width: 8px;
     height: 8px;
     left: 50%;
@@ -26,7 +26,7 @@
     margin-left: -4px;
 }
 
-.content  span{
+.cesium-domPoint  span{
     width: 4px;
     height: 4px;
     left: 50%;
@@ -35,18 +35,20 @@
     margin-left: -2px;
 }
 
-.content .one{
+.cesium-domPoint .one{
     position: absolute;
     left:600px; 
     top:100px;
-    .text {
-        white-space: nowrap;
-        width: 0;
-        height: 0;
-        font-size: 1.2rem;
-        transform: translate(2rem, -0.5rem);
-        color: greenyellow;
-      }}
+}
+
+.cesium-domPoint .one .text {
+    white-space: nowrap;
+    width: 0;
+    height: 0;
+    font-size: 1.2rem;
+    transform: translate(2rem, -0.5rem);
+    color: greenyellow;
+}
 
 @keyframes myfirst{
     10% {transform: scale(1);}

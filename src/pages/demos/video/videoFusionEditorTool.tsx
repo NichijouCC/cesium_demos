@@ -17,7 +17,7 @@ export default class VideoFusionEditorToolDemo extends React.Component {
     private handleViewerLoaded(viewer: Cesium.Viewer) {
         this.setState({ viewer: viewer });
         let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: "http://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json",
+            url: "https://cloudv2bucket.oss-cn-shanghai.aliyuncs.com/185/1254/resultCC/Production_1.json",
             maximumScreenSpaceError: 0.8,
             maximumNumberOfLoadedTiles: 100,
             // shadows: Cesium.ShadowMode.DISABLED
@@ -56,7 +56,7 @@ export default class VideoFusionEditorToolDemo extends React.Component {
                 <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
                 {
                     this.state.viewer ?
-                        <VideoFusion ref={this.videoRef} editorInfo={this.state.editorInfo} aspect={this.state.aspect} postion={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
+                        <VideoFusion ref={this.videoRef} editorInfo={this.state.editorInfo} aspect={this.state.aspect} position={this.state.pos} quat={this.state.quat} url={"./videos/videoFusion.mp4"} viewer={this.state.viewer} /> : null
                 }
                 <div style={{ position: "absolute", top: "350px", right: "30px", zIndex: 99, backgroundColor: "#dd4f" }}>
                     <div>==gui介绍==</div>

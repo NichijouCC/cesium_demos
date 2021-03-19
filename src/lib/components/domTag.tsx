@@ -1,7 +1,7 @@
 import React from "react";
-import './domTag.scss'
+import './domTag.css'
 
-export interface ItagInfoProps {
+export interface IProps {
     viewer: Cesium.Viewer;
     trackPos?: Cesium.Cartesian3;
     trackEntity?: Cesium.Entity;
@@ -10,25 +10,14 @@ export interface ItagInfoProps {
     textCss?: React.CSSProperties
     children?: React.ReactNode,
 
-    alignx?: AlignXPosEnum,
-    aligny?: AlignYPosEnum,
+    alignX?: "left" | "center" | "right",
+    alignY?: "top" | "center" | "bottom",
 }
 
-export enum AlignXPosEnum {
-    LEFT,
-    CENTER,
-    RIGHT
-}
-export enum AlignYPosEnum {
-    TOP,
-    CENTER,
-    BOTOOM
-}
-
-export default class DomTagInfo extends React.Component<ItagInfoProps> {
+export class DomTagInfo extends React.Component<IProps> {
     protected element: HTMLDivElement;
     private mousePos: Cesium.Cartesian2;
-    constructor(props: ItagInfoProps) {
+    constructor(props: IProps) {
         super(props);
 
         if (props.trackCursor) {
@@ -45,7 +34,9 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
     }
 
     componentWillUnmount() {
-        this.props.viewer.scene.preUpdate.removeEventListener(this.onUpdate);
+        if (this.props.viewer && !this.props.viewer.isDestroyed()) {
+            this.props.viewer.scene.preUpdate.removeEventListener(this.onUpdate);
+        }
     }
     private onUpdate = () => {
         if (this.element == null) return;
@@ -64,27 +55,27 @@ export default class DomTagInfo extends React.Component<ItagInfoProps> {
         if (screenPos) {
             this.element.style.display = "";
 
-            switch (this.props.alignx) {
-                case AlignXPosEnum.LEFT:
+            switch (this.props.alignX) {
+                case "left":
                     this.element.style.left = screenPos.x + "px";
                     break;
-                case AlignXPosEnum.RIGHT:
+                case "center":
                     this.element.style.left = (screenPos.x + this.element.clientWidth * 0.5) + "px";
                     break;
-                case AlignXPosEnum.RIGHT:
+                case "right":
                 default:
                     this.element.style.left = (screenPos.x - this.element.clientWidth * 0.5) + "px";
             }
 
-            switch (this.props.aligny) {
-                case AlignYPosEnum.TOP:
+            switch (this.props.alignY) {
+                case "top":
                     this.element.style.top = (screenPos.y - this.element.clientHeight) + "px";
                     break;
-                case AlignYPosEnum.BOTOOM:
+                case "bottom":
                     // this.element.style.top = (screenPos.y + this.element.clientHeight * 0.5) + "px";
                     this.element.style.top = screenPos.y + "px";
                     break;
-                case AlignYPosEnum.CENTER:
+                case "center":
                 default:
                     this.element.style.top = (screenPos.y - this.element.clientHeight * 0.5) + "px";
 

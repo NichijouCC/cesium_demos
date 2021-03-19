@@ -1,0 +1,39 @@
+
+.chat-frame span{
+    background-color: #fff;
+    padding: 5px 8px;
+    display: inline-block;
+    border-radius: 4px;
+    margin:10px 0 10px 10px;
+    position: relative;
+    white-space: pre;
+}
+.chat-frame span::after{
+    content: '';
+    border: 6px solid #ffffff00;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+
+.chat-frame.left{
+    padding-left: 5px;
+}
+.chat-frame.left span::after{
+    border-right: 6px solid #fff;
+    top: 0;
+    bottom: 0;
+    left: -12px;
+    margin: auto;
+}
+
+.chat-frame.bottom{
+    padding-bottom: 5px;
+}
+.chat-frame.bottom span::after{
+    border-top: 6px solid #fff;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}

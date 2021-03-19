@@ -1,11 +1,11 @@
 import React from "react";
 import { VolumeTool, VolumMeasureHandler } from "./single/volumeTool";
 import { message, Switch, Slider } from "antd";
-import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "../domTag";
+import { DomTagInfo } from "../domTag";
 import { ChatBox } from "../chatFrame";
-import { ImeasureComp } from "./pointMeasureComp";
+import { IMeasureComp } from "./pointMeasureComp";
 
-import './measureTool.scss'
+import './measureTool.css'
 import { MeasureStateEnum } from "./single/measureTool";
 
 
@@ -25,7 +25,7 @@ interface Istate {
     sliderDetailValue: number
 }
 
-export class VolumeMeasureComp extends React.Component<Iprops, Istate> implements ImeasureComp {
+export class VolumeMeasureComp extends React.Component<Iprops, Istate> implements IMeasureComp {
 
     state = {
         basePlaneHeight: 0,
@@ -106,7 +106,7 @@ export class VolumeMeasureComp extends React.Component<Iprops, Istate> implement
             <React.Fragment>
                 {
                     this.state.beActived ? (
-                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.CENTER}>
+                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignX={"left"} alignY={"center"}>
                             <ChatBox text={this.state.tagText}></ChatBox>
                         </DomTagInfo>
                     ) : null

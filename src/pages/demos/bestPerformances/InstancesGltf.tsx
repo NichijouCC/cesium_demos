@@ -25,8 +25,8 @@ export default class InstancesGltf extends React.Component {
         let centerLatitude = 31;
         let height = 250.0;
         let count = 1024;
-        let spacing = 0.00004;
-        let modelUrl = "./models/ship/scene.gltf";
+        let spacing = 0.0005;
+        let modelUrl = "./models/cesium_Air.glb";
         // modelUrl = "./models/1.gltf";
 
 

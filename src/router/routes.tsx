@@ -1,6 +1,6 @@
 import React from "react";
 import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
-import { AsyncRoute, CustomeAsyncRoute } from "./AsyncRoute";
+import { AsyncRoute } from "./asyncRoute";
 import { DeafaultPage } from "@/pages/deaultPage";
 
 export const demosInfo = [
@@ -29,10 +29,10 @@ export const demosInfo = [
                 asyncComponent: () => import("../pages/demos/3dtiles/loadKml")
             },
             {
-                title: "加载Dsm地形",
-                path: "/loadDsmTerrain",
-                asyncComponent: () => import("../pages/demos/terrain/dsm")
-            },
+                title: "加载正射",
+                path: "/loadKmlTiles",
+                asyncComponent: () => import("../pages/demos/3dtiles/loadKmlTiles")
+            }
         ]
     },
     {
@@ -110,18 +110,23 @@ export const demosInfo = [
         ]
     },
     {
-        title: "自定义材质",
+        title: "造效果",
         path: "/materials",
         childs: [
             {
                 title: "自定义材质_围栏一号",
                 path: "/customeMaterial_1",
-                asyncComponent: () => import("../pages/demos/material/customeMaterial_1")
+                asyncComponent: () => import("../pages/demos/effect/customeMaterial_1")
             },
             {
                 title: "自定义材质_围栏二号",
                 path: "/customeMaterial_2",
-                asyncComponent: () => import("../pages/demos/material/customeMaterial_2")
+                asyncComponent: () => import("../pages/demos/effect/customeMaterial_2")
+            },
+            {
+                title: "区域特效",
+                path: "/areaTag",
+                asyncComponent: () => import("../pages/demos/effect/areaTagDemo")
             },
         ]
     },
@@ -205,16 +210,16 @@ export const demosInfo = [
     // },
 ]
 
-export interface IrouteInfo {
+export interface IRouteInfo {
     title: string,
     path: string,
     asyncComponent: () => Promise<any>,
-    childs?: IrouteInfo[]
+    childs?: IRouteInfo[]
 }
 
 export const Demos = () => {
 
-    let func = (child: IrouteInfo, parentpath: string, routeArr: React.ReactNode[]) => {
+    let func = (child: IRouteInfo, parentpath: string, routeArr: React.ReactNode[]) => {
         if (child.childs != null) {
             child.childs.forEach(item => func(item, child.path, routeArr))
         } else {

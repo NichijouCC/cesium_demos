@@ -5,6 +5,7 @@ class Options {
     width: number = 10
 }
 export default class ClipModels extends React.Component {
+    private _gui: any;
     render() {
         return (
             <CesiumMap id={this.constructor.name} onViewerLoaded={this.handleViewerLoaded.bind(this)} />
@@ -37,10 +38,14 @@ export default class ClipModels extends React.Component {
 
         let ops = new Options();
         let gui = new dat.GUI();
+        this._gui = gui;
         gui.add(ops, "width", 0, 1000).onChange((value) => {
             for (let i = 0; i < clippingPlanes.length; i++) {
                 clippingPlanes.get(i).distance = value;
             }
         });
+    }
+    componentWillUnmount() {
+        this._gui?.destroy();
     }
 }

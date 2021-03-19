@@ -19,11 +19,19 @@ module.exports = api => {
                     }
             ],
             "@babel/react",
-            '@babel/typescript',
+            ['@babel/typescript', {
+                allowNamespaces: true
+            }],
         ],
         "plugins": [
+            [
+                "@babel/plugin-proposal-decorators",
+                {
+                    "legacy": true
+                }
+            ],
             "@babel/proposal-class-properties",
-            "@babel/proposal-object-rest-spread"
+            "@babel/proposal-object-rest-spread",
         ]
     };
 };

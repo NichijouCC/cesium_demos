@@ -1,6 +1,7 @@
 import React from "react";
-import { LeftMenu } from "./components/leftMenu";
-import { Demos } from "@/router/routes";
+import { Demos } from "../router/routes";
+import { LeftMenu } from "./comps/leftMenu";
+
 export class App extends React.Component {
     render() {
         return (

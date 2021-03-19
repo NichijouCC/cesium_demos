@@ -1,7 +1,7 @@
 .cesium-tag{
     color: rgb(255, 51, 255);
     position: absolute;
-    white-space: pre-wrap;;
-
+    z-index: 10;
+    white-space: nowrap;;
     pointer-events: none;
 }

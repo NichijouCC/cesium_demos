@@ -6,25 +6,25 @@ export class VideoFusionEditor {
     private readonly viewer: Cesium.Viewer;
     private videoFusion: VideoFusion;
     private gui: any;
-    private _camerOffset: number = 30;
+    private _cameraOffset: number = 30;
     private beActive: boolean;
     private editorInfo: IvideoEditedInfo;
     constructor(viewer: Cesium.Viewer) {
         this.viewer = viewer;
         this.viewer.frameUpdate.addEventListener(this.loop);
-        this.guiInite();
+        this.guiInit();
     }
     private currentPos: Cesium.Cartesian3;
     private currentQuat: Cesium.Quaternion;
     private loop = () => {
         if (this.beActive && this.videoFusion) {
             let camera = this.viewer.camera;
-            let offsetdir = Cesium.Cartesian3.multiplyByScalar(camera.directionWC, this._camerOffset, new Cesium.Cartesian3());
-            let targetpos = Cesium.Cartesian3.add(offsetdir, camera.positionWC, new Cesium.Cartesian3());
+            let offsetDir = Cesium.Cartesian3.multiplyByScalar(camera.directionWC, this._cameraOffset, new Cesium.Cartesian3());
+            let targetPos = Cesium.Cartesian3.add(offsetDir, camera.positionWC, new Cesium.Cartesian3());
             let quat = Helper.unitxyzToRotation(camera.rightWC, camera.directionWC, camera.upWC, new Cesium.Quaternion());
-            let mat = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(targetpos, quat, new Cesium.Cartesian3(this.videoFusion.aspect * 1, 1, 1)), new Cesium.Matrix4());
+            let mat = Cesium.Matrix4.fromTranslationRotationScale(new Cesium.TranslationRotationScale(targetPos, quat, new Cesium.Cartesian3(this.videoFusion.aspect * 1, 1, 1)), new Cesium.Matrix4());
             this.videoFusion.modelMatrix = mat;
-            this.currentPos = targetpos;
+            this.currentPos = targetPos;
             this.currentQuat = quat;
         }
     };
@@ -43,7 +43,7 @@ export class VideoFusionEditor {
         }
     }
 
-    private guiInite() {
+    private guiInit() {
         let viewer = this.viewer;
         let gui = new dat.GUI();
         this.gui = gui;
@@ -53,9 +53,9 @@ export class VideoFusionEditor {
             let logInfo = {} as IvideoEditedInfo;
             logInfo.aspect = options.aspect;
             // logInfo.cameraOffset = options.camerOffset;
-            let pos= Cesium.Matrix4.getTranslation(this.videoFusion.modelMatrix, new Cesium.Cartesian3());
-            let rotmat=Cesium.Matrix4.getRotation(this.videoFusion.modelMatrix,new Cesium.Matrix3());
-            let quat=Cesium.Quaternion.fromRotationMatrix(rotmat);
+            let pos = Cesium.Matrix4.getTranslation(this.videoFusion.modelMatrix, new Cesium.Cartesian3());
+            let rotmat = Cesium.Matrix4.getRotation(this.videoFusion.modelMatrix, new Cesium.Matrix3());
+            let quat = Cesium.Quaternion.fromRotationMatrix(rotmat);
             logInfo.pos = [pos.x, pos.y, pos.z];
             // logInfo.pos = getCarArr(this.currentPos);
             logInfo.quat = [quat.x, quat.y, quat.z, quat.w];
@@ -90,7 +90,7 @@ export class VideoFusionEditor {
                 let worldPos = Cesium.Matrix4.getTranslation(this.videoFusion.modelMatrix, new Cesium.Cartesian3());
                 let camWorldPos = this.viewer.camera.positionWC;
                 options.camerOffset = Cesium.Cartesian3.distance(worldPos, camWorldPos);
-                options.fov = this.viewer.camera.frustum.fov*180/Math.PI;
+                options.fov = this.viewer.camera.frustum.fov * 180 / Math.PI;
             }
         };
         gui.add(options, 'active').onChange((value) => {
@@ -113,7 +113,7 @@ export class VideoFusionEditor {
             this.videoFusion.color = Cesium.Color.fromCssColorString(options.color).withAlpha(options.opacity);
         });
         gui.add(options, 'camerOffset', 0.1, 100.0).onChange((value) => {
-            this._camerOffset = value;
+            this._cameraOffset = value;
         });
         gui.add(options, "fov", 30, 180).onChange(value => {
             viewer.camera.frustum.fov = value * Math.PI / 180;

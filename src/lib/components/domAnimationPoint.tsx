@@ -1,11 +1,11 @@
-import DomTagInfo from "./domTag";
+import { DomTagInfo } from "./domTag";
 import React from "react";
 
-import "./domAnimationPoint.scss";
+import "./domAnimationPoint.css";
 export class DomAnimationPoint extends DomTagInfo {
     render() {
         return (
-            <div className="content" >
+            <div className="cesium-domPoint" >
                 <div className="one" ref={element => this.element = element}>
                     <p></p>
                     <span></span>

@@ -1,7 +1,7 @@
-export function loadKmlTiles(kmlurl: string): Promise<{ resourcesUrl: string, orthoRect: Cesium.Rectangle }> {
-    let resourcesUrl = kmlurl.substr(0, kmlurl.lastIndexOf("/"));
+export function loadKmlTiles(kmlUrl: string): Promise<{ resourcesUrl: string, orthoRect: Cesium.Rectangle }> {
+    let resourcesUrl = kmlUrl.substr(0, kmlUrl.lastIndexOf("/"));
     return new Promise((resolve, reject) => {
-        fetch(kmlurl).then(res => res.text()).then(data => {
+        fetch(kmlUrl).then(res => res.text()).then(data => {
             const north = data.indexOf('<north>')      //北
             const north2 = data.indexOf('</north>')
             const north1 = data.lastIndexOf('<north>')

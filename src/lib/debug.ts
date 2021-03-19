@@ -1,10 +1,3 @@
-
-export enum PosType {
-    Cartesian,
-    Cartographic,
-    Cartographic_angle,
-}
-
 export class Debug {
     static addSpriteMark(pos: Cesium.Cartesian3, viewer: Cesium.Viewer) {
         viewer.entities.add({
@@ -17,20 +10,20 @@ export class Debug {
         });
     }
 
-    static activePick(viewer: Cesium.Viewer, type: PosType = PosType.Cartographic, onPick?: (pos: Cesium.Cartographic) => void) {
+    static activePick(viewer: Cesium.Viewer, type: "cartesian" | "cartographic" | "cartographic_angle", onPick?: (pos: Cesium.Cartographic) => void) {
         let rayHandler = new Cesium.ScreenSpaceEventHandler();
         rayHandler.setInputAction((event) => {
             let ray = viewer.camera.getPickRay(event.position);
             let picked = viewer.scene.pickFromRay(ray, []);
             if (picked && picked.object != null) {
                 switch (type) {
-                    case PosType.Cartesian:
+                    case "cartesian":
                         console.warn(picked.position.toString());
                         break;
-                    case PosType.Cartographic:
+                    case "cartographic":
                         console.warn(Cesium.Cartographic.fromCartesian(picked.position).toString());
                         break;
-                    case PosType.Cartographic_angle:
+                    case "cartographic_angle":
                         let car = Cesium.Cartographic.fromCartesian(picked.position);
                         console.warn(car.longitude * 180 / Math.PI + "," + car.latitude * 180 / Math.PI + "," + car.height);
                         break;
@@ -39,7 +32,6 @@ export class Debug {
                     let cargo = Cesium.Cartographic.fromCartesian(picked.position);
                     onPick(cargo);
                 }
-                // console.warn(Cesium.Cartographic.fromCartesian(picked.position).toString())
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
         return rayHandler;
@@ -56,7 +48,6 @@ export class Debug {
     static loadCameraInfo(viewer: Cesium.Viewer, info: string) {
         let { pos, hpr } = JSON.parse(info);
         viewer.camera.setView({
-            // destination: new Cesium.Cartesian3(this.editorInfo.cameraPositon[0], this.editorInfo.cameraPositon[1], this.editorInfo.cameraPositon[2]),
             destination: new Cesium.Cartesian3(pos[0], pos[1], pos[2]),
             orientation: {
                 heading: hpr[0],

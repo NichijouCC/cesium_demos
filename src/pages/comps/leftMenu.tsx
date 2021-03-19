@@ -1,41 +1,34 @@
 import React from "react";
-import { Menu, Button,Icon } from "antd";
+import { Menu, Button } from "antd";
 import { Link, HashRouter } from "react-router-dom";
-import { demosInfo, IrouteInfo } from "@/router/routes";
-import SubMenu from "antd/lib/menu/SubMenu";
-import { spawn } from "child_process";
+import { demosInfo, IRouteInfo } from "../../router/routes";
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 
 export class LeftMenu extends React.Component {
     state = {
         collapsed: false,
-      };
-
-    renderRoute = (item: IrouteInfo, parentPath: string = "") => {
+    };
+    renderRoute = (item: IRouteInfo, parentPath: string = "") => {
         let currentPath = parentPath + item.path;
         if (item.childs != null) {
             return (
-                <SubMenu
+                <Menu.SubMenu
                     key={item.title}
                     title={
                         <span>
-                            <Icon type="global" />
                             <span>
                                 {item.title}
                             </span>
-                        </span>
-                        
-                    }
-                >
+                        </span>}>
                     {
                         item.childs.map(chid => this.renderRoute(chid, currentPath))
                     }
-                </SubMenu>
+                </Menu.SubMenu>
             )
         } else {
             return (
                 <Menu.Item key={currentPath}>
                     <Link to={currentPath}>
-                        <Icon type="global" />
                         <span>{item.title}</span>
                     </Link>
                 </Menu.Item>
@@ -44,29 +37,24 @@ export class LeftMenu extends React.Component {
     }
     toggleCollapsed = () => {
         this.setState({
-          collapsed: !this.state.collapsed,
+            collapsed: !this.state.collapsed,
         });
-      };
+    };
 
     render() {
         return (
             <div style={{ height: '100%', backgroundColor: '#2B2C30', position: "absolute", top: "0" }}>
-                {/* <div className="main-logo" style={{ textAlign: "center" }}>
-                <span>
-                    <img src={Logo} alt="logo" style={{ width: "80%", height: "10%", marginTop: '24px', }} />
-                </span>
-                </div> */}
-                <div style={{display:"flex",alignItems: "flex-end", justifyContent: "flex-end"}}>
+                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
                     <Button type="primary" onClick={this.toggleCollapsed} style={{ margin: 16 }}>
-                        <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                        {this.state.collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
                     </Button>
                 </div>
                 <HashRouter>
-                    <Menu 
-                        defaultSelectedKeys={["0"]} 
-                        defaultOpenKeys={['sub1']} 
-                        mode="inline" 
-                        theme="dark" 
+                    <Menu
+                        defaultSelectedKeys={["0"]}
+                        defaultOpenKeys={['sub1']}
+                        mode="inline"
+                        theme="dark"
                         style={{ backgroundColor: '#2B2C30' }}
                         inlineCollapsed={this.state.collapsed}
                     >

@@ -1,20 +1,20 @@
 import React from "react";
 import { PointTool, PointMeasureHandler } from "./single/pointTool";
 import { message, Switch } from "antd";
-import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "../domTag";
+import { DomTagInfo } from "../domTag";
 import { ChatBox, ChatLocationEnum } from "../chatFrame";
-import './measureTool.scss'
+import './measureTool.css'
 import { randomChar } from "./single/measureTool";
 
-interface Iprops {
+interface IProps {
     viewer: Cesium.Viewer,
     showUI?: boolean,
     showSwitch?: boolean,
     onMeasureEnd?: (point: PointMeasureHandler) => void
 }
-export class PointMeasureComp extends React.Component<Iprops> implements ImeasureComp {
+export class PointMeasureComp extends React.Component<IProps> implements IMeasureComp {
     state = {
-        beActived: false,
+        beActive: false,
         tagText: null,
     }
     ins: PointTool;
@@ -48,8 +48,8 @@ export class PointMeasureComp extends React.Component<Iprops> implements Imeasur
     render() {
         return (<React.Fragment>
             {
-                this.state.beActived ? (
-                    <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.CENTER} aligny={AlignYPosEnum.TOP}>
+                this.state.beActive ? (
+                    <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignX={"center"} alignY={"top"}>
                         <ChatBox location={ChatLocationEnum.BOTTOM} text={this.state.tagText}></ChatBox>
                     </DomTagInfo>
                 ) : null
@@ -58,7 +58,7 @@ export class PointMeasureComp extends React.Component<Iprops> implements Imeasur
                 this.props.showSwitch && <div className='volume-measure' style={{ display: this.props.showUI != false ? "block" : 'none' }}>
                     <div className="measure-options">
                         <div>测量开关：</div>
-                        <Switch defaultChecked={false} checked={this.state.beActived} onChange={this.setToolState} />
+                        <Switch defaultChecked={false} checked={this.state.beActive} onChange={this.setToolState} />
                     </div>
                 </div>
             }
@@ -66,7 +66,7 @@ export class PointMeasureComp extends React.Component<Iprops> implements Imeasur
         </React.Fragment>)
     }
     setToolState = (checked: boolean) => {
-        this.setState({ beActived: checked });
+        this.setState({ beActive: checked });
         if (checked) {
             this.ins.active();
         } else {
@@ -75,6 +75,6 @@ export class PointMeasureComp extends React.Component<Iprops> implements Imeasur
     }
 }
 
-export interface ImeasureComp {
+export interface IMeasureComp {
     setToolState: (checked: boolean) => void;
 }

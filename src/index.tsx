@@ -1,8 +1,7 @@
-import ReactDOM from 'react-dom';
 import React from "react";
+import { App } from "./pages/app";
+import { MyApp } from "./__internal";
+import './index.css';
+import 'antd/dist/antd.css';
 
-import { Main } from './main';
-
-ReactDOM.render(
-    <Main />
-    , document.getElementById('root'));
+MyApp.start(<App></App>);

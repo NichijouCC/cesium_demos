@@ -1,9 +1,5 @@
 import { Helper } from "./helper";
-enum LoopEnum {
-    pingpong,
-    restart
-}
-export interface ImodelOptions {
+export interface IModelOptions {
     url: string;
     scale?: number;
     pos?: Cesium.Cartesian3;
@@ -14,22 +10,22 @@ export class PatrolModel {
     private options: {
         speed: number;
         pointArr: Cesium.Cartesian3[];
-        loopType: LoopEnum;
+        loopType: "pingpong" | "restart";
         adjustRot: Cesium.Quaternion;
     };
-    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | ImodelOptions, options: {
+    constructor(viewer: Cesium.Viewer, ins: Cesium.Entity | IModelOptions, options: {
         adjustRot?: Cesium.Quaternion;
         speed: number;
         pointArr: Cesium.Cartesian3[];
-        loopType?: LoopEnum;
+        loopType?: "pingpong" | "restart";
     }) {
         viewer.frameUpdate.addEventListener(this.loop);
-        this.options = { ...options, adjustRot: options.adjustRot != null ? options.adjustRot : Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : LoopEnum.pingpong };
+        this.options = { ...options, adjustRot: options.adjustRot != null ? options.adjustRot : Cesium.Quaternion.IDENTITY, loopType: options.loopType != null ? options.loopType : "pingpong" };
         if (ins instanceof Cesium.Entity) {
             this.ins = ins;
         }
         else {
-            let modelOps = ins as ImodelOptions;
+            let modelOps = ins as IModelOptions;
             this.ins = viewer.entities.add({
                 position: modelOps.pos ? modelOps.pos : Cesium.Cartesian3.ZERO,
                 orientation: Cesium.Quaternion.IDENTITY,
@@ -54,19 +50,19 @@ export class PatrolModel {
     private currentDir: Cesium.Cartesian3;
     private curPos: Cesium.Cartesian3;
     private curPointIndex: number;
-    private loop = (deltalTime) => {
-        if (!this.beActived)
+    private loop = (deltaTime) => {
+        if (!this.beActive)
             return;
         let { pointArr, speed } = this.options;
-        let moveDelta = Cesium.Cartesian3.multiplyByScalar(this.currentDir, speed * deltalTime, new Cesium.Cartesian3());
+        let moveDelta = Cesium.Cartesian3.multiplyByScalar(this.currentDir, speed * deltaTime, new Cesium.Cartesian3());
         let newPos = Cesium.Cartesian3.add(this.curPos, moveDelta, new Cesium.Cartesian3());
         let distance = Cesium.Cartesian3.distance(pointArr[this.curPointIndex], pointArr[this.curPointIndex + 1]);
-        let newdistance = Cesium.Cartesian3.distance(pointArr[this.curPointIndex], newPos);
-        if (newdistance >= distance) {
+        let newDistance = Cesium.Cartesian3.distance(pointArr[this.curPointIndex], newPos);
+        if (newDistance >= distance) {
             this.curPointIndex++;
             if (this.curPointIndex >= pointArr.length - 1) { //end
                 this.curPointIndex = 0;
-                if (this.options.loopType == LoopEnum.pingpong) {
+                if (this.options.loopType == "pingpong") {
                     pointArr.reverse();
                 }
             }
@@ -78,12 +74,12 @@ export class PatrolModel {
         this.ins.position = newPos;
         this.curPos = newPos;
     };
-    private beActived: boolean = false;
+    private beActive: boolean = false;
     active() {
-        this.beActived = true;
+        this.beActive = true;
     }
     disActive() {
-        this.beActived = false;
+        this.beActive = false;
     }
     dispose() { };
     private calculateDirection(nextPosition: Cesium.Cartesian3, position: Cesium.Cartesian3) {

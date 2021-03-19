@@ -4623,7 +4623,6 @@ declare module Cesium {
         flyTo(target: Entity | Entity[] | EntityCollection | DataSource | Promise<Entity | Entity[] | EntityCollection | DataSource>,
             options?: { duration?: number; maximumHeight?: number; offset?: HeadingPitchRange }): Promise<boolean>;
         frameUpdate: Event;//毫秒
-        excuteFrameTask(task: (detalTime: number) => void): { end: () => void }
     }
 
     namespace Viewer {

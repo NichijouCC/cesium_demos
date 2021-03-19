@@ -1,14 +1,13 @@
 import React from "react";
-window.Cesium = process.env.NODE_ENV == "development" ? require("@cesiumDebug/Cesium") : require("@cesiumBuild/Cesium");
-require('@cesiumSource/Widgets/widgets.css');
+window.Cesium = process.env.NODE_ENV == "development" ? require('../../node_modules/cesium/Build/CesiumUnminified/Cesium') : require("../../node_modules/cesium/Build/Cesium/Cesium");
+require('../../node_modules/cesium/Build/Cesium/Widgets/widgets.css');
 // import Cesium from "cesium";
 
 export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, onViewerLoaded?: (viewer: Cesium.Viewer) => void }> {
-
     private _viewer: Cesium.Viewer;
     get viewer() { return this._viewer; }
     state = {
-        beActived: false
+        beActive: false
     }
     private get containerId() {
         return this.props.id || "__cesiumContainer"
@@ -30,11 +29,10 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
         },
         ION?: string
     }): Cesium.Viewer {
-        console.warn("ceisum 启动！！");
-        this.setState({ beActived: true });
+        console.warn("cesium 启动！！");
+        this.setState({ beActive: true });
         Cesium.Ion.defaultAccessToken = options?.ION || MapConfig.ION;
         let viewer: Cesium.Viewer = new Cesium.Viewer(this.containerId, { ...MapConfig.MAPOPTIONS, ...options });
-
         (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";//去除版权信息
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//移除双击选中
 
@@ -65,33 +63,19 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             viewer.frameUpdate.raiseEvent(deltaTime);
         });
 
-        //-----------------------------
-        (viewer as any).excuteFrameTask = (task: (deltaTime: number) => void) => {
-            viewer.frameUpdate.addEventListener(task);
-            return {
-                end: () => viewer.frameUpdate.removeEventListener(task)
-            }
-        }
         if (this.props.onViewerLoaded != null) {
             this.props.onViewerLoaded(viewer);
         }
         this._viewer = viewer;
         return viewer;
     }
-
+    beforeDestroy = new Cesium.Event();
     destroy() {
-        if (this.state.beActived) {
-            this.setState({ beActived: false });
-            if (this._viewer) {
-                setTimeout(() => {//因为react是父节点到子节点的顺序卸载，所以延迟一下，让子节点先卸载掉。【不然viewer丢失，子节点报错】
-                    console.warn("ceisum destroy！！");
-                    this._viewer.destroy();
-                    this._viewer = null;
-                }, 1000)
-            }
-        }
+        this.beforeDestroy.raiseEvent();
+        console.warn("cesium destroy！！");
+        this._viewer?.destroy();
+        this._viewer = null;
     }
-
 
     componentWillUnmount() {
         this.destroy();
@@ -106,7 +90,7 @@ export class CesiumMap extends React.Component<{ id?: string, setUp?: boolean, o
             bottom: 0,
             right: 0,
             // position: "absolute",
-            display: this.state.beActived ? "inline" : "none"
+            display: this.state.beActive ? "inline" : "none"
         };
         return (
             <div id={this.containerId} style={containerStyle}>
@@ -131,7 +115,6 @@ const MapConfig = {
                 creationFunction: function () {
                     return new Cesium.UrlTemplateImageryProvider({
                         url: 'http://www.google.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}',//影像图 (中国范围无偏移)
-                        //url: 'http://www.google.cn/maps/vt?lyrs=s&gl=cn&x={x}&y={y}&z={z}',//影像图 (中国范围有偏移，以适应偏移后的Google矢量图)
                         tilingScheme: new Cesium.WebMercatorTilingScheme(),
                         minimumLevel: 1,
                         maximumLevel: 200,

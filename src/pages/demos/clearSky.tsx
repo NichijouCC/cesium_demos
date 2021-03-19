@@ -1,6 +1,5 @@
 import { CesiumMap } from "@/lib";
 import React, { useEffect, useRef } from "react";
-import bg from '../assets/center_bg.png';
 import dat from 'dat.gui';
 
 export default function ClearSky() {
@@ -48,7 +47,7 @@ export default function ClearSky() {
     const mapRef = useRef<CesiumMap>();
 
     return (
-        <div className="container" style={{ width: "100%", height: "100%", backgroundImage: `url(${bg})`, backgroundColor: "#04172A", backgroundRepeat: "norepeat" }} >
+        <div className="container" style={{ width: "100%", height: "100%", backgroundImage: "url(./images/center_bg.png)", backgroundColor: "#04172A", backgroundRepeat: "norepeat" }} >
             <CesiumMap ref={mapRef} setUp={false} />
         </div>)
 }

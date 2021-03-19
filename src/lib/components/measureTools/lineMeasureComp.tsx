@@ -1,12 +1,12 @@
 import React from "react";
-import DomTagInfo, { AlignXPosEnum, AlignYPosEnum } from "../domTag";
+import { DomTagInfo } from "../domTag";
 import { ChatBox } from "../chatFrame";
 import { Switch, message } from "antd";
 import { LineTool, LineMeasureHandler } from "./single/lineTool";
 
-import './measureTool.scss'
+import './measureTool.css'
 import { randomChar } from "./single/measureTool";
-import { ImeasureComp } from "./pointMeasureComp";
+import { IMeasureComp } from "./pointMeasureComp";
 
 interface Iprops {
     viewer: Cesium.Viewer,
@@ -21,7 +21,7 @@ interface Istate {
     brokenLine: boolean
 }
 
-export class LineMeasureComp extends React.Component<Iprops, Istate> implements ImeasureComp {
+export class LineMeasureComp extends React.Component<Iprops, Istate> implements IMeasureComp {
     state = {
         beActived: false,
         tagText: null,
@@ -70,12 +70,11 @@ export class LineMeasureComp extends React.Component<Iprops, Istate> implements 
             <React.Fragment>
                 {
                     this.state.beActived ? (
-                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignx={AlignXPosEnum.LEFT} aligny={AlignYPosEnum.CENTER}>
+                        <DomTagInfo viewer={this.props.viewer} trackCursor={true} alignX={"left"} alignY={"center"}>
                             <ChatBox text={this.state.tagText}></ChatBox>
                         </DomTagInfo>
                     ) : null
                 }
-
                 <div className='volume-measure' style={{ display: this.props.showUI != false ? "block" : 'none' }}>
                     {
                         this.props.showSwitch && <div className="measure-options">

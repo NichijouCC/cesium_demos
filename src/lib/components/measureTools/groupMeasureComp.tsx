@@ -1,7 +1,7 @@
 import React from "react";
 
-import './groupTool.scss'
-import { PointMeasureComp, ImeasureComp } from "./pointMeasureComp";
+import './groupTool.css'
+import { PointMeasureComp, IMeasureComp } from "./pointMeasureComp";
 import { LineMeasureComp } from "./lineMeasureComp";
 import { VolumeMeasureComp } from "./volumeMeasureComp";
 import { ToolEnum } from "@/lib/components/measureTools/single/measureTool";
@@ -25,7 +25,7 @@ export default class GroupMeasureComp extends React.Component<{
     private pointComp = React.createRef<PointMeasureComp>();
     private lineComp = React.createRef<LineMeasureComp>();
     private volumeComp = React.createRef<VolumeMeasureComp>();
-    private groupToolConfig: { [type: string]: { type: ToolEnum, url: string, selected: string, comp: React.RefObject<ImeasureComp> } } = {};;
+    private groupToolConfig: { [type: string]: { type: ToolEnum, url: string, selected: string, comp: React.RefObject<IMeasureComp> } } = {};;
 
     constructor(props) {
         super(props);

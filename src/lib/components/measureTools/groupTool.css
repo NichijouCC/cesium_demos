@@ -14,19 +14,21 @@
     display: flex;
     flex-direction: column;
 
-    .toolItem{
-        width: 15px;
-        text-align: center;
-        height: 16px;
-        margin: 20px 7px;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
+    
 
-    .cuttLine{
-        content: '';
-        height: 1px;
-        width: 20px;
-        background: rgba(255,255,255,0.12);
-    }
+
+}
+.measure-group-tool .toolItem{
+    width: 15px;
+    text-align: center;
+    height: 16px;
+    margin: 20px 7px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.measure-group-tool .cuttLine{
+    content: '';
+    height: 1px;
+    width: 20px;
+    background: rgba(255,255,255,0.12);
 }
