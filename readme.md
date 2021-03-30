@@ -36,6 +36,7 @@
 - 性能优化 
     - instances gltf并更新位置
     - 更新单个geometryinstance属性
+- 热力图
 - 点线面与鼠标交互
 - 地球自旋转
 - 画河流

@@ -163,6 +163,11 @@ export const demosInfo = [
         ]
     },
     {
+        title: "热力图",
+        path: "/heatmap",
+        asyncComponent: () => import("../pages/demos/heatmap/index")
+    },
+    {
         title: "点线面",
         path: "/pointLineFace",
         asyncComponent: () => import("../pages/demos/pointLineFace")
