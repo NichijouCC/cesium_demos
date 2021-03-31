@@ -10,7 +10,7 @@ export default class CommandRobotDemo extends React.Component {
             offset: new Cesium.HeadingPitchRange(0, -45 * Math.PI / 180, 500)
         });
         let handler = this.clickLand(viewer, (clickPos) => {
-            robot.sendTargetPos(clickPos);
+            robot.sendTargetPos({ pos: clickPos });
         });
         this.componentWillUnmount = () => {
             handler.destroy();
