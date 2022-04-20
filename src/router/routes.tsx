@@ -203,6 +203,11 @@ export const demosInfo = [
         path: "/cleatBg",
         asyncComponent: () => import("../pages/demos/clearSky")
     },
+    {
+        title: "框选删除",
+        path: "/boxSelectToDelete",
+        asyncComponent: () => import("../pages/demos/boxSelect")
+    }
     // {
     //     title: "测试",
     //     path: "/testDemo",
